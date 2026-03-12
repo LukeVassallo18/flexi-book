@@ -1,36 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
 
 :root {
   color-scheme: light;
-  /* tab text colour */
-  --color-tab-header-text: #1a1f26;
-  /* search button colour */
-  --color-search-button: #f07850;
-  /* star rating colour */
-  --color-star-rating: #f0b428;
-  /* input background */
-  --color-input-background: #c8c8b4;
-  /* primary background hero */
-  --color-primary-hero-bg: #147864;
-  /* bubbles and form background */
-  --color-bubbles-form-bg: #28a08c;
-  /* nav background colour */
-  --color-nav-bg: white;
 
-  --color-nav-txt:#6b7682;
+  /* Core */
+  --color-heading:            #181F25;
+  --color-text:               #181F25;
+  --color-text-muted:         #6A7581;
+  --color-text-on-dark:       rgba(255, 255, 255, 0.70);
 
-  /* main background colour for nav and rest of page */
-  --color-page-background: #ffffff;
+  /* Brand */
+  --color-primary:            #259D91;
+  --color-primary-dark:       #1B746B;
+  --color-primary-tint:       rgba(37, 157, 145, 0.10);
 
-  /* shared semantic aliases for components */
-  --color-text: var(--color-tab-header-text);
-  --color-heading: var(--color-tab-header-text);
-  --color-primary: var(--color-primary-hero-bg);
-  --color-surface: var(--color-page-background);
-  --color-border: var(--color-input-background);
+  /* CTA */
+  --color-cta:                #EC7051;
 
+  /* Accents */
+  --color-star:               #F4B625;
+
+  /* Surfaces */
+  --color-bg:                 #FCFAF8;
+  --color-surface:            #ffffff;
+  --color-section-alt:        rgba(246, 242, 234, 0.30);
+
+  /* Nav */
+  --color-nav-bg:             rgba(255, 255, 255, 0.80);
+  --color-nav-text:           #6A7581;
+
+  /* Footer */
+  --color-footer-bg:          #181F25;
+
+  /* Borders */
+  --color-border:             #E7E2DA;
+  --color-border-footer:      rgba(255, 255, 255, 0.10);
+
+  /* Legacy aliases */
+  --color-tab-header-text:    #181F25;
+  --color-search-button:      #EC7051;
+  --color-primary-hero-bg:    #259D91;
+  --color-input-background:   #E7E2DA;
+  --color-form-text:          #6A7581;
+  --color-page-background:    #FCFAF8;
+  --color-hero-text:          #ffffff;
+  --color-nav-bg:             rgba(255, 255, 255, 0.80);
 }
-
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -39,8 +54,12 @@
 }
 
 body {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  background-color: var(--color-page-background);
-  color: var(--color-tab-header-text);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }

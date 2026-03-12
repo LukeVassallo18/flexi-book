@@ -1,32 +1,30 @@
 <script setup>
+import AccessibilityMenu from './AccessibilityMenu.vue';
 </script>
 
 <template>
-  <nav class="navbar">
+  <nav class="navbar" aria-label="Main navigation">
     <div class="navbar-container">
-      <div class="left">
-        <a href="#" class="navbar-logo">
-          <span class="navbar-logo-icon">
+
+      <div class="nav-left">
+        <a href="#" class="navbar-logo" aria-label="Flexi Book home">
+          <span class="logo-icon" aria-hidden="true">
             <span class="material-icons">flight</span>
           </span>
-          <span class="navbar-logo-text">Flexi Book</span>
+          <span class="logo-text">Flexi Book</span>
         </a>
       </div>
 
-      <ul class="center">
-        <li><a href="#">Flights</a></li>
-        <li><a href="#">Hotels</a></li>
-        <li><a href="#">Car Rentals</a></li>
+      <ul class="nav-center" role="list">
+        <li><a href="#" class="nav-link">Flights</a></li>
+        <li><a href="#" class="nav-link">Hotels</a></li>
+        <li><a href="#" class="nav-link">Car Rentals</a></li>
       </ul>
 
-      <ul class="right">
-        <li>
-          <a href="#" class="navbar-link with-icon">
-            <span class="material-icons" aria-hidden="true">accessibility_new</span>
-            <span>Accessibility</span>
-          </a>
-        </li>
-      </ul>
+      <div class="nav-right">
+        <AccessibilityMenu />
+      </div>
+
     </div>
   </nav>
 </template>
