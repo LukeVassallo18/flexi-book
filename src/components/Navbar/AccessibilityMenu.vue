@@ -8,11 +8,181 @@ const CVD_MODES = [
   { value: 'tritanopia', label: 'Tritanopia' },
 ];
 
+const THEME_VAR_MAP = {
+  bg: '--color-bg',
+  surface: '--color-surface',
+  sectionAlt: '--color-section-alt',
+  text: '--color-text',
+  heading: '--color-heading',
+  textMuted: '--color-text-muted',
+  textOnDark: '--color-text-on-dark',
+  primary: '--color-primary',
+  primaryDark: '--color-primary-dark',
+  primaryTint: '--color-primary-tint',
+  cta: '--color-cta',
+  star: '--color-star',
+  navBg: '--color-nav-bg',
+  navText: '--color-nav-text',
+  border: '--color-border',
+  borderFooter: '--color-border-footer',
+  footerBg: '--color-footer-bg',
+  heroGradient: '--hero-gradient',
+  heroText: '--color-hero-text',
+};
+
+const defaultTheme = {
+  bg: '#FCFAF8',
+  surface: '#FFFFFF',
+  sectionAlt: 'rgba(246, 242, 234, 0.30)',
+  text: '#181F25',
+  heading: '#181F25',
+  textMuted: '#6A7581',
+  textOnDark: 'rgba(255, 255, 255, 0.70)',
+  primary: '#259D91',
+  primaryDark: '#1B746B',
+  primaryTint: 'rgba(37, 157, 145, 0.10)',
+  cta: '#EC7051',
+  star: '#F4B625',
+  navBg: 'rgba(255, 255, 255, 0.80)',
+  navText: '#6A7581',
+  border: '#E7E2DA',
+  borderFooter: 'rgba(255, 255, 255, 0.10)',
+  footerBg: '#181F25',
+  heroGradient: 'linear-gradient(135deg, #259D91, #1B746B)',
+  heroText: '#FFFFFF',
+};
+
+const CVD_THEME_OVERRIDES = {
+  protanopia: {
+    primary: '#2b6dab',
+    primaryDark: '#214f83',
+    heroGradient: 'linear-gradient(135deg, #2b6dab, #214f83)',
+    cta: '#f3b621',
+  },
+  deuteranopia: {
+    primary: '#3f72b2',
+    primaryDark: '#2f588c',
+    heroGradient: 'linear-gradient(135deg, #3f72b2, #2f588c)',
+    cta: '#ed9822',
+  },
+  tritanopia: {
+    primary: '#be4d61',
+    primaryDark: '#97384c',
+    heroGradient: 'linear-gradient(135deg, #be4d61, #97384c)',
+    cta: '#35a196',
+  },
+};
+
+const HIGH_CONTRAST_THEME_OVERRIDES = {
+  bg: '#FFFFFF',
+  surface: '#FFFFFF',
+  sectionAlt: '#FFFFFF',
+  text: '#000000',
+  heading: '#000000',
+  textMuted: '#1F1F1F',
+  navBg: '#FFFFFF',
+  navText: '#111111',
+  border: '#1F1F1F',
+  primaryTint: 'rgba(0, 0, 0, 0.08)',
+};
+
 const PRESETS = [
-  { name: 'Ocean', colors: { background: '#f0f7fa', text: '#1a2b3c', buttons: '#2196a4', navigation: '#1b7a85', links: '#0e6b76', headings: '#14404d', borders: '#b8d8e0', cards: '#ffffff' } },
-  { name: 'Sand', colors: { background: '#faf6f0', text: '#3c2e1a', buttons: '#c4792a', navigation: '#a86520', links: '#9b5b1a', headings: '#4d3314', borders: '#e0d4b8', cards: '#fffdf8' } },
-  { name: 'Forest', colors: { background: '#f2f7f0', text: '#1a3c1e', buttons: '#3a8a45', navigation: '#2d7a38', links: '#267632', headings: '#1e4d24', borders: '#b8e0be', cards: '#fafffa' } },
-  { name: 'Hi-Vis', colors: { background: '#000000', text: '#ffffff', buttons: '#ffcc00', navigation: '#ffcc00', links: '#00ccff', headings: '#ffffff', borders: '#666666', cards: '#1a1a1a' } },
+  {
+    name: 'Ocean Clarity',
+    theme: {
+      bg: '#F6FAFD',
+      surface: '#FFFFFF',
+      sectionAlt: '#ECF3FA',
+      text: '#102235',
+      heading: '#0B1A2A',
+      textMuted: '#516579',
+      textOnDark: 'rgba(241, 247, 255, 0.88)',
+      primary: '#126CA1',
+      primaryDark: '#0E527A',
+      primaryTint: 'rgba(18, 108, 161, 0.14)',
+      cta: '#D9822B',
+      star: '#D4A017',
+      navBg: 'rgba(255, 255, 255, 0.92)',
+      navText: '#415567',
+      border: '#BACCE0',
+      borderFooter: 'rgba(241, 247, 255, 0.22)',
+      footerBg: '#102235',
+      heroGradient: 'linear-gradient(135deg, #126CA1, #0E527A)',
+      heroText: '#F7FBFF',
+    },
+  },
+  {
+    name: 'Amber Slate',
+    theme: {
+      bg: '#FCF8F2',
+      surface: '#FFFFFF',
+      sectionAlt: '#F3ECE2',
+      text: '#1F2937',
+      heading: '#111827',
+      textMuted: '#5D6776',
+      textOnDark: 'rgba(255, 248, 239, 0.88)',
+      primary: '#6C5B7B',
+      primaryDark: '#53455F',
+      primaryTint: 'rgba(108, 91, 123, 0.14)',
+      cta: '#D8892B',
+      star: '#D4A017',
+      navBg: 'rgba(255, 255, 255, 0.92)',
+      navText: '#5A6270',
+      border: '#D8CDBE',
+      borderFooter: 'rgba(255, 248, 239, 0.22)',
+      footerBg: '#2F2A35',
+      heroGradient: 'linear-gradient(135deg, #6C5B7B, #53455F)',
+      heroText: '#FFF9F2',
+    },
+  },
+  {
+    name: 'Nordic Contrast',
+    theme: {
+      bg: '#F5FAFA',
+      surface: '#FFFFFF',
+      sectionAlt: '#EAF3F4',
+      text: '#102A33',
+      heading: '#0C1F26',
+      textMuted: '#4D6772',
+      textOnDark: 'rgba(239, 250, 255, 0.88)',
+      primary: '#0E8A8D',
+      primaryDark: '#0B6669',
+      primaryTint: 'rgba(14, 138, 141, 0.14)',
+      cta: '#C86E2C',
+      star: '#D8A928',
+      navBg: 'rgba(255, 255, 255, 0.92)',
+      navText: '#4A616B',
+      border: '#BFD1D5',
+      borderFooter: 'rgba(239, 250, 255, 0.22)',
+      footerBg: '#102A33',
+      heroGradient: 'linear-gradient(135deg, #0E8A8D, #0B6669)',
+      heroText: '#F2FCFC',
+    },
+  },
+  {
+    name: 'Hi-Vis Focus',
+    theme: {
+      bg: '#FFFFFF',
+      surface: '#FFFFFF',
+      sectionAlt: '#F2F2F2',
+      text: '#000000',
+      heading: '#000000',
+      textMuted: '#1F1F1F',
+      textOnDark: '#FFFFFF',
+      primary: '#005A9C',
+      primaryDark: '#003F6E',
+      primaryTint: 'rgba(0, 90, 156, 0.14)',
+      cta: '#C66A00',
+      star: '#B38A00',
+      navBg: '#FFFFFF',
+      navText: '#000000',
+      border: '#111111',
+      borderFooter: 'rgba(255, 255, 255, 0.35)',
+      footerBg: '#111111',
+      heroGradient: 'linear-gradient(135deg, #005A9C, #003F6E)',
+      heroText: '#FFFFFF',
+    },
+  },
 ];
 
 const ALL_COLOR_ITEMS = [
@@ -53,6 +223,7 @@ const letterSpacing = ref(0);
 const lineHeight = ref(1.5);
 
 const customColors = reactive({ ...defaultColors });
+const activeTheme = ref({ ...defaultTheme });
 
 const mainTabs = [
   { id: 'vision', label: 'Vision', icon: 'visibility_off' },
@@ -60,56 +231,87 @@ const mainTabs = [
   { id: 'tuning', label: 'Tuning', icon: 'tune' },
 ];
 
-const cvdFilterMap = {
-  none: '',
-  protanopia: 'sepia(0.25) hue-rotate(-20deg) saturate(0.85)',
-  deuteranopia: 'sepia(0.2) hue-rotate(25deg) saturate(0.9)',
-  tritanopia: 'sepia(0.15) hue-rotate(130deg) saturate(0.8)',
-};
+const cvdClasses = ['cvd-protanopia', 'cvd-deuteranopia', 'cvd-tritanopia'];
+
+function applyCvdClass(mode) {
+  const root = document.documentElement;
+  root.classList.remove(...cvdClasses);
+
+  if (mode !== 'none') {
+    root.classList.add(`cvd-${mode}`);
+  }
+}
 
 function setCustomColor(key, value) {
   customColors[key] = value;
-  const root = document.documentElement;
 
   if (key === 'background') {
-    root.style.setProperty('--color-bg', value);
-    root.style.setProperty('--color-page-background', value);
+    activeTheme.value.bg = value;
+    activeTheme.value.sectionAlt = value;
   }
-  if (key === 'text') {
-    root.style.setProperty('--color-text', value);
-    root.style.setProperty('--color-tab-header-text', value);
+  if (key === 'text') activeTheme.value.text = value;
+  if (key === 'cards') activeTheme.value.surface = value;
+  if (key === 'buttons') activeTheme.value.cta = value;
+  if (key === 'links') activeTheme.value.navText = value;
+  if (key === 'navigation') activeTheme.value.navBg = value;
+  if (key === 'headings') activeTheme.value.heading = value;
+  if (key === 'borders') activeTheme.value.border = value;
+
+  applyCurrentTheme(false);
+}
+
+function applyTheme(theme, syncCustom = true) {
+  const root = document.documentElement;
+  const merged = { ...defaultTheme, ...theme };
+
+  Object.entries(THEME_VAR_MAP).forEach(([themeKey, cssVar]) => {
+    root.style.setProperty(cssVar, merged[themeKey]);
+  });
+
+  root.style.setProperty('--color-page-background', merged.bg);
+  root.style.setProperty('--color-tab-header-text', merged.heading);
+  root.style.setProperty('--color-search-button', merged.cta);
+  root.style.setProperty('--color-input-background', merged.border);
+  root.style.setProperty('--color-form-text', merged.navText);
+
+  if (syncCustom) {
+    customColors.background = merged.bg;
+    customColors.text = merged.text;
+    customColors.cards = merged.surface;
+    customColors.buttons = merged.cta;
+    customColors.links = merged.navText;
+    customColors.navigation = merged.navBg;
+    customColors.headings = merged.heading;
+    customColors.borders = merged.border;
   }
-  if (key === 'cards') {
-    root.style.setProperty('--color-surface', value);
+}
+
+function resolveTheme() {
+  const merged = { ...activeTheme.value };
+
+  if (cvdMode.value !== 'none' && CVD_THEME_OVERRIDES[cvdMode.value]) {
+    Object.assign(merged, CVD_THEME_OVERRIDES[cvdMode.value]);
   }
-  if (key === 'buttons') {
-    root.style.setProperty('--color-cta', value);
-    root.style.setProperty('--color-search-button', value);
+
+  if (highContrast.value) {
+    Object.assign(merged, HIGH_CONTRAST_THEME_OVERRIDES);
   }
-  if (key === 'links') {
-    root.style.setProperty('--color-nav-text', value);
-    root.style.setProperty('--color-form-text', value);
-  }
-  if (key === 'navigation') {
-    root.style.setProperty('--color-nav-bg', value);
-  }
-  if (key === 'headings') {
-    root.style.setProperty('--color-heading', value);
-  }
-  if (key === 'borders') {
-    root.style.setProperty('--color-border', value);
-    root.style.setProperty('--color-input-background', value);
-  }
+
+  return merged;
+}
+
+function applyCurrentTheme(syncCustom = false) {
+  applyTheme(resolveTheme(), syncCustom);
 }
 
 function applyPreset(preset) {
-  Object.entries(preset.colors).forEach(([key, value]) => {
-    setCustomColor(key, value);
-  });
+  activeTheme.value = { ...defaultTheme, ...preset.theme };
+  applyCurrentTheme(true);
 }
 
 function resetColors() {
-  Object.entries(defaultColors).forEach(([key, value]) => setCustomColor(key, value));
+  activeTheme.value = { ...defaultTheme };
+  applyCurrentTheme(true);
   brightness.value = 100;
   saturation.value = 100;
   fontSize.value = 100;
@@ -126,10 +328,15 @@ function toggleVoice() {
   voiceListening.value = voiceEnabled.value;
 }
 
-watch([brightness, saturation, cvdMode], () => {
-  const base = `brightness(${brightness.value}%) saturate(${saturation.value}%)`;
-  const cvd = cvdFilterMap[cvdMode.value];
-  document.body.style.filter = cvd ? `${base} ${cvd}` : base;
+watch([brightness, saturation], () => {
+  const root = document.documentElement;
+  root.style.setProperty('--a11y-brightness', `${brightness.value}%`);
+  root.style.setProperty('--a11y-saturation', `${saturation.value}%`);
+});
+
+watch(cvdMode, (value) => {
+  applyCvdClass(value);
+  applyCurrentTheme(false);
 });
 
 watch([fontSize, letterSpacing, lineHeight], () => {
@@ -140,13 +347,16 @@ watch([fontSize, letterSpacing, lineHeight], () => {
 
 watch(highContrast, (value) => {
   document.documentElement.classList.toggle('a11y-high-contrast', value);
+  applyCurrentTheme(false);
 });
 
 onBeforeUnmount(() => {
-  document.body.style.filter = '';
   document.body.style.letterSpacing = '';
   document.body.style.lineHeight = '';
   document.documentElement.style.fontSize = '';
+  document.documentElement.style.removeProperty('--a11y-brightness');
+  document.documentElement.style.removeProperty('--a11y-saturation');
+  document.documentElement.classList.remove(...cvdClasses);
   document.documentElement.classList.remove('a11y-high-contrast');
 });
 </script>
@@ -238,7 +448,7 @@ onBeforeUnmount(() => {
             <button v-for="preset in PRESETS" :key="preset.name" class="preset-item" @click="applyPreset(preset)">
               <div class="swatches">
                 <span
-                  v-for="(swatch, index) in [preset.colors.background, preset.colors.buttons, preset.colors.text, preset.colors.navigation]"
+                  v-for="(swatch, index) in [preset.theme.bg, preset.theme.primary, preset.theme.cta, preset.theme.text]"
                   :key="`${preset.name}-${index}`"
                   :style="{ backgroundColor: swatch }"
                 ></span>

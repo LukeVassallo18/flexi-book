@@ -1,5 +1,5 @@
 .features-section {
-  background: #FCFAF8;
+  background: var(--color-bg);
   padding: 80px 1.25rem;
 }
 
@@ -12,7 +12,7 @@
   text-align: center;
   font-size: 2.25rem;
   font-weight: 700;
-  color: #181F25;
+  color: var(--color-heading);
   font-family: 'Space Grotesk', sans-serif;
   line-height: 40px;
 }
@@ -20,7 +20,7 @@
 .section-subtitle {
   text-align: center;
   font-size: 1rem;
-  color: #6A7581;
+  color: var(--color-text-muted);
   margin-top: 12px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 24px;
@@ -34,17 +34,17 @@
 }
 
 .feature-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
-  border: 1px solid #E7E2DA;
+  border: 1px solid var(--color-border);
   padding: 25px;
-  box-shadow: 0 8px 30px -8px rgba(24, 31, 37, 0.10);
+  box-shadow: var(--shadow-card);
 }
 
 .icon-box {
   width: 48px;
   height: 48px;
-  background: rgba(37, 157, 145, 0.10);
+  background: var(--color-primary-tint);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -54,13 +54,13 @@
 
 .icon-box .material-icons {
   font-size: 1.5rem;
-  color: #259D91;
+  color: var(--color-primary);
 }
 
 .card-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #181F25;
+  color: var(--color-heading);
   font-family: 'Space Grotesk', sans-serif;
   line-height: 24px;
   margin-bottom: 8px;
@@ -68,7 +68,7 @@
 
 .card-desc {
   font-size: 14px;
-  color: #6A7581;
+  color: var(--color-text-muted);
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 22.75px;
 }

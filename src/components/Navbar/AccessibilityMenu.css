@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: rgba(24, 31, 37, 0.8);
+  color: var(--color-heading);
   text-decoration: none;
   font-size: 14px;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -28,9 +28,9 @@
 .listening-dot {
   width: 8px;
   height: 8px;
-  background: #EC7051;
+  background: var(--color-cta);
   border-radius: 999px;
-  box-shadow: 0 0 0 0 rgba(236, 112, 81, 0.8);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-cta) 80%, transparent);
   animation: pulse 1.2s infinite;
 }
 
@@ -52,9 +52,9 @@
   z-index: 50;
   width: 320px;
   border-radius: 12px;
-  background: #fff;
-  border: 1px solid #E7E2DA;
-  box-shadow: 0 16px 50px -12px rgba(24, 31, 37, 0.15);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-elevated);
   overflow: hidden;
 }
 
@@ -69,7 +69,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #181F25;
+  color: var(--color-heading);
 }
 
 .reset-btn {
@@ -78,7 +78,7 @@
   gap: 0.2rem;
   border: 0;
   background: transparent;
-  color: #6A7581;
+  color: var(--color-text-muted);
   font-size: 11px;
   cursor: pointer;
 }
@@ -93,7 +93,7 @@
   gap: 0.25rem;
   margin: 0.5rem 0.75rem;
   padding: 0.2rem;
-  background: #f4f4f2;
+  background: var(--color-bg);
   border-radius: 10px;
 }
 
@@ -105,7 +105,7 @@
   border-radius: 8px;
   padding: 0.4rem 0.3rem;
   font-size: 11px;
-  color: #6A7581;
+  color: var(--color-text-muted);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -120,8 +120,8 @@
 
 .main-tab.active,
 .sub-tabs button.active {
-  background: #fff;
-  color: #181F25;
+  background: var(--color-surface);
+  color: var(--color-heading);
   box-shadow: 0 1px 6px rgba(24, 31, 37, 0.12);
 }
 
@@ -142,12 +142,12 @@
   padding: 0.55rem 0.6rem;
   font-size: 12px;
   cursor: pointer;
-  background: #f4f4f2;
-  color: #181F25;
+  background: var(--color-bg);
+  color: var(--color-heading);
 }
 
 .voice-btn.active {
-  background: #259D91;
+  background: var(--color-primary);
   color: #fff;
 }
 
@@ -157,7 +157,7 @@
 
 .hint {
   font-size: 10px;
-  color: #6A7581;
+  color: var(--color-text-muted);
 }
 
 .field-group {
@@ -169,16 +169,16 @@
   font-size: 10px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #6A7581;
+  color: var(--color-text-muted);
 }
 
 .field-group select {
-  border: 1px solid #E7E2DA;
-  background: #f4f4f2;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
   border-radius: 10px;
   padding: 0.5rem;
   font-size: 12px;
-  color: #181F25;
+  color: var(--color-heading);
 }
 
 .range-header {
@@ -189,12 +189,12 @@
 
 .range-header span {
   font-size: 10px;
-  color: #6A7581;
+  color: var(--color-text-muted);
 }
 
 .field-group input[type='range'] {
   width: 100%;
-  accent-color: #259D91;
+  accent-color: var(--color-primary);
 }
 
 .switch-row {
@@ -205,7 +205,7 @@
 
 .switch-row label {
   font-size: 12px;
-  color: #181F25;
+  color: var(--color-heading);
 }
 
 .switch {
@@ -228,7 +228,7 @@
 }
 
 .switch.on {
-  background: #259D91;
+  background: var(--color-primary);
 }
 
 .switch.on span {
@@ -242,14 +242,20 @@
 }
 
 .preset-item {
-  border: 1px solid #E7E2DA;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #fff;
+  background: var(--color-surface);
   padding: 0.5rem;
   text-align: left;
   font-size: 10px;
-  color: #181F25;
+  color: var(--color-heading);
   cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.preset-item:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
 }
 
 .swatches {
@@ -277,13 +283,13 @@
   align-items: center;
   gap: 0.2rem;
   font-size: 9px;
-  color: #6A7581;
+  color: var(--color-text-muted);
 }
 
 .color-input input[type='color'] {
   width: 30px;
   height: 30px;
-  border: 1px solid #E7E2DA;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 0;
   background: transparent;
@@ -294,7 +300,7 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  border: 1px solid #E7E2DA;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 0.45rem;
   font-size: 10px;
@@ -316,8 +322,4 @@
 .tuning-preview {
   display: grid;
   gap: 0.2rem;
-}
-
-:global(html.a11y-high-contrast) {
-  filter: contrast(1.4);
 }

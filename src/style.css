@@ -13,9 +13,12 @@
   --color-primary:            #259D91;
   --color-primary-dark:       #1B746B;
   --color-primary-tint:       rgba(37, 157, 145, 0.10);
+  --hero-gradient:            linear-gradient(135deg, #259D91, #1B746B);
 
   /* CTA */
   --color-cta:                #EC7051;
+  --color-accent-coral:       #EC7051;
+
 
   /* Accents */
   --color-star:               #F4B625;
@@ -45,6 +48,79 @@
   --color-page-background:    #FCFAF8;
   --color-hero-text:          #ffffff;
   --color-nav-bg:             rgba(255, 255, 255, 0.80);
+
+  /* Accessibility overrides */
+  --a11y-brightness:          100%;
+  --a11y-saturation:          100%;
+  --shadow-soft:              0 4px 20px -4px rgba(24, 31, 37, 0.08);
+  --shadow-card:              0 8px 30px -8px rgba(24, 31, 37, 0.10);
+  --shadow-elevated:          0 16px 50px -12px rgba(24, 31, 37, 0.15);
+}
+
+:root.cvd-protanopia {
+  --color-primary:            #2b6dab;
+  --color-primary-dark:       #214f83;
+  --hero-gradient:            linear-gradient(135deg, #2b6dab, #214f83);
+  --color-cta:                #f3b621;
+  --color-accent-coral:       #f3b621;
+}
+
+:root.cvd-deuteranopia {
+  --color-primary:            #3f72b2;
+  --color-primary-dark:       #2f588c;
+  --hero-gradient:            linear-gradient(135deg, #3f72b2, #2f588c);
+  --color-cta:                #ed9822;
+  --color-accent-coral:       #ed9822;
+}
+
+:root.cvd-tritanopia {
+  --color-primary:            #be4d61;
+  --color-primary-dark:       #97384c;
+  --hero-gradient:            linear-gradient(135deg, #be4d61, #97384c);
+  --color-cta:                #35a196;
+  --color-accent-coral:       #359f95;
+}
+
+:root.a11y-high-contrast {
+  --color-text:               #000000;
+  --color-heading:            #000000;
+  --color-bg:                 #ffffff;
+  --color-surface:            #ffffff;
+  --color-section-alt:        #ffffff;
+  --color-page-background:    #ffffff;
+  --color-nav-bg:             #ffffff;
+  --color-nav-text:           #111111;
+  --color-border:             #1f1f1f;
+  --color-input-background:   #1f1f1f;
+  --color-text-muted:         #1f1f1f;
+  --shadow-soft:              0 4px 20px -4px rgba(0, 0, 0, 0.20);
+  --shadow-card:              0 8px 30px -8px rgba(0, 0, 0, 0.25);
+  --shadow-elevated:          0 16px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+:root.a11y-high-contrast .navbar,
+:root.a11y-high-contrast .a11y-panel,
+:root.a11y-high-contrast .search-card,
+:root.a11y-high-contrast .travel-tabs,
+:root.a11y-high-contrast .tab,
+:root.a11y-high-contrast .input-wrap,
+:root.a11y-high-contrast .feature-card,
+:root.a11y-high-contrast .dest-card,
+:root.a11y-high-contrast .rating-badge,
+:root.a11y-high-contrast .preset-item,
+:root.a11y-high-contrast .preview,
+:root.a11y-high-contrast .field-group select,
+:root.a11y-high-contrast .switch,
+:root.a11y-high-contrast .footer-bottom {
+  border: 2px solid var(--color-border) !important;
+}
+
+:root.a11y-high-contrast .feature-card,
+:root.a11y-high-contrast .dest-card,
+:root.a11y-high-contrast .search-card,
+:root.a11y-high-contrast .a11y-panel,
+:root.a11y-high-contrast .tab.active {
+  box-shadow: none !important;
 }
 
 *, *::before, *::after {
@@ -58,6 +134,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.5;
+  filter: brightness(var(--a11y-brightness)) saturate(var(--a11y-saturation));
 }
 
 h1, h2, h3, h4, h5, h6 {

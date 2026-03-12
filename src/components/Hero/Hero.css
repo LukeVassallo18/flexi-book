@@ -1,8 +1,8 @@
 .hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(160deg, #259D91 0%, #1B746B 100%);
-  color: #fff;
+  background: var(--hero-gradient);
+  color: var(--color-hero-text);
   padding: 80px 1.25rem;
   text-align: center;
 }
@@ -40,7 +40,7 @@
   line-height: 1.0;
   font-weight: 700;
   font-family: 'Space Grotesk', sans-serif;
-  color: #fff;
+  color: var(--color-hero-text);
 }
 
 .subtitle {
@@ -91,17 +91,17 @@
 }
 
 .tab.active {
-  background: #fff;
-  color: #181F25;
-  box-shadow: 0 4px 20px -4px rgba(24, 31, 37, 0.08);
+  background: var(--color-surface);
+  color: var(--color-heading);
+  box-shadow: var(--shadow-soft);
 }
 
 /* Search card */
 .search-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 0 0 12px 12px;
   padding: 24px;
-  box-shadow: 0 16px 50px -12px rgba(24, 31, 37, 0.15);
+  box-shadow: var(--shadow-elevated);
 }
 
 .field-grid {
@@ -124,7 +124,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: #6A7581;
+  color: var(--color-text-muted);
   line-height: 16px;
 }
 
@@ -132,17 +132,17 @@
   display: flex;
   align-items: center;
   width: 100%;
-  border: 1px solid #E7E2DA;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   height: 46px;
-  background: #FCFAF8;
+  background: var(--color-bg);
   padding: 0 12px;
   gap: 8px;
 }
 
 .field-icon {
   font-size: 1rem;
-  color: #6A7581;
+  color: var(--color-text-muted);
   flex-shrink: 0;
 }
 
@@ -151,14 +151,14 @@
   width: 100%;
   outline: none;
   font-size: 14px;
-  color: #6A7581;
+  color: var(--color-text-muted);
   background: transparent;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 400;
 }
 
 .input-wrap input::placeholder {
-  color: #6A7581;
+  color: var(--color-text-muted);
 }
 
 /* Search button */
@@ -167,7 +167,7 @@
   width: 100%;
   border: 0;
   border-radius: 12px;
-  background: #EC7051;
+  background: var(--color-cta);
   color: #fff;
   height: 48px;
   font-size: 14px;
@@ -182,7 +182,7 @@
 }
 
 .search-btn:hover {
-  background: #d9623e;
+  background: var(--color-primary-dark);
 }
 
 .search-btn .material-icons {

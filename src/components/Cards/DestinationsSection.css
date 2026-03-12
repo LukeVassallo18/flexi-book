@@ -1,5 +1,5 @@
 .destinations-section {
-  background: rgba(246, 242, 234, 0.30);
+  background: var(--color-section-alt);
   padding: 80px 1.25rem;
 }
 
@@ -12,7 +12,7 @@
   text-align: center;
   font-size: 2.25rem;
   font-weight: 700;
-  color: #181F25;
+  color: var(--color-heading);
   font-family: 'Space Grotesk', sans-serif;
   line-height: 40px;
 }
@@ -20,7 +20,7 @@
 .section-subtitle {
   text-align: center;
   font-size: 1rem;
-  color: #6A7581;
+  color: var(--color-text-muted);
   margin-top: 12px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 24px;
@@ -34,10 +34,10 @@
 }
 
 .dest-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 30px -8px rgba(24, 31, 37, 0.10);
+  box-shadow: var(--shadow-card);
 }
 
 /* Image */
@@ -45,7 +45,7 @@
   position: relative;
   aspect-ratio: 324 / 192;
   overflow: hidden;
-  background: #ffffff;
+  background: var(--color-surface);
 }
 
 .card-image img {
@@ -72,13 +72,13 @@
 
 .star-icon {
   font-size: 0.75rem;
-  color: #F4B625;
+  color: var(--color-star);
 }
 
 .rating-text {
   font-size: 12px;
   font-weight: 700;
-  color: #181F25;
+  color: var(--color-heading);
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 16px;
 }
@@ -97,12 +97,12 @@
 
 .location-icon {
   font-size: 0.75rem;
-  color: #6A7581;
+  color: var(--color-text-muted);
 }
 
 .card-country {
   font-size: 12px;
-  color: #6A7581;
+  color: var(--color-text-muted);
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 16px;
 }
@@ -116,7 +116,7 @@
 .card-city {
   font-size: 1rem;
   font-weight: 700;
-  color: #181F25;
+  color: var(--color-heading);
   font-family: 'Space Grotesk', sans-serif;
   line-height: 24px;
 }
@@ -124,7 +124,7 @@
 .card-price {
   font-size: 14px;
   font-weight: 700;
-  color: #259D91;
+  color: var(--color-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 20px;
 }
