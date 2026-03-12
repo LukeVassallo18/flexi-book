@@ -157,6 +157,23 @@
   font-weight: 400;
 }
 
+.input-wrap select {
+  border: 0;
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+  color: var(--color-text);
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.input-wrap select option {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
 .input-wrap input::placeholder {
   color: var(--color-text-muted);
 }

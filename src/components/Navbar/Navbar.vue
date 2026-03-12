@@ -1,6 +1,18 @@
 <script setup>
+import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import AccessibilityMenu from './AccessibilityMenu.vue';
+import CartIcon from './CartIcon.vue';
+
+const mobileMenuOpen = ref(false);
+
+function toggleMobileMenu() {
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+}
+
+function closeMobileMenu() {
+  mobileMenuOpen.value = false;
+}
 </script>
 
 <template>
@@ -16,14 +28,25 @@ import AccessibilityMenu from './AccessibilityMenu.vue';
         </RouterLink>
       </div>
 
-      <ul class="nav-center" role="list">
-        <li><RouterLink to="/flights" class="nav-link">Flights</RouterLink></li>
-        <li><RouterLink to="/" class="nav-link">Hotels</RouterLink></li>
-        <li><RouterLink to="/" class="nav-link">Car Rentals</RouterLink></li>
+      <ul class="nav-center" :class="{ active: mobileMenuOpen }" role="list">
+        <li><RouterLink to="/flights" class="nav-link" @click="closeMobileMenu">Flights</RouterLink></li>
+        <li><RouterLink to="/hotels" class="nav-link" @click="closeMobileMenu">Hotels</RouterLink></li>
+        <li><RouterLink to="/car-rentals" class="nav-link" @click="closeMobileMenu">Car Rentals</RouterLink></li>
       </ul>
 
       <div class="nav-right">
         <AccessibilityMenu />
+        <CartIcon />
+        <button 
+          class="hamburger" 
+          @click="toggleMobileMenu"
+          :aria-label="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+          :class="{ active: mobileMenuOpen }"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
 
     </div>

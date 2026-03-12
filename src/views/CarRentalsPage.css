@@ -1,8 +1,8 @@
-.flights-hero {
+.rentals-hero {
   position: relative;
   overflow: hidden;
   background: var(--hero-gradient);
-  padding: 2.5rem 1rem 3rem;
+  padding: 3rem 1rem 4rem;
 }
 
 .hero-bubble {
@@ -12,20 +12,20 @@
 }
 
 .bubble-1 {
-  width: 210px;
-  height: 210px;
-  right: 3rem;
+  width: 206px;
+  height: 206px;
+  right: 2rem;
   top: 1rem;
 }
 
 .bubble-2 {
-  width: 60px;
-  height: 60px;
+  width: 51px;
+  height: 51px;
   left: 2rem;
-  bottom: 1rem;
+  bottom: 2rem;
 }
 
-.flights-hero-inner {
+.rentals-hero-inner {
   max-width: 1240px;
   margin: 0 auto;
   position: relative;
@@ -33,38 +33,41 @@
   text-align: center;
 }
 
-.flights-hero h1 {
+.rentals-hero h1 {
   color: var(--color-hero-text);
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  line-height: 1.1;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-.flights-hero p {
-  margin-top: 0.6rem;
-  color: color-mix(in srgb, var(--color-hero-text) 85%, transparent);
+.rentals-hero p {
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--color-hero-text) 80%, transparent);
   font-size: 1.1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .search-form {
-  max-width: 980px;
-  margin: 1.5rem auto 0;
+  max-width: 900px;
+  margin: 2rem auto 0;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 1.25rem;
+  padding: 1.5rem;
   box-shadow: var(--shadow-elevated);
 }
 
 .search-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 1rem;
   align-items: flex-end;
 }
 
 .search-grid label {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.5rem;
   text-align: left;
 }
 
@@ -73,21 +76,23 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .input-wrap {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   border: 1px solid var(--color-border);
   background: var(--color-bg);
   border-radius: 12px;
-  padding: 0.7rem 0.75rem;
+  padding: 0.7rem 0.8rem;
 }
 
 .input-wrap .material-icons {
   font-size: 1rem;
   color: var(--color-text-muted);
+  flex-shrink: 0;
 }
 
 .input-wrap input {
@@ -97,6 +102,11 @@
   background: transparent;
   color: var(--color-text);
   font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.input-wrap input::placeholder {
+  color: var(--color-text-muted);
 }
 
 .search-btn {
@@ -108,68 +118,75 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.5rem;
   cursor: pointer;
+  padding: 0.7rem 1rem;
+  transition: opacity 0.2s;
   width: 100%;
-  min-height: 44px;
-  margin: 0 auto;
-  grid-column: 1 / -1;
+}
+
+.search-btn:hover {
+  opacity: 0.9;
 }
 
 .search-btn .material-icons {
   font-size: 1rem;
 }
 
-.flights-content {
+.rentals-content {
   background: var(--color-bg);
   padding: 3rem 1rem 4rem;
 }
 
-.flights-container {
+.rentals-container {
   max-width: 1240px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 260px 1fr;
-  gap: 1.2rem;
+  gap: 1.5rem;
 }
 
 .filters {
   align-self: start;
   position: sticky;
-  top: 80px;
+  top: 100px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1.2rem;
   box-shadow: var(--shadow-soft);
 }
 
 .filters h2 {
-  font-size: 1.15rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  color: var(--color-heading);
+  margin-bottom: 1.2rem;
+  font-weight: 700;
 }
 
 .filter-group {
-  margin-bottom: 0.9rem;
-  display: grid;
-  gap: 0.35rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.filter-group:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0;
 }
 
 .filter-group h3 {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--color-heading);
+  margin-bottom: 0.6rem;
+  font-weight: 700;
 }
 
-.filter-group p,
-.filter-group label {
+.filter-group label,
+.filter-group p {
   font-size: 0.88rem;
   color: var(--color-text-muted);
-}
-
-.filter-group label {
-  display: inline-flex;
-  gap: 0.45rem;
-  align-items: center;
 }
 
 .clear-btn {
@@ -179,137 +196,169 @@
   font-size: 0.82rem;
   padding: 0;
   cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.clear-btn:hover {
+  opacity: 0.8;
 }
 
 .results {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-.deal-card {
+.rental-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 224px 1fr;
+  grid-template-columns: 230px 1fr;
   box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s;
 }
 
-.deal-thumb {
+.rental-card:hover {
+  box-shadow: var(--shadow-elevated);
+}
+
+.rental-thumb {
   background: color-mix(in srgb, var(--color-primary-tint) 70%, var(--color-surface));
   border-right: 1px solid var(--color-border);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 216px;
+  min-height: 220px;
 }
 
-.deal-thumb .material-icons {
-  font-size: 4.5rem;
+.rental-thumb .material-icons {
+  font-size: 4rem;
   color: var(--color-primary);
 }
 
-.deal-main {
-  padding: 1rem 1.2rem;
+.rental-main {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.deal-top {
+.rental-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
-.deal-top h3 {
-  font-size: 1.15rem;
+.rental-top h3 {
+  font-size: 1.1rem;
   color: var(--color-heading);
+  font-weight: 700;
+  margin: 0;
 }
 
 .rating {
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.3rem;
   border-radius: 999px;
-  padding: 0.15rem 0.45rem;
+  padding: 0.2rem 0.5rem;
   background: color-mix(in srgb, var(--color-primary-tint) 80%, transparent);
   color: var(--color-heading);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
+  flex-shrink: 0;
 }
 
 .rating .material-icons {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--color-star);
 }
 
-.deal-details {
-  margin-top: 0.2rem;
+.rental-specs {
+  margin-top: 0.3rem;
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
-.deal-tags {
+.rental-features {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
 }
 
-.deal-tags span {
+.rental-features span {
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: 999px;
   color: var(--color-heading);
-  font-size: 0.72rem;
-  padding: 0.12rem 0.45rem;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  font-weight: 500;
 }
 
-.direct {
-  margin-top: 0.45rem;
+.rental-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.detail-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.4rem;
   color: var(--color-text-muted);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
 }
 
-.direct .material-icons {
+.detail-item .material-icons {
   font-size: 0.9rem;
+  color: var(--color-text-muted);
 }
 
-.deal-bottom {
-  margin-top: 0.8rem;
+.rental-bottom {
+  margin-top: 1rem;
   border-top: 1px solid var(--color-border);
-  padding-top: 0.7rem;
+  padding-top: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.deal-bottom strong {
-  color: var(--color-primary-dark);
+.rental-bottom strong {
+  color: var(--color-primary);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 }
 
-.deal-bottom button {
+.rental-bottom button {
   border: 0;
   background: var(--color-cta);
   color: #fff;
   border-radius: 12px;
   height: 36px;
-  padding: 0 1rem;
+  padding: 0 1.2rem;
   font-weight: 700;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
 }
 
+.rental-bottom button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive */
 @media (max-width: 1100px) {
   .search-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .flights-container {
+  .rentals-container {
     grid-template-columns: 1fr;
   }
 
@@ -319,18 +368,35 @@
 }
 
 @media (max-width: 800px) {
+  .rentals-hero {
+    padding: 2rem 1rem 2.5rem;
+  }
+
+  .rentals-hero h1 {
+    font-size: 2rem;
+  }
+
+  .search-form {
+    margin-top: 1.5rem;
+    padding: 1rem;
+  }
+
   .search-grid {
     grid-template-columns: 1fr;
   }
 
-  .deal-card {
+  .rental-card {
     grid-template-columns: 1fr;
   }
 
-  .deal-thumb {
-    min-height: 130px;
+  .rental-thumb {
+    min-height: 140px;
     border-right: 0;
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .rental-thumb .material-icons {
+    font-size: 3rem;
   }
 }
 
