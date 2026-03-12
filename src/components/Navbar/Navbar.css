@@ -1,0 +1,48 @@
+.navbar {
+  background: var(--color-page-background);
+  border-bottom: 1px solid var(--color-input-background);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  color: var(--color-tab-header-text);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-menu a,
+.navbar-link {
+  color: var(--color-tab-header-text);
+  text-decoration: none;
+}
+
+.navbar-menu a:hover,
+.navbar-link:hover {
+  color: var(--color-primary-hero-bg);
+}
+
+.with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.material-icons {
+  font-size: 1.125rem;
+}
+
