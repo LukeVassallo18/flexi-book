@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from 'vue-router';
 import AccessibilityMenu from './AccessibilityMenu.vue';
 </script>
 
@@ -7,18 +8,18 @@ import AccessibilityMenu from './AccessibilityMenu.vue';
     <div class="navbar-container">
 
       <div class="nav-left">
-        <a href="#" class="navbar-logo" aria-label="Flexi Book home">
+        <RouterLink to="/" class="navbar-logo" aria-label="Flexi Book home">
           <span class="logo-icon" aria-hidden="true">
             <span class="material-icons">flight</span>
           </span>
           <span class="logo-text">Flexi Book</span>
-        </a>
+        </RouterLink>
       </div>
 
       <ul class="nav-center" role="list">
-        <li><a href="#" class="nav-link">Flights</a></li>
-        <li><a href="#" class="nav-link">Hotels</a></li>
-        <li><a href="#" class="nav-link">Car Rentals</a></li>
+        <li><RouterLink to="/flights" class="nav-link">Flights</RouterLink></li>
+        <li><RouterLink to="/" class="nav-link">Hotels</RouterLink></li>
+        <li><RouterLink to="/" class="nav-link">Car Rentals</RouterLink></li>
       </ul>
 
       <div class="nav-right">

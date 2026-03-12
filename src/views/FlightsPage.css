@@ -1,0 +1,331 @@
+.flights-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--hero-gradient);
+  padding: 2.5rem 1rem 3rem;
+}
+
+.hero-bubble {
+  position: absolute;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+.bubble-1 {
+  width: 210px;
+  height: 210px;
+  right: 3rem;
+  top: 1rem;
+}
+
+.bubble-2 {
+  width: 60px;
+  height: 60px;
+  left: 2rem;
+  bottom: 1rem;
+}
+
+.flights-hero-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.flights-hero h1 {
+  color: var(--color-hero-text);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.05;
+}
+
+.flights-hero p {
+  margin-top: 0.6rem;
+  color: color-mix(in srgb, var(--color-hero-text) 85%, transparent);
+  font-size: 1.1rem;
+}
+
+.search-form {
+  max-width: 980px;
+  margin: 1.5rem auto 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-elevated);
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.search-grid label {
+  display: grid;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.search-grid label > span {
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  border-radius: 12px;
+  padding: 0.7rem 0.75rem;
+}
+
+.input-wrap .material-icons {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.input-wrap input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+}
+
+.search-btn {
+  border: 0;
+  border-radius: 12px;
+  background: var(--color-cta);
+  color: #fff;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+.search-btn .material-icons {
+  font-size: 1rem;
+}
+
+.flights-content {
+  background: var(--color-bg);
+  padding: 3rem 1rem 4rem;
+}
+
+.flights-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.2rem;
+}
+
+.filters {
+  align-self: start;
+  position: sticky;
+  top: 80px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.filters h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.filter-group {
+  margin-bottom: 0.9rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.filter-group h3 {
+  font-size: 0.92rem;
+  color: var(--color-heading);
+}
+
+.filter-group p,
+.filter-group label {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+
+.filter-group label {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.clear-btn {
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.results {
+  display: grid;
+  gap: 1rem;
+}
+
+.deal-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 224px 1fr;
+  box-shadow: var(--shadow-card);
+}
+
+.deal-thumb {
+  background: color-mix(in srgb, var(--color-primary-tint) 70%, var(--color-surface));
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 216px;
+}
+
+.deal-thumb .material-icons {
+  font-size: 4.5rem;
+  color: var(--color-primary);
+}
+
+.deal-main {
+  padding: 1rem 1.2rem;
+}
+
+.deal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.deal-top h3 {
+  font-size: 1.15rem;
+  color: var(--color-heading);
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
+  background: color-mix(in srgb, var(--color-primary-tint) 80%, transparent);
+  color: var(--color-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.rating .material-icons {
+  font-size: 0.8rem;
+  color: var(--color-star);
+}
+
+.deal-details {
+  margin-top: 0.2rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.deal-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.deal-tags span {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-heading);
+  font-size: 0.72rem;
+  padding: 0.12rem 0.45rem;
+}
+
+.direct {
+  margin-top: 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+}
+
+.direct .material-icons {
+  font-size: 0.9rem;
+}
+
+.deal-bottom {
+  margin-top: 0.8rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deal-bottom strong {
+  color: var(--color-primary-dark);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+}
+
+.deal-bottom button {
+  border: 0;
+  background: var(--color-cta);
+  color: #fff;
+  border-radius: 12px;
+  height: 36px;
+  padding: 0 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .search-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search-btn {
+    min-height: 44px;
+    grid-column: 1 / -1;
+  }
+
+  .flights-container {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    position: static;
+  }
+}
+
+@media (max-width: 800px) {
+  .deal-card {
+    grid-template-columns: 1fr;
+  }
+
+  .deal-thumb {
+    min-height: 130px;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+}

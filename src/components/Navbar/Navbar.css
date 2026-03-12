@@ -82,6 +82,11 @@
   color: var(--color-heading);
 }
 
+.nav-link.router-link-active {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
 /* Right */
 .nav-right {
   display: flex;

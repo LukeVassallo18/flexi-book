@@ -1,19 +1,13 @@
 <script setup>
-import Navbar from './components/Navbar/Navbar.vue';
-import Hero from './components/Hero/Hero.vue';
-import FeaturesSection from './components/Cards/FeaturesSection.vue';
-import DestinationsSection from './components/Cards/DestinationsSection.vue';
+import { RouterView } from 'vue-router';
 import AppFooter from './components/Footer/Footer.vue';
+import Navbar from './components/Navbar/Navbar.vue';
 </script>
 
 <template>
   <div id="app">
     <Navbar />
-    <main>
-      <Hero />
-      <FeaturesSection />
-      <DestinationsSection />
-    </main>
+    <RouterView />
     <AppFooter />
   </div>
 </template>
