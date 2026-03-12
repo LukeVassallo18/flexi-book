@@ -3,7 +3,7 @@
 :root {
   color-scheme: light;
   /* tab text colour */
-  --color-tab-header-text: #141414;
+  --color-tab-header-text: #1a1f26;
   /* search button colour */
   --color-search-button: #f07850;
   /* star rating colour */
@@ -14,8 +14,11 @@
   --color-primary-hero-bg: #147864;
   /* bubbles and form background */
   --color-bubbles-form-bg: #28a08c;
-  /* form text colour */
-  --color-form-text: #647878;
+  /* nav background colour */
+  --color-nav-bg: white;
+
+  --color-nav-txt:#6b7682;
+
   /* main background colour for nav and rest of page */
   --color-page-background: #ffffff;
 
