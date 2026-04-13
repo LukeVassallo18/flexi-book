@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeUnmount, reactive, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 
 const CVD_MODES = [
   { value: 'none', label: 'Standard' },
@@ -19,6 +19,8 @@ const THEME_VAR_MAP = {
   primary: '--color-primary',
   primaryDark: '--color-primary-dark',
   primaryTint: '--color-primary-tint',
+  accentCoral: '--color-accent-coral',
+  featureIconBoxBg: '--feature-icon-box-bg',
   cta: '--color-cta',
   star: '--color-star',
   navBg: '--color-nav-bg',
@@ -28,6 +30,8 @@ const THEME_VAR_MAP = {
   footerBg: '--color-footer-bg',
   heroGradient: '--hero-gradient',
   heroText: '--color-hero-text',
+  filterText: '--color-filter-text',
+  filterHeading: '--color-filter-heading',
 };
 
 const defaultTheme = {
@@ -41,6 +45,8 @@ const defaultTheme = {
   primary: '#259D91',
   primaryDark: '#1B746B',
   primaryTint: 'rgba(37, 157, 145, 0.10)',
+  accentCoral: '#EC7051',
+  featureIconBoxBg: 'rgba(37, 157, 145, 0.10)',
   cta: '#EC7051',
   star: '#F4B625',
   navBg: 'rgba(255, 255, 255, 0.80)',
@@ -50,26 +56,30 @@ const defaultTheme = {
   footerBg: '#181F25',
   heroGradient: 'linear-gradient(135deg, #259D91, #1B746B)',
   heroText: '#FFFFFF',
+  filterText: '#6A7581',
+  filterHeading: '#181F25',
 };
 
 const CVD_THEME_OVERRIDES = {
   protanopia: {
     primary: '#2b6dab',
     primaryDark: '#214f83',
-    heroGradient: 'linear-gradient(135deg, #2b6dab, #214f83)',
-    cta: '#f3b621',
+    cta: '#3866d0',
+    accentCoral: '#3866d0',
+    star: '#174dcc',
   },
   deuteranopia: {
     primary: '#3f72b2',
     primaryDark: '#2f588c',
-    heroGradient: 'linear-gradient(135deg, #3f72b2, #2f588c)',
     cta: '#ed9822',
+    accentCoral: '#ed9822',
   },
   tritanopia: {
     primary: '#be4d61',
     primaryDark: '#97384c',
-    heroGradient: 'linear-gradient(135deg, #be4d61, #97384c)',
     cta: '#35a196',
+    accentCoral: '#359f95',
+    featureIconBoxBg: '#F2DBDC',
   },
 };
 
@@ -193,6 +203,7 @@ const ALL_COLOR_ITEMS = [
   { key: 'links', label: 'Links' },
   { key: 'navigation', label: 'Nav' },
   { key: 'headings', label: 'Head' },
+  { key: 'filters', label: 'Filt' },
   { key: 'borders', label: 'Bord' },
 ];
 
@@ -204,32 +215,87 @@ const defaultColors = {
   links: '#6A7581',
   navigation: 'rgba(255, 255, 255, 0.80)',
   headings: '#181F25',
+  filters: '#6A7581',
   borders: '#E7E2DA',
 };
 
+const TARGET_PICKERS = [
+  {
+    key: 'iconBg',
+    label: 'Icon background',
+    selector: '.icon-box, .deal-thumb, .hotel-thumb, .rental-thumb',
+    themeKey: 'featureIconBoxBg',
+  },
+  {
+    key: 'buttons',
+    label: 'Buttons',
+    selector: 'button, .btn-primary, .btn-secondary, .search-btn, .page-btn',
+    themeKey: 'cta',
+  },
+  {
+    key: 'cards',
+    label: 'Cards',
+    selector: '.feature-card, .dest-card, .deal-card, .hotel-card, .rental-card, .detail-card, .review-card',
+    themeKey: 'surface',
+  },
+  {
+    key: 'navigation',
+    label: 'Navigation text',
+    selector: '.nav-link, .accessibility-btn, .a11y-trigger',
+    themeKey: 'navText',
+  },
+  {
+    key: 'text',
+    label: 'Body text',
+    selector: 'p, li, span, .subtitle, .deal-details, .review-text',
+    themeKey: 'text',
+  },
+  {
+    key: 'headings',
+    label: 'Headings',
+    selector: 'h1, h2, h3, h4, h5, h6, .section-title',
+    themeKey: 'heading',
+  },
+  {
+    key: 'filters',
+    label: 'Filters',
+    selector: '.filters, .filter-group, .filter-option',
+    themeKey: 'filterText',
+  },
+];
+
 const open = ref(false);
+const menuWrapRef = ref(null);
 const mainTab = ref('vision');
 const colorTab = ref('presets');
 
 const voiceEnabled = ref(false);
 const voiceListening = ref(false);
 const cvdMode = ref('none');
+const cvdSeverity = ref(100);
 const highContrast = ref(false);
 
 const brightness = ref(100);
 const saturation = ref(100);
-const fontSize = ref(100);
-const letterSpacing = ref(0);
-const lineHeight = ref(1.5);
 
 const customColors = reactive({ ...defaultColors });
 const activeTheme = ref({ ...defaultTheme });
+const pickerArmed = ref(false);
+const pickedTarget = ref(null);
+const pickedColor = ref('#6a7581');
+const pickerHint = ref('Click "Pick from page", then click an element to edit its color.');
 
 const mainTabs = [
   { id: 'vision', label: 'Vision', icon: 'visibility_off' },
   { id: 'colours', label: 'Colours', icon: 'palette' },
-  { id: 'tuning', label: 'Tuning', icon: 'tune' },
 ];
+
+const mainTabIndex = computed(() => {
+  const index = mainTabs.findIndex((tab) => tab.id === mainTab.value);
+  return index >= 0 ? index : 0;
+});
+
+const colourTabIndex = computed(() => (colorTab.value === 'presets' ? 0 : 1));
 
 const cvdClasses = ['cvd-protanopia', 'cvd-deuteranopia', 'cvd-tritanopia'];
 
@@ -255,6 +321,10 @@ function setCustomColor(key, value) {
   if (key === 'links') activeTheme.value.navText = value;
   if (key === 'navigation') activeTheme.value.navBg = value;
   if (key === 'headings') activeTheme.value.heading = value;
+  if (key === 'filters') {
+    activeTheme.value.filterText = value;
+    activeTheme.value.filterHeading = value;
+  }
   if (key === 'borders') activeTheme.value.border = value;
 
   applyCurrentTheme(false);
@@ -282,15 +352,137 @@ function applyTheme(theme, syncCustom = true) {
     customColors.links = merged.navText;
     customColors.navigation = merged.navBg;
     customColors.headings = merged.heading;
+    customColors.filters = merged.filterText;
     customColors.borders = merged.border;
   }
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function parseColor(color) {
+  if (!color) return null;
+  const hex = color.trim();
+  const hexMatch = hex.match(/^#([0-9a-fA-F]{6})$/);
+  if (hexMatch) {
+    const normalized = hexMatch[1];
+    return {
+      r: Number.parseInt(normalized.slice(0, 2), 16),
+      g: Number.parseInt(normalized.slice(2, 4), 16),
+      b: Number.parseInt(normalized.slice(4, 6), 16),
+      a: 1,
+    };
+  }
+
+  const rgbaMatch = hex.match(/^rgba?\(([^)]+)\)$/i);
+  if (!rgbaMatch) return null;
+  const parts = rgbaMatch[1].split(',').map((part) => part.trim());
+  if (parts.length < 3) return null;
+
+  return {
+    r: Number(parts[0]),
+    g: Number(parts[1]),
+    b: Number(parts[2]),
+    a: parts[3] !== undefined ? Number(parts[3]) : 1,
+  };
+}
+
+function blendColors(fromColor, toColor, ratio) {
+  const from = parseColor(fromColor);
+  const to = parseColor(toColor);
+  if (!from || !to) return toColor;
+
+  const t = clamp(ratio, 0, 1);
+  const r = Math.round(from.r + (to.r - from.r) * t);
+  const g = Math.round(from.g + (to.g - from.g) * t);
+  const b = Math.round(from.b + (to.b - from.b) * t);
+  const a = from.a + (to.a - from.a) * t;
+
+  if (a < 0.999) {
+    return `rgba(${r}, ${g}, ${b}, ${a.toFixed(3)})`;
+  }
+
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function colorToHexString(value) {
+  const parsed = parseColor(value);
+  if (!parsed) return '#6a7581';
+  const toHex = (channel) => channel.toString(16).padStart(2, '0');
+  return `#${toHex(clamp(Math.round(parsed.r), 0, 255))}${toHex(clamp(Math.round(parsed.g), 0, 255))}${toHex(clamp(Math.round(parsed.b), 0, 255))}`;
+}
+
+function detectPickedTarget(element) {
+  let bestMatch = null;
+
+  for (const target of TARGET_PICKERS) {
+    const closest = element.closest(target.selector);
+    if (!closest) continue;
+
+    let distance = 0;
+    let node = element;
+    while (node && node !== closest) {
+      node = node.parentElement;
+      distance += 1;
+    }
+
+    if (!bestMatch || distance < bestMatch.distance) {
+      bestMatch = { target, distance };
+    }
+  }
+
+  return bestMatch?.target || null;
+}
+
+function armTargetPicker() {
+  pickerArmed.value = true;
+  pickedTarget.value = null;
+  pickerHint.value = 'Click any button, card, navigation text, filter, or text on the page.';
+}
+
+function cancelTargetPicker() {
+  pickerArmed.value = false;
+  pickerHint.value = 'Click "Pick from page", then click an element to edit its color.';
+}
+
+function updatePickedColorFromText(value) {
+  const parsedHex = colorToHexString(value);
+  pickedColor.value = parsedHex;
+}
+
+function applyPickedColor() {
+  if (!pickedTarget.value) return;
+  const { themeKey } = pickedTarget.value;
+  activeTheme.value[themeKey] = pickedColor.value;
+
+  if (themeKey === 'cta') customColors.buttons = pickedColor.value;
+  if (themeKey === 'surface') customColors.cards = pickedColor.value;
+  if (themeKey === 'navText') customColors.links = pickedColor.value;
+  if (themeKey === 'text') customColors.text = pickedColor.value;
+  if (themeKey === 'heading') customColors.headings = pickedColor.value;
+
+  if (themeKey === 'filterText') {
+    activeTheme.value.filterHeading = pickedColor.value;
+    customColors.filters = pickedColor.value;
+  }
+
+  applyCurrentTheme(false);
 }
 
 function resolveTheme() {
   const merged = { ...activeTheme.value };
 
   if (cvdMode.value !== 'none' && CVD_THEME_OVERRIDES[cvdMode.value]) {
-    Object.assign(merged, CVD_THEME_OVERRIDES[cvdMode.value]);
+    const severityRatio = clamp(cvdSeverity.value / 100, 0, 1);
+    const modeOverrides = CVD_THEME_OVERRIDES[cvdMode.value];
+
+    Object.entries(modeOverrides).forEach(([key, targetValue]) => {
+      const sourceValue = merged[key] ?? defaultTheme[key];
+      merged[key] = blendColors(sourceValue, targetValue, severityRatio);
+    });
+
+    merged.heroGradient = `linear-gradient(135deg, ${merged.primary}, ${merged.primaryDark})`;
   }
 
   if (highContrast.value) {
@@ -314,18 +506,50 @@ function resetColors() {
   applyCurrentTheme(true);
   brightness.value = 100;
   saturation.value = 100;
-  fontSize.value = 100;
-  letterSpacing.value = 0;
-  lineHeight.value = 1.5;
   cvdMode.value = 'none';
   highContrast.value = false;
   voiceEnabled.value = false;
   voiceListening.value = false;
+  cvdSeverity.value = 100;
+  pickerArmed.value = false;
+  pickedTarget.value = null;
 }
 
 function toggleVoice() {
   voiceEnabled.value = !voiceEnabled.value;
   voiceListening.value = voiceEnabled.value;
+}
+
+function handleClickOutside(event) {
+  if (!open.value) return;
+  if (!menuWrapRef.value) return;
+  if (pickerArmed.value) return;
+
+  if (!menuWrapRef.value.contains(event.target)) {
+    open.value = false;
+  }
+}
+
+function handlePagePick(event) {
+  if (!open.value || !pickerArmed.value) return;
+  if (!menuWrapRef.value) return;
+  if (menuWrapRef.value.contains(event.target)) return;
+
+  const match = detectPickedTarget(event.target);
+  if (!match) {
+    pickerHint.value = 'That item type is not editable. Try buttons, cards, nav, filters, or text.';
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  pickedTarget.value = match;
+  const rootStyle = getComputedStyle(document.documentElement);
+  const currentColor = rootStyle.getPropertyValue(THEME_VAR_MAP[match.themeKey]).trim() || '#6a7581';
+  pickedColor.value = colorToHexString(currentColor);
+  pickerHint.value = `Selected: ${match.label}. Choose a color and apply.`;
+  pickerArmed.value = false;
 }
 
 watch([brightness, saturation], () => {
@@ -339,10 +563,8 @@ watch(cvdMode, (value) => {
   applyCurrentTheme(false);
 });
 
-watch([fontSize, letterSpacing, lineHeight], () => {
-  document.documentElement.style.fontSize = `${fontSize.value}%`;
-  document.body.style.letterSpacing = `${letterSpacing.value}px`;
-  document.body.style.lineHeight = String(lineHeight.value);
+watch(cvdSeverity, () => {
+  applyCurrentTheme(false);
 });
 
 watch(highContrast, (value) => {
@@ -350,7 +572,14 @@ watch(highContrast, (value) => {
   applyCurrentTheme(false);
 });
 
+onMounted(() => {
+  document.addEventListener('pointerdown', handleClickOutside, true);
+  document.addEventListener('click', handlePagePick, true);
+});
+
 onBeforeUnmount(() => {
+  document.removeEventListener('pointerdown', handleClickOutside, true);
+  document.removeEventListener('click', handlePagePick, true);
   document.body.style.letterSpacing = '';
   document.body.style.lineHeight = '';
   document.documentElement.style.fontSize = '';
@@ -362,7 +591,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="a11y-menu-wrap">
+  <div ref="menuWrapRef" class="a11y-menu-wrap">
     <button
       class="a11y-trigger"
       aria-label="Accessibility settings"
@@ -374,7 +603,7 @@ onBeforeUnmount(() => {
       <span v-if="voiceListening" class="listening-dot" aria-hidden="true"></span>
     </button>
 
-    <div v-if="open" class="a11y-overlay" @click="open = false"></div>
+    <div v-if="open && !pickerArmed" class="a11y-overlay" @click="open = false"></div>
 
     <div v-if="open" class="a11y-panel">
       <div class="a11y-header">
@@ -385,7 +614,10 @@ onBeforeUnmount(() => {
         </button>
       </div>
 
-      <div class="main-tabs">
+      <div
+        class="main-tabs"
+        :style="{ '--active-index': mainTabIndex, '--tab-count': mainTabs.length }"
+      >
         <button
           v-for="tab in mainTabs"
           :key="tab.id"
@@ -414,6 +646,11 @@ onBeforeUnmount(() => {
             </select>
           </div>
 
+          <div class="field-group" v-if="cvdMode !== 'none'">
+            <div class="range-header"><label>CVD Severity</label><span>{{ cvdSeverity }}%</span></div>
+            <input v-model.number="cvdSeverity" type="range" min="0" max="100" step="5" />
+          </div>
+
           <div class="switch-row">
             <label>High Contrast</label>
             <button class="switch" :class="{ on: highContrast }" @click="highContrast = !highContrast">
@@ -433,7 +670,10 @@ onBeforeUnmount(() => {
         </template>
 
         <template v-else-if="mainTab === 'colours'">
-          <div class="sub-tabs">
+          <div
+            class="sub-tabs"
+            :style="{ '--active-index': colourTabIndex, '--tab-count': 2 }"
+          >
             <button :class="{ active: colorTab === 'presets' }" @click="colorTab = 'presets'">
               <span class="material-icons">auto_awesome</span>
               <span>Presets</span>
@@ -468,34 +708,45 @@ onBeforeUnmount(() => {
             </label>
           </div>
 
+          <div class="picker-box" v-if="colorTab === 'custom'">
+            <div class="picker-row">
+              <button
+                type="button"
+                class="picker-btn"
+                :class="{ active: pickerArmed }"
+                @click="pickerArmed ? cancelTargetPicker() : armTargetPicker()"
+              >
+                <span class="material-icons">ads_click</span>
+                <span>{{ pickerArmed ? 'Cancel picking' : 'Pick from page' }}</span>
+              </button>
+
+              <div class="picker-color-wrap" v-if="pickedTarget">
+                <label>Color</label>
+                <input v-model="pickedColor" type="color" />
+                <input
+                  class="picker-text-input"
+                  type="text"
+                  :value="pickedColor"
+                  placeholder="#RRGGBB"
+                  @change="updatePickedColorFromText($event.target.value)"
+                />
+              </div>
+            </div>
+
+            <p class="picker-hint">{{ pickerHint }}</p>
+
+            <div class="picker-actions" v-if="pickedTarget">
+              <span class="picker-target">Target: {{ pickedTarget.label }}</span>
+              <button type="button" class="apply-picked-btn" @click="applyPickedColor">Apply color</button>
+            </div>
+          </div>
+
           <div class="preview" :style="{ backgroundColor: customColors.background, color: customColors.text, borderColor: customColors.borders }">
             <span class="chip" :style="{ backgroundColor: customColors.navigation, color: '#fff' }">Nav</span>
             <span class="preview-heading" :style="{ color: customColors.headings }">Heading</span>
             <span>Body</span>
             <span class="chip" :style="{ backgroundColor: customColors.buttons, color: '#fff' }">Btn</span>
             <span class="preview-link" :style="{ color: customColors.links }">Link</span>
-          </div>
-        </template>
-
-        <template v-else>
-          <div class="field-group">
-            <div class="range-header"><label>Text Size</label><span>{{ fontSize }}%</span></div>
-            <input v-model.number="fontSize" type="range" min="80" max="150" step="1" />
-          </div>
-
-          <div class="field-group">
-            <div class="range-header"><label>Letter Spacing</label><span>{{ letterSpacing > 0 ? '+' : '' }}{{ letterSpacing }}px</span></div>
-            <input v-model.number="letterSpacing" type="range" min="0" max="5" step="0.5" />
-          </div>
-
-          <div class="field-group">
-            <div class="range-header"><label>Line Height</label><span>{{ lineHeight.toFixed(1) }}</span></div>
-            <input v-model.number="lineHeight" type="range" min="1" max="2.5" step="0.1" />
-          </div>
-
-          <div class="preview tuning-preview" :style="{ backgroundColor: customColors.background, color: customColors.text }">
-            <p class="preview-heading" :style="{ color: customColors.headings }">Sample Heading</p>
-            <p>This is how your text settings look with the current tuning applied.</p>
           </div>
         </template>
       </div>

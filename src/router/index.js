@@ -1,11 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import CarRentalDetailPage from "../views/CarRentalDetailPage.vue";
+import { createRouter, createWebHistory } from "vue-router";
 import CarRentalsPage from "../views/CarRentalsPage.vue";
 import CartPage from "../views/CartPage.vue";
-import FlightDetailPage from "../views/FlightDetailPage.vue";
-import FlightsPage from '../views/FlightsPage.vue';
-import HomePage from '../views/HomePage.vue';
-import HotelDetailPage from "../views/HotelDetailPage.vue";
+import DetailPage from "../views/DetailPage.vue";
+import FlightsPage from "../views/FlightsPage.vue";
+import HomePage from "../views/HomePage.vue";
 import HotelsPage from "../views/HotelsPage.vue";
 
 const router = createRouter({
@@ -16,12 +14,17 @@ const router = createRouter({
     {
       path: "/flight/:flight",
       name: "flight-detail",
-      component: FlightDetailPage,
+      component: DetailPage,
     },
     { path: "/hotels", name: "hotels", component: HotelsPage },
-    { path: "/hotel/:hotel", name: "hotel-detail", component: HotelDetailPage },
+    { path: "/hotel/:hotel", name: "hotel-detail", component: DetailPage },
     { path: "/car-rentals", name: "car-rentals", component: CarRentalsPage },
-    { path: "/car/:car", name: "car-detail", component: CarRentalDetailPage },
+    { path: "/car/:car", name: "car-detail", component: DetailPage },
+    {
+      path: "/destination/:destination",
+      name: "destination-detail",
+      component: DetailPage,
+    },
     { path: "/cart", name: "cart", component: CartPage },
   ],
 });

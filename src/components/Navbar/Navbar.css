@@ -73,19 +73,23 @@
   color: var(--color-nav-text);
   text-decoration: none;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 20px;
-  transition: color 0.15s;
+  transition: color 0.15s, background 0.15s;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
 }
 
 .nav-link:hover {
+  background: color-mix(in srgb, var(--color-primary-tint) 70%, transparent);
   color: var(--color-heading);
 }
 
 .nav-link.router-link-active {
   color: var(--color-heading);
   font-weight: 700;
+  background: color-mix(in srgb, var(--color-primary-tint) 78%, transparent);
 }
 
 /* Right */

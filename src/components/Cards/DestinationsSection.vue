@@ -1,4 +1,8 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 const destinations = [
   {
     country: 'France',
@@ -29,6 +33,11 @@ const destinations = [
     image: 'Bali.png',
   },
 ];
+
+function viewDestinationDetails(destination) {
+  const payload = encodeURIComponent(JSON.stringify(destination));
+  router.push({ name: 'destination-detail', params: { destination: payload } });
+}
 </script>
 
 <template>
@@ -38,7 +47,7 @@ const destinations = [
       <p class="section-subtitle">Explore trending destinations with the best deals this season.</p>
 
       <div class="cards-grid">
-        <article v-for="dest in destinations" :key="dest.city" class="dest-card">
+        <article v-for="dest in destinations" :key="dest.city" class="dest-card" @click="viewDestinationDetails(dest)" style="cursor: pointer;">
           <div class="card-image">
             <img :src="dest.image" :alt="`${dest.city}, ${dest.country}`" loading="lazy"/>
             <div class="rating-badge" aria-label="Rating">

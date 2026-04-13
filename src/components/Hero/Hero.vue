@@ -1,15 +1,22 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import countriesData from '../../data/countries.json';
 
 const router = useRouter();
 const activeTab = ref('flights');
+const availableCountries = [...countriesData].sort((a, b) => a.localeCompare(b));
 
 const tabs = [
   { id: 'flights',     label: 'Flights',     icon: 'flight' },
   { id: 'hotels',      label: 'Hotels',      icon: 'apartment' },
   { id: 'car-rentals', label: 'Car Rentals', icon: 'directions_car' },
 ];
+
+const activeTabIndex = computed(() => {
+  const index = tabs.findIndex((tab) => tab.id === activeTab.value);
+  return index >= 0 ? index : 0;
+});
 
 // Form state
 const searchForm = reactive({
@@ -33,44 +40,44 @@ function handleSearch(e) {
   e.preventDefault();
 
   if (activeTab.value === 'flights') {
-    if (!searchForm.from || !searchForm.to || !searchForm.departDate) {
-      alert('Please fill in all flight search fields');
+    if (!searchForm.from.trim() && !searchForm.to.trim() && !searchForm.departDate) {
+      alert('Please fill in at least one flight search field');
       return;
     }
     router.push({
       path: '/flights',
       query: {
-        from: searchForm.from,
-        to: searchForm.to,
-        departDate: searchForm.departDate,
+        ...(searchForm.from && { from: searchForm.from }),
+        ...(searchForm.to && { to: searchForm.to }),
+        ...(searchForm.departDate && { departDate: searchForm.departDate }),
         travelers: searchForm.travelers,
       },
     });
   } else if (activeTab.value === 'hotels') {
-    if (!searchForm.destination || !searchForm.checkIn || !searchForm.checkOut) {
-      alert('Please fill in all hotel search fields');
+    if (!searchForm.destination.trim() && !searchForm.checkIn && !searchForm.checkOut) {
+      alert('Please fill in at least one hotel search field');
       return;
     }
     router.push({
       path: '/hotels',
       query: {
-        destination: searchForm.destination,
-        checkIn: searchForm.checkIn,
-        checkOut: searchForm.checkOut,
+        ...(searchForm.destination && { destination: searchForm.destination }),
+        ...(searchForm.checkIn && { checkIn: searchForm.checkIn }),
+        ...(searchForm.checkOut && { checkOut: searchForm.checkOut }),
         guests: searchForm.guests,
       },
     });
   } else if (activeTab.value === 'car-rentals') {
-    if (!searchForm.pickupLocation || !searchForm.pickupDate || !searchForm.dropoffDate) {
-      alert('Please fill in all car rental search fields');
+    if (!searchForm.pickupLocation.trim() && !searchForm.pickupDate && !searchForm.dropoffDate) {
+      alert('Please fill in at least one car rental search field');
       return;
     }
     router.push({
       path: '/car-rentals',
       query: {
-        location: searchForm.pickupLocation,
-        pickupDate: searchForm.pickupDate,
-        dropoffDate: searchForm.dropoffDate,
+        ...(searchForm.pickupLocation && { pickupLocation: searchForm.pickupLocation }),
+        ...(searchForm.pickupDate && { pickupDate: searchForm.pickupDate }),
+        ...(searchForm.dropoffDate && { dropoffDate: searchForm.dropoffDate }),
       },
     });
   }
@@ -87,7 +94,12 @@ function handleSearch(e) {
       <p class="subtitle">Search flights, hotels, and car rentals in one place. Accessible to everyone.</p>
 
       <div class="search-shell">
-        <div class="travel-tabs" role="tablist" aria-label="Travel type">
+        <div
+          class="travel-tabs"
+          role="tablist"
+          aria-label="Travel type"
+          :style="{ '--active-index': activeTabIndex }"
+        >
           <button
             v-for="tab in tabs"
             :key="tab.id"
@@ -104,168 +116,178 @@ function handleSearch(e) {
         </div>
 
         <form class="search-card" @submit="handleSearch">
-          <!-- FLIGHTS TAB -->
-          <div v-show="activeTab === 'flights'" class="field-grid">
-            <label class="field">
-              <span class="field-label">From</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">location_on</span>
-                <input 
-                  v-model="searchForm.from" 
-                  type="text" 
-                  placeholder="Departure city" 
-                  aria-label="Departure city" 
-                />
-              </span>
-            </label>
+          <Transition name="tab-panel" mode="out-in">
+            <!-- FLIGHTS TAB -->
+            <div v-if="activeTab === 'flights'" key="flights" class="field-grid">
+              <label class="field">
+                <span class="field-label">From</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">location_on</span>
+                  <input 
+                    v-model="searchForm.from" 
+                    type="text" 
+                    list="countries-list-home"
+                    placeholder="Departure city" 
+                    aria-label="Departure city" 
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">To</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">location_on</span>
-                <input 
-                  v-model="searchForm.to" 
-                  type="text" 
-                  placeholder="Destination" 
-                  aria-label="Destination" 
-                />
-              </span>
-            </label>
+              <label class="field">
+                <span class="field-label">To</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">location_on</span>
+                  <input 
+                    v-model="searchForm.to" 
+                    type="text" 
+                    list="countries-list-home"
+                    placeholder="Destination" 
+                    aria-label="Destination" 
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Depart</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
-                <input 
-                  v-model="searchForm.departDate" 
-                  type="date" 
-                  aria-label="Departure date" 
-                />
-              </span>
-            </label>
+              <label class="field">
+                <span class="field-label">Depart</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
+                  <input 
+                    v-model="searchForm.departDate" 
+                    type="date" 
+                    aria-label="Departure date" 
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Travellers</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">group</span>
-                <select v-model.number="searchForm.travelers" aria-label="Number of travellers">
-                  <option value="1">1 Adult</option>
-                  <option value="2">2 Adults</option>
-                  <option value="3">3 Adults</option>
-                  <option value="4">4 Adults</option>
-                  <option value="5">5 Adults</option>
-                  <option value="6">6+ Adults</option>
-                </select>
-              </span>
-            </label>
-          </div>
+              <label class="field">
+                <span class="field-label">Travellers</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">group</span>
+                  <select v-model.number="searchForm.travelers" aria-label="Number of travellers">
+                    <option value="1">1 Adult</option>
+                    <option value="2">2 Adults</option>
+                    <option value="3">3 Adults</option>
+                    <option value="4">4 Adults</option>
+                    <option value="5">5 Adults</option>
+                    <option value="6">6+ Adults</option>
+                  </select>
+                </span>
+              </label>
+            </div>
 
-          <!-- HOTELS TAB -->
-          <div v-show="activeTab === 'hotels'" class="field-grid">
-            <label class="field">
-              <span class="field-label">Destination</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">location_on</span>
-                <input 
-                  v-model="searchForm.destination" 
-                  type="text" 
-                  placeholder="City or hotel name" 
-                  aria-label="Hotel destination" 
-                />
-              </span>
-            </label>
+            <!-- HOTELS TAB -->
+            <div v-else-if="activeTab === 'hotels'" key="hotels" class="field-grid">
+              <label class="field">
+                <span class="field-label">Destination</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">location_on</span>
+                  <input
+                    v-model="searchForm.destination"
+                    type="text"
+                    list="countries-list-home"
+                    placeholder="Choose country"
+                    aria-label="Hotel destination country"
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Check-in</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
-                <input 
-                  v-model="searchForm.checkIn" 
-                  type="date" 
-                  aria-label="Check-in date" 
-                />
-              </span>
-            </label>
+              <label class="field">
+                <span class="field-label">Check-in</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
+                  <input 
+                    v-model="searchForm.checkIn" 
+                    type="date" 
+                    aria-label="Check-in date" 
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Check-out</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
-                <input 
-                  v-model="searchForm.checkOut" 
-                  type="date" 
-                  aria-label="Check-out date" 
-                />
-              </span>
-            </label>
+              <label class="field">
+                <span class="field-label">Check-out</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
+                  <input 
+                    v-model="searchForm.checkOut" 
+                    type="date" 
+                    aria-label="Check-out date" 
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Guests</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">group</span>
-                <select v-model.number="searchForm.guests" aria-label="Number of guests">
-                  <option value="1">1 Guest</option>
-                  <option value="2">2 Guests</option>
-                  <option value="3">3 Guests</option>
-                  <option value="4">4 Guests</option>
-                  <option value="5">5+ Guests</option>
-                </select>
-              </span>
-            </label>
-          </div>
+              <label class="field">
+                <span class="field-label">Guests</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">group</span>
+                  <select v-model.number="searchForm.guests" aria-label="Number of guests">
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5+ Guests</option>
+                  </select>
+                </span>
+              </label>
+            </div>
 
-          <!-- CAR RENTALS TAB -->
-          <div v-show="activeTab === 'car-rentals'" class="field-grid">
-            <label class="field">
-              <span class="field-label">Pick-up Location</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">location_on</span>
-                <input 
-                  v-model="searchForm.pickupLocation" 
-                  type="text" 
-                  placeholder="City or airport" 
-                  aria-label="Pick-up location" 
-                />
-              </span>
-            </label>
+            <!-- CAR RENTALS TAB -->
+            <div v-else key="car-rentals" class="field-grid">
+              <label class="field">
+                <span class="field-label">Pick-up Location</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">location_on</span>
+                  <input
+                    v-model="searchForm.pickupLocation"
+                    type="text"
+                    list="countries-list-home"
+                    placeholder="Choose country"
+                    aria-label="Pick-up country"
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Pick-up Date</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
-                <input 
-                  v-model="searchForm.pickupDate" 
-                  type="date" 
-                  aria-label="Pick-up date" 
-                />
-              </span>
-            </label>
+              <label class="field">
+                <span class="field-label">Pick-up Date</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
+                  <input 
+                    v-model="searchForm.pickupDate" 
+                    type="date" 
+                    aria-label="Pick-up date" 
+                  />
+                </span>
+              </label>
 
-            <label class="field">
-              <span class="field-label">Drop-off Date</span>
-              <span class="input-wrap">
-                <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
-                <input 
-                  v-model="searchForm.dropoffDate" 
-                  type="date" 
-                  aria-label="Drop-off date" 
-                />
-              </span>
-            </label>
+              <label class="field">
+                <span class="field-label">Drop-off Date</span>
+                <span class="input-wrap">
+                  <span class="material-icons field-icon" aria-hidden="true">calendar_month</span>
+                  <input 
+                    v-model="searchForm.dropoffDate" 
+                    type="date" 
+                    aria-label="Drop-off date" 
+                  />
+                </span>
+              </label>
 
-            <label class="field" style="visibility: hidden;">
-              <span class="field-label">Placeholder</span>
-              <span class="input-wrap">
-                <input type="text" />
-              </span>
-            </label>
-          </div>
+              <label class="field" style="visibility: hidden;">
+                <span class="field-label">Placeholder</span>
+                <span class="input-wrap">
+                  <input type="text" />
+                </span>
+              </label>
+            </div>
+          </Transition>
 
           <button class="search-btn" type="submit">
             <span class="material-icons" aria-hidden="true">search</span>
             <span>Search</span>
           </button>
         </form>
+
+        <datalist id="countries-list-home">
+          <option v-for="country in availableCountries" :key="`home-${country}`" :value="country" />
+        </datalist>
       </div>
     </div>
   </section>

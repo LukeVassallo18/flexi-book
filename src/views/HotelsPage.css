@@ -105,6 +105,17 @@
   font-size: 0.95rem;
 }
 
+.input-wrap select {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  appearance: none;
+}
+
 .input-wrap input::placeholder {
   color: var(--color-text-muted);
 }
@@ -152,11 +163,15 @@
   align-self: start;
   position: sticky;
   top: 100px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-surface) 92%, var(--color-primary-tint));
+  border: 1px solid color-mix(in srgb, var(--color-border) 75%, var(--color-primary));
   border-radius: 12px;
   padding: 1.2rem;
   box-shadow: var(--shadow-soft);
+  max-height: calc(100vh - 116px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .filters h2 {
@@ -167,7 +182,7 @@
 }
 
 .filter-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
   padding-bottom: 1.2rem;
   border-bottom: 1px solid var(--color-border);
 }
@@ -188,7 +203,28 @@
 .filter-group label,
 .filter-group p {
   font-size: 0.88rem;
-  color: var(--color-text-muted);
+  color: color-mix(in srgb, var(--color-text) 88%, transparent);
+}
+
+.filter-group input[type='checkbox'] {
+  accent-color: var(--color-primary);
+}
+
+.filter-group input[type='checkbox']:checked + span {
+  color: var(--color-heading);
+  font-weight: 700;
+}
+
+.toggle-filters-btn {
+  width: 100%;
+  margin-bottom: 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-weight: 600;
+  min-height: 36px;
+  cursor: pointer;
 }
 
 .clear-btn {
@@ -227,7 +263,7 @@
 }
 
 .hotel-thumb {
-  background: color-mix(in srgb, var(--color-primary-tint) 70%, var(--color-surface));
+  background: var(--feature-icon-box-bg, var(--color-primary-tint));
   border-right: 1px solid var(--color-border);
   display: flex;
   justify-content: center;
@@ -363,6 +399,8 @@
 
   .filters {
     position: static;
+    max-height: none;
+    overflow: visible;
   }
 }
 

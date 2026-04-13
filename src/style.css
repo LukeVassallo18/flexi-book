@@ -7,12 +7,15 @@
   --color-heading:            #181F25;
   --color-text:               #181F25;
   --color-text-muted:         #6A7581;
+  --color-filter-text:        #6A7581;
+  --color-filter-heading:     #181F25;
   --color-text-on-dark:       rgba(255, 255, 255, 0.70);
 
   /* Brand */
   --color-primary:            #259D91;
   --color-primary-dark:       #1B746B;
   --color-primary-tint:       rgba(37, 157, 145, 0.10);
+  --feature-icon-box-bg:      var(--color-primary-tint);
   --hero-gradient:            linear-gradient(135deg, #259D91, #1B746B);
 
   /* CTA */
@@ -29,8 +32,8 @@
   --color-section-alt:        rgba(246, 242, 234, 0.30);
 
   /* Nav */
-  --color-nav-bg:             rgba(255, 255, 255, 0.80);
-  --color-nav-text:           #6A7581;
+  --color-nav-bg:             rgba(255, 255, 255, 0.94);
+  --color-nav-text:           #3F4B57;
 
   /* Footer */
   --color-footer-bg:          #181F25;
@@ -61,8 +64,9 @@
   --color-primary:            #2b6dab;
   --color-primary-dark:       #214f83;
   --hero-gradient:            linear-gradient(135deg, #2b6dab, #214f83);
-  --color-cta:                #f3b621;
-  --color-accent-coral:       #f3b621;
+  --color-cta:                #3866d0;
+  --color-accent-coral:       #3866d0;
+  --color-star:               #174dcc;
 }
 
 :root.cvd-deuteranopia {
@@ -79,6 +83,22 @@
   --hero-gradient:            linear-gradient(135deg, #be4d61, #97384c);
   --color-cta:                #35a196;
   --color-accent-coral:       #359f95;
+  --feature-icon-box-bg:      #F2DBDC;
+}
+
+/* Intentional challenge targets: only in default (non-CVD) mode */
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .features-section .icon-box {
+  background: #8B0000 !important;
+}
+
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .features-section .icon-box .material-icons {
+  color: #FF0000 !important;
+}
+
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) {
+  --color-filter-text: #c7d3e2;
+  --color-filter-heading: #c7d3e2;
+  --color-nav-text: rgba(24, 31, 37, 0.34);
 }
 
 :root.a11y-high-contrast {
@@ -151,4 +171,14 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.filters h2,
+.filters .filter-group h3 {
+  color: var(--color-filter-heading) !important;
+}
+
+.filters .filter-group label,
+.filters .filter-group p {
+  color: var(--color-filter-text) !important;
 }
