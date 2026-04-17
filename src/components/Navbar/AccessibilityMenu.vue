@@ -250,6 +250,7 @@ const voiceEnabled = ref(false);
 const voiceListening = ref(false);
 const voiceSupported = ref(true);
 const liveVoiceTranscript = ref('');
+const voiceGuideExpanded = ref(false);
 const cvdMode = ref('none');
 const cvdSeverity = ref(100);
 const highContrast = ref(false);
@@ -894,6 +895,10 @@ watch(open, (value) => {
   if (!value && pickerArmed.value) {
     cancelTargetPicker();
   }
+
+  if (!value) {
+    voiceGuideExpanded.value = false;
+  }
 });
 
 onMounted(() => {
@@ -1019,20 +1024,64 @@ onBeforeUnmount(() => {
             <span>{{ voiceEnabled ? 'Listening...' : 'Voice Commands' }}</span>
           </button>
 
-          <div v-if="voiceEnabled" class="voice-guide">
-            <p class="hint">Try: "change navigation colour", "change navigation text to black", "change input text background", "make filter text darker"</p>
+          <div v-if="voiceSupported" class="voice-guide">
+            <div class="voice-guide-header">
+              <p class="hint">Need ideas? Open the command guide for examples you can say.</p>
+              <button
+                type="button"
+                class="voice-guide-toggle"
+                :aria-expanded="voiceGuideExpanded"
+                @click="voiceGuideExpanded = !voiceGuideExpanded"
+              >
+                <span class="material-icons" aria-hidden="true">{{ voiceGuideExpanded ? 'expand_less' : 'expand_more' }}</span>
+                <span>{{ voiceGuideExpanded ? 'Hide command guide' : 'Show command guide' }}</span>
+              </button>
+            </div>
+
+            <div v-if="voiceGuideExpanded" class="voice-guide-card">
+              <div class="voice-guide-group">
+                <p class="voice-guide-title">Quick starters</p>
+                <div class="voice-guide-chips">
+                  <span>“Change navigation text to black”</span>
+                  <span>“Change card background to white”</span>
+                  <span>“Make filter text darker”</span>
+                </div>
+              </div>
+
+              <div class="voice-guide-group">
+                <p class="voice-guide-title">Adjustments</p>
+                <div class="voice-guide-chips">
+                  <span>“A bit more”</span>
+                  <span>“Less saturated”</span>
+                  <span>“Buttons too”</span>
+                </div>
+              </div>
+
+              <div class="voice-guide-group">
+                <p class="voice-guide-title">Vision modes</p>
+                <div class="voice-guide-chips">
+                  <span>“Turn on protanopia”</span>
+                  <span>“Turn off deuteranopia”</span>
+                  <span>“Standard vision”</span>
+                </div>
+              </div>
+
+              <div class="voice-guide-group">
+                <p class="voice-guide-title">System controls</p>
+                <div class="voice-guide-chips">
+                  <span>“Increase brightness”</span>
+                  <span>“Set brightness to 120”</span>
+                  <span>“High contrast on”</span>
+                </div>
+              </div>
+            </div>
+
             <p v-if="liveVoiceTranscript" class="voice-live">
               <span class="material-icons" aria-hidden="true">graphic_eq</span>
               <span>{{ liveVoiceTranscript }}</span>
             </p>
-            <ul>
-              <li>Targets: navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filters, headings, stars, buttons, page background</li>
-              <li>Follow-ups: a bit more, a bit less, darker, lighter, more vibrant, less saturated, buttons too</li>
-              <li>Modes: turn on protanopia, turn off protanopia, turn on deuteranopia, turn off tritanopia, standard vision</li>
-              <li>System controls: increase brightness, decrease saturation, set brightness to 120, high contrast on</li>
-            </ul>
           </div>
-          <p v-else-if="!voiceSupported" class="hint">Voice commands are unavailable in this browser.</p>
+          <p v-else class="hint">Voice commands are unavailable in this browser.</p>
 
           <div class="field-group">
             <label>Colour Vision</label>

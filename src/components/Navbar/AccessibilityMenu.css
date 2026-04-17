@@ -182,19 +182,69 @@
 
 .voice-guide {
   display: grid;
+  gap: 0.35rem;
+}
+
+.voice-guide-header {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.voice-guide-toggle {
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  min-height: 30px;
+  padding: 0 0.5rem;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+
+.voice-guide-toggle .material-icons {
+  font-size: 14px;
+}
+
+.voice-guide-card {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  border-radius: 10px;
+  padding: 0.45rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.voice-guide-group {
+  display: grid;
   gap: 0.2rem;
 }
 
-.voice-guide ul {
+.voice-guide-title {
   margin: 0;
-  padding-left: 0.9rem;
-  display: grid;
-  gap: 0.1rem;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-heading);
+  font-weight: 700;
 }
 
-.voice-guide li {
+.voice-guide-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.voice-guide-chips span {
   font-size: 10px;
   color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.38rem;
+  background: color-mix(in srgb, var(--color-surface) 86%, transparent);
 }
 
 .voice-live {
