@@ -185,14 +185,7 @@ const TARGET_SYNONYMS = {
     "paragraphs",
     "labels",
   ],
-  headings: [
-    "heading",
-    "headings",
-    "title",
-    "titles",
-    "header text",
-    "heading text",
-  ],
+  headings: ["heading", "headings", "header text", "heading text"],
   background: [
     "background",
     "page",
@@ -255,9 +248,20 @@ const TARGET_SYNONYMS = {
     "input field background",
     "field background",
     "form field background",
-    "form background",
   ],
   stars: ["star", "stars", "rating", "ratings"],
+  formBackground: [
+    "form background",
+    "search form background",
+    "hero form background",
+  ],
+  tabText: [
+    "tab text",
+    "tabs text",
+    "tab label",
+    "tab labels",
+    "form tab text",
+  ],
   heroBackground: [
     "hero",
     "banner",
@@ -269,9 +273,12 @@ const TARGET_SYNONYMS = {
     "hero text",
     "banner text",
     "header text",
+    "title",
+    "titles",
     "hero heading",
     "hero title",
   ],
+  heroTitle: ["title", "titles", "title only", "hero title"],
 };
 
 const TARGET_PHRASES = {
@@ -329,7 +336,7 @@ const TARGET_PHRASES = {
     "buttons color",
   ],
   text: ["body text", "paragraph text", "main text"],
-  headings: ["heading text", "headings text", "titles text"],
+  headings: ["heading text", "headings text"],
   filters: [
     "filter text",
     "filters text",
@@ -354,12 +361,24 @@ const TARGET_PHRASES = {
     "input field background",
     "field background",
     "form field background",
-    "form background",
   ],
   background: ["page background", "site background", "screen background"],
   borders: ["border colour", "border color", "outline colour", "outline color"],
+  formBackground: [
+    "form background",
+    "search form background",
+    "hero form background",
+  ],
+  tabText: [
+    "tab text",
+    "tabs text",
+    "tab label",
+    "tab labels",
+    "form tab text",
+  ],
   heroBackground: ["hero background", "banner background", "header background"],
   heroText: ["hero text", "banner text", "header text"],
+  heroTitle: ["title", "titles", "title only", "hero title"],
 };
 
 const TARGET_PRIORITY = [
@@ -373,9 +392,12 @@ const TARGET_PRIORITY = [
   "headings",
   "filters",
   "inputBackground",
+  "formBackground",
+  "tabText",
   "inputText",
   "stars",
   "borders",
+  "heroTitle",
   "heroText",
   "heroBackground",
   "text",
@@ -387,7 +409,7 @@ const ACTION_VERB_PATTERN = /\b(make|change|set|turn|update|switch|apply|paint|c
 const CONTINUATION_PATTERN = /\b(too|also|as\s+well|same|it|them)\b/;
 const RESET_TERMS = ['reset colours', 'reset colors', 'undo', 'go back to default', 'default theme', 'reset'];
 const HELP_MESSAGE =
-  "You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filter text, headings, stars, buttons, hero background, hero text, background, or borders. You can also say: make filter text darker, change input text background, buttons too, increase brightness, turn on protanopia, or turn off deuteranopia.";
+  "You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filter text, headings, stars, buttons, hero background, hero title, background, or borders. You can also say: make hero title lighter, change hero title to white, make filter text darker, change input text background, buttons too, increase brightness, turn on protanopia, or turn off deuteranopia.";
 const SMALL_STEP_PATTERN = /\b(a bit|a little|a little bit|little bit|slightly|somewhat|tiny bit)\b/;
 const LARGE_STEP_PATTERN = /\b(a lot|much|way more|way less|far more|far less|significantly)\b/;
 const GENERIC_MORE_PATTERN = /\b(more|increase|higher|stronger)\b/;
@@ -498,10 +520,13 @@ const TARGET_TO_VARS = {
     "--color-form-text",
   ],
   inputBackground: ["--color-input-background"],
+  formBackground: [],
+  tabText: [],
   stars: ["--color-star"],
   hero: ["--hero-gradient"],
   heroBackground: ["--hero-gradient"],
   heroText: ["--color-hero-text"],
+  heroTitle: ["--color-hero-text"],
   all: [
     "--color-bg",
     "--color-page-background",
@@ -542,11 +567,16 @@ const TARGET_HIGHLIGHT_SELECTORS = {
     ".input-wrap input, .input-wrap select, .input-wrap .material-icons",
   inputBackground:
     ".input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea",
+  formBackground: ".search-shell, .search-card",
+  tabText:
+    ".travel-tabs .tab, .travel-tabs .tab .material-icons, .travel-tabs .tab span",
   stars: ".rating .material-icons, .material-icons.star",
   hero: '.hero, .flights-hero, .hotels-hero, .rentals-hero, [class$="-hero"]',
   heroBackground:
     '.hero, .flights-hero, .hotels-hero, .rentals-hero, [class$="-hero"]',
   heroText:
+    '.hero h1, .hero h2, .hero h3, .hero p, .flights-hero h1, .flights-hero h2, .flights-hero h3, .flights-hero p, .hotels-hero h1, .hotels-hero h2, .hotels-hero h3, .hotels-hero p, .rentals-hero h1, .rentals-hero h2, .rentals-hero h3, .rentals-hero p, [class$="-hero"] h1, [class$="-hero"] h2, [class$="-hero"] h3, [class$="-hero"] p',
+  heroTitle:
     '.hero h1, .hero h2, .hero h3, .hero p, .flights-hero h1, .flights-hero h2, .flights-hero h3, .flights-hero p, .hotels-hero h1, .hotels-hero h2, .hotels-hero h3, .hotels-hero p, .rentals-hero h1, .rentals-hero h2, .rentals-hero h3, .rentals-hero p, [class$="-hero"] h1, [class$="-hero"] h2, [class$="-hero"] h3, [class$="-hero"] p',
   background: `body, .search-form, .filters, .input-wrap, ${CARD_TARGET_SELECTOR}`,
   borders: `.search-form, .filters, .input-wrap, ${CARD_TARGET_SELECTOR}, .a11y-panel`,
@@ -1118,6 +1148,16 @@ class VoiceCommandManager {
       foundTargets.delete('icons');
     }
 
+    if (foundTargets.has("background")) {
+      const explicitPageBackground = /\b(page|site|screen)\s+background\b/.test(
+        text,
+      );
+      if (!explicitPageBackground) {
+        foundTargets.delete("background");
+        foundTargets.add("heroBackground");
+      }
+    }
+
     if (foundTargets.has('all')) return ['all'];
 
     const ordered = TARGET_PRIORITY.filter((target) => foundTargets.has(target));
@@ -1602,6 +1642,43 @@ class VoiceCommandManager {
       return;
     }
 
+    if (target === "formBackground") {
+      this.setScopedTargetRule(
+        "formBackground",
+        `
+        ${TARGET_HIGHLIGHT_SELECTORS.formBackground} {
+          background: ${color} !important;
+          background-color: ${color} !important;
+        }
+      `,
+      );
+      this.lastTargetColors[target] = color;
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
+      return;
+    }
+
+    if (target === "tabText") {
+      this.setScopedTargetRule(
+        "tabText",
+        `
+        ${TARGET_HIGHLIGHT_SELECTORS.tabText} {
+          color: ${color} !important;
+        }
+      `,
+      );
+      this.lastTargetColors[target] = color;
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
+      return;
+    }
+
     const vars = TARGET_TO_VARS[target] || [];
     vars.forEach((cssVar) => {
       if (cssVar === '--hero-gradient') {
@@ -1647,6 +1724,7 @@ class VoiceCommandManager {
 
   formatTargetName(target) {
     if (!target) return 'section';
+    if (target === "heroText" || target === "heroTitle") return "hero title";
     return target
       .replace(/([a-z])([A-Z])/g, '$1 $2')
       .replace(/\bnav\b/gi, 'navigation')
@@ -1819,11 +1897,31 @@ class VoiceCommandManager {
       );
     }
 
-    if (target === "heroText") {
+    if (target === "heroText" || target === "heroTitle") {
       return (
+        this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.heroTitle, "color") ||
         this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.heroText, "color") ||
         rootStyle.getPropertyValue("--color-hero-text").trim() ||
         "#ffffff"
+      );
+    }
+
+    if (target === "formBackground") {
+      return (
+        this.readSelectorColor(
+          TARGET_HIGHLIGHT_SELECTORS.formBackground,
+          "background-color",
+        ) ||
+        rootStyle.getPropertyValue("--color-surface").trim() ||
+        "#ffffff"
+      );
+    }
+
+    if (target === "tabText") {
+      return (
+        this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.tabText, "color") ||
+        rootStyle.getPropertyValue("--color-nav-text").trim() ||
+        "#3f4b57"
       );
     }
 

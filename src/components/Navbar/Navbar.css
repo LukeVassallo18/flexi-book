@@ -37,7 +37,7 @@
 .logo-icon {
   width: 32px;
   height: 32px;
-  background: var(--hero-gradient);
+  background: color-mix(in srgb, var(--color-primary) 88%, var(--color-surface));
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
@@ -55,7 +55,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-heading);
+  color: var(--color-primary-dark);
   line-height: 28px;
 }
 

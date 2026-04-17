@@ -409,7 +409,7 @@ function friendlyTargetLabel(element, cssProperty) {
   }
 
   if (element.closest(HERO_BACKGROUND_SELECTOR) && hasDirectText(element)) {
-    return 'Hero text';
+    return 'Hero title';
   }
 
   if (cssProperty.startsWith('background')) {
