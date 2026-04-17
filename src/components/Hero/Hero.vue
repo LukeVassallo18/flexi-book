@@ -125,6 +125,7 @@ function handleSearch(e) {
                   <span class="material-icons field-icon" aria-hidden="true">location_on</span>
                   <input 
                     v-model="searchForm.from" 
+                    class="hero-city-input"
                     type="text" 
                     list="countries-list-home"
                     placeholder="Departure city" 
@@ -139,6 +140,7 @@ function handleSearch(e) {
                   <span class="material-icons field-icon" aria-hidden="true">location_on</span>
                   <input 
                     v-model="searchForm.to" 
+                    class="hero-city-input"
                     type="text" 
                     list="countries-list-home"
                     placeholder="Destination" 

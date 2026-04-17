@@ -5,6 +5,9 @@ import DetailPage from "../views/DetailPage.vue";
 import FlightsPage from "../views/FlightsPage.vue";
 import HomePage from "../views/HomePage.vue";
 import HotelsPage from "../views/HotelsPage.vue";
+import WelcomeDisclaimerPage from "../views/WelcomeDisclaimerPage.vue";
+
+const DISCLAIMER_STORAGE_KEY = "flexi-book-disclaimer-accepted";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -12,6 +15,7 @@ const router = createRouter({
     return { top: 0, left: 0 };
   },
   routes: [
+    { path: "/welcome", name: "welcome-disclaimer", component: WelcomeDisclaimerPage },
     { path: "/", name: "home", component: HomePage },
     { path: "/flights", name: "flights", component: FlightsPage },
     {
@@ -30,6 +34,28 @@ const router = createRouter({
     },
     { path: "/cart", name: "cart", component: CartPage },
   ],
+});
+
+router.beforeEach((to) => {
+  if (typeof window === "undefined") return true;
+
+  const hasAcceptedDisclaimer = window.localStorage.getItem(DISCLAIMER_STORAGE_KEY) === "true";
+  if (to.name === "welcome-disclaimer") {
+    if (hasAcceptedDisclaimer) {
+      const redirect = typeof to.query.redirect === "string" ? to.query.redirect : "/";
+      return redirect;
+    }
+    return true;
+  }
+
+  if (!hasAcceptedDisclaimer) {
+    return {
+      name: "welcome-disclaimer",
+      query: { redirect: to.fullPath },
+    };
+  }
+
+  return true;
 });
 
 router.afterEach(() => {
