@@ -46,7 +46,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-on-dark);
   line-height: 28px;
 }
 
@@ -62,7 +62,7 @@
 .col-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-on-dark);
   font-family: 'Space Grotesk', sans-serif;
   line-height: 24px;
   margin-bottom: 16px;
@@ -87,7 +87,7 @@
 }
 
 .footer-link:hover {
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 /* Bottom bar */

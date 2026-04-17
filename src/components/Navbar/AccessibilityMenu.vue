@@ -404,6 +404,10 @@ function toTitleCase(value) {
 }
 
 function friendlyTargetLabel(element, cssProperty) {
+  if (cssProperty === 'placeholder-color') {
+    return 'Input placeholder';
+  }
+
   if (cssProperty === 'background' && element.closest(HERO_BACKGROUND_SELECTOR)) {
     return 'Hero background';
   }
@@ -467,6 +471,23 @@ function getElementTagSelector(element) {
 
 function buildGroupSelector(element, cssProperty) {
   const tag = getElementTagSelector(element);
+
+  if (cssProperty === 'placeholder-color') {
+    if (element.matches('.hero-city-input')) {
+      return '.hero-city-input';
+    }
+
+    if (element.matches('textarea')) {
+      return 'textarea[placeholder]';
+    }
+
+    const ownClass = getStableClassSelector(element);
+    if (ownClass) {
+      return `${tag}${ownClass}`;
+    }
+
+    return 'input[placeholder]';
+  }
 
   if (cssProperty === 'background') {
     const hero = element.closest(HERO_BACKGROUND_SELECTOR);
@@ -539,20 +560,39 @@ function hasDirectText(element) {
 }
 
 function inferPropertyForElement(element) {
-  if (element.matches(HERO_BACKGROUND_SELECTOR) || element.closest(HERO_BACKGROUND_SELECTOR)) {
-    return 'background';
-  }
+  const isTextElement = element.matches('h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li, button');
 
   if (element.matches('path, circle, ellipse, line, polyline, polygon, rect')) {
     return 'fill';
   }
 
-  if (element.matches('.material-icons, svg, i, input, textarea, select, option')) {
+  if (element.matches('input, textarea')) {
+    const placeholder = (element.getAttribute('placeholder') || '').trim();
+    const currentValue = typeof element.value === 'string' ? element.value.trim() : '';
+    if (placeholder && !currentValue) {
+      return 'placeholder-color';
+    }
     return 'color';
   }
 
-  if (hasDirectText(element) || element.matches('h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li, button')) {
+  if (element.matches('.material-icons, svg, i, select, option')) {
     return 'color';
+  }
+
+  if (hasDirectText(element) || isTextElement) {
+    return 'color';
+  }
+
+  if (element.matches(HERO_BACKGROUND_SELECTOR)) {
+    return 'background';
+  }
+
+  if (element.closest(HERO_BACKGROUND_SELECTOR)) {
+    const computed = window.getComputedStyle(element);
+    if (isTransparentColor(computed.backgroundColor) && computed.backgroundImage === 'none') {
+      return 'color';
+    }
+    return computed.backgroundImage !== 'none' ? 'background' : 'background-color';
   }
 
   if (element.matches(BACKGROUND_HINT_SELECTOR)) {
@@ -575,6 +615,15 @@ function firstColorFromGradient(value) {
 
 function sampleEffectiveColor(element, cssProperty) {
   if (!element) return '#6a7581';
+
+  if (cssProperty === 'placeholder-color') {
+    const placeholderStyle = window.getComputedStyle(element, '::placeholder');
+    const placeholderColor = placeholderStyle?.color;
+    if (placeholderColor && !isTransparentColor(placeholderColor)) {
+      return placeholderColor;
+    }
+    return window.getComputedStyle(element).color || '#6a7581';
+  }
 
   if (cssProperty === 'background') {
     const style = window.getComputedStyle(element);
@@ -672,6 +721,8 @@ function applyPickedColor() {
     if (cssProperty === 'background') {
       targetEl.style.setProperty('background-image', 'none', 'important');
       targetEl.style.setProperty('background-color', pickedColor.value, 'important');
+    } else if (cssProperty === 'placeholder-color') {
+      targetEl.style.setProperty('--a11y-picked-placeholder-color', pickedColor.value, 'important');
     } else {
       targetEl.style.setProperty(cssProperty, pickedColor.value, 'important');
     }

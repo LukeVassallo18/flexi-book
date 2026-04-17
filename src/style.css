@@ -115,7 +115,7 @@
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap input::placeholder {
-  color: var(--color-input-placeholder);
+  color: var(--a11y-picked-placeholder-color, var(--color-input-placeholder));
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap .material-icons {
