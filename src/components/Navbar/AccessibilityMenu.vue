@@ -408,6 +408,10 @@ function friendlyTargetLabel(element, cssProperty) {
     return 'Hero background';
   }
 
+  if (element.closest(HERO_BACKGROUND_SELECTOR) && hasDirectText(element)) {
+    return 'Hero text';
+  }
+
   if (cssProperty.startsWith('background')) {
     if (element.matches('.hotel-card, .deal-card, .rental-card, .dest-card, .feature-card')) return 'Card background';
     if (element.matches('.input-wrap, input, textarea, select')) return 'Input background';

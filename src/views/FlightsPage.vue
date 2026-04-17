@@ -7,10 +7,12 @@ import SearchFormField from '../components/Search/SearchFormField.vue';
 import countriesData from '../data/countries.json';
 import flightsData from '../data/flights.json';
 import { useCart } from '../services/cartStore';
+import { useToast } from '../services/toastStore';
 
 const route = useRoute();
 const router = useRouter();
 const { addToCart } = useCart();
+const { pushToast } = useToast();
 const availableCountries = [...countriesData].sort((a, b) => a.localeCompare(b));
 
 function normalizeCountry(value) {
@@ -329,7 +331,7 @@ function bookFlight(flight) {
     ...flight,
     type: 'Flight',
   });
-  alert(`Flight booked: ${flight.route}`);
+  pushToast(`Added to cart: ${flight.route}`, { type: 'success' });
   router.push('/cart');
 }
 

@@ -82,7 +82,7 @@
                 <span>Total</span>
                 <span>${{ Math.round(getCartTotal * 1.1) }}</span>
               </div>
-              <button class="checkout-btn">
+              <button class="checkout-btn" @click="proceedToCheckout">
                 <span class="material-icons">payment</span>
                 Proceed to Checkout
               </button>
@@ -149,9 +149,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { useCart } from '../services/cartStore';
 
+const router = useRouter();
 const { removeFromCart, getCartItems, getCartTotal } = useCart();
 const selectedItem = ref(null);
 
@@ -168,6 +169,10 @@ function viewDetails(item) {
 
 function closeDetails() {
   selectedItem.value = null;
+}
+
+function proceedToCheckout() {
+  router.push('/checkout');
 }
 </script>
 

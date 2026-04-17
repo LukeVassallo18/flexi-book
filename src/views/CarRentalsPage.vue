@@ -156,10 +156,12 @@ import carBrandsData from '../data/carBrands.json';
 import carsData from '../data/cars.json';
 import countriesData from '../data/countries.json';
 import { useCart } from '../services/cartStore';
+import { useToast } from '../services/toastStore';
 
 const route = useRoute();
 const router = useRouter();
 const { addToCart } = useCart();
+const { pushToast } = useToast();
 
 const availableCountries = [...countriesData].sort((a, b) => a.localeCompare(b));
 const carBrands = [...carBrandsData];
@@ -430,7 +432,7 @@ function handleSearch() {
 
 function bookCar(car) {
   addToCart({ ...car, type: 'Car' });
-  alert(`Car booked: ${car.name}`);
+  pushToast(`Added to cart: ${car.name}`, { type: 'success' });
   router.push('/cart');
 }
 

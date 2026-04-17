@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
+import BookingSuccessPage from "../views/BookingSuccessPage.vue";
 import CarRentalsPage from "../views/CarRentalsPage.vue";
 import CartPage from "../views/CartPage.vue";
+import CheckoutPage from "../views/CheckoutPage.vue";
 import DetailPage from "../views/DetailPage.vue";
 import FlightsPage from "../views/FlightsPage.vue";
 import HomePage from "../views/HomePage.vue";
@@ -15,7 +17,11 @@ const router = createRouter({
     return { top: 0, left: 0 };
   },
   routes: [
-    { path: "/welcome", name: "welcome-disclaimer", component: WelcomeDisclaimerPage },
+    {
+      path: "/welcome",
+      name: "welcome-disclaimer",
+      component: WelcomeDisclaimerPage,
+    },
     { path: "/", name: "home", component: HomePage },
     { path: "/flights", name: "flights", component: FlightsPage },
     {
@@ -33,6 +39,12 @@ const router = createRouter({
       component: DetailPage,
     },
     { path: "/cart", name: "cart", component: CartPage },
+    { path: "/checkout", name: "checkout", component: CheckoutPage },
+    {
+      path: "/booking-success",
+      name: "booking-success",
+      component: BookingSuccessPage,
+    },
   ],
 });
 

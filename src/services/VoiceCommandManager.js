@@ -148,66 +148,246 @@ const RESET_TOKENS = {
 };
 
 const TARGET_SYNONYMS = {
-  cards: ['card', 'cards', 'tile', 'tiles', 'panel', 'panels', 'grid cards', 'grid card'],
-  cardText: ['card text', 'cards text', 'grid cards text', 'grid card text', 'card words', 'cards words'],
-  cardIcons: ['card icon', 'card icons', 'cards icon', 'cards icons', 'grid cards icon', 'grid card icon'],
-  text: ['text', 'words', 'font', 'copy', 'content', 'body text', 'paragraph', 'paragraphs', 'labels'],
-  headings: ['heading', 'headings', 'title', 'titles', 'header text', 'heading text'],
-  background: ['background', 'page', 'backdrop', 'page background', 'site background', 'screen'],
-  all: ['everything', 'all', 'entire', 'whole app', 'whole page', 'whole site'],
-  buttons: ['button', 'buttons', 'cta', 'search button', 'book button', 'action button', 'action buttons'],
-  navBackground: ['navigation colour', 'navigation color', 'navigation background', 'navbar colour', 'navbar color', 'nav background', 'menu background', 'navigation bar'],
-  links: ['link', 'links', 'navigation', 'nav', 'menu', 'navigation text', 'nav text', 'menu text', 'navbar', 'navbar text'],
-  borders: ['border', 'borders', 'outline', 'lines', 'stroke', 'strokes'],
-  icons: ['icon', 'icons', 'symbol', 'symbols', 'logo', 'logos'],
-  filters: ['filter', 'filters', 'sidebar', 'side panel', 'filter panel'],
-  inputText: ['input text', 'inputs text', 'input', 'inputs', 'placeholder', 'placeholders', 'field text', 'form text', 'destination text', 'search field', 'search fields'],
-  inputBackground: ['input background', 'input text background', 'input field background', 'field background', 'form field background', 'form background'],
-  stars: ['star', 'stars', 'rating', 'ratings'],
-  hero: ['hero', 'banner', 'header background', 'hero section', 'hero background'],
+  cards: [
+    "card",
+    "cards",
+    "tile",
+    "tiles",
+    "panel",
+    "panels",
+    "grid cards",
+    "grid card",
+  ],
+  cardText: [
+    "card text",
+    "cards text",
+    "grid cards text",
+    "grid card text",
+    "card words",
+    "cards words",
+  ],
+  cardIcons: [
+    "card icon",
+    "card icons",
+    "cards icon",
+    "cards icons",
+    "grid cards icon",
+    "grid card icon",
+  ],
+  text: [
+    "text",
+    "words",
+    "font",
+    "copy",
+    "content",
+    "body text",
+    "paragraph",
+    "paragraphs",
+    "labels",
+  ],
+  headings: [
+    "heading",
+    "headings",
+    "title",
+    "titles",
+    "header text",
+    "heading text",
+  ],
+  background: [
+    "background",
+    "page",
+    "backdrop",
+    "page background",
+    "site background",
+    "screen",
+  ],
+  all: ["everything", "all", "entire", "whole app", "whole page", "whole site"],
+  buttons: [
+    "button",
+    "buttons",
+    "cta",
+    "search button",
+    "book button",
+    "action button",
+    "action buttons",
+  ],
+  navBackground: [
+    "navigation colour",
+    "navigation color",
+    "navigation background",
+    "navbar colour",
+    "navbar color",
+    "nav background",
+    "menu background",
+    "navigation bar",
+  ],
+  links: [
+    "link",
+    "links",
+    "navigation",
+    "nav",
+    "menu",
+    "navigation text",
+    "nav text",
+    "menu text",
+    "navbar",
+    "navbar text",
+  ],
+  borders: ["border", "borders", "outline", "lines", "stroke", "strokes"],
+  icons: ["icon", "icons", "symbol", "symbols", "logo", "logos"],
+  filters: ["filter", "filters", "sidebar", "side panel", "filter panel"],
+  inputText: [
+    "input text",
+    "inputs text",
+    "input",
+    "inputs",
+    "placeholder",
+    "placeholders",
+    "field text",
+    "form text",
+    "destination text",
+    "search field",
+    "search fields",
+  ],
+  inputBackground: [
+    "input background",
+    "input text background",
+    "input field background",
+    "field background",
+    "form field background",
+    "form background",
+  ],
+  stars: ["star", "stars", "rating", "ratings"],
+  heroBackground: [
+    "hero",
+    "banner",
+    "header background",
+    "hero section",
+    "hero background",
+  ],
+  heroText: [
+    "hero text",
+    "banner text",
+    "header text",
+    "hero heading",
+    "hero title",
+  ],
 };
 
 const TARGET_PHRASES = {
-  links: ['navigation text', 'nav text', 'menu text', 'navbar text', 'navigation links', 'menu links'],
-  navBackground: ['navigation colour', 'navigation color', 'navigation background', 'navbar colour', 'navbar color', 'nav colour', 'nav color', 'menu background'],
-  cards: ['card background', 'cards background', 'grid cards background', 'card colour', 'cards colour', 'card color', 'cards color', 'grid cards colour', 'grid cards color'],
-  cardText: ['card text', 'cards text', 'grid card text', 'grid cards text', 'card text colour', 'card text color'],
-  cardIcons: ['card icon colour', 'card icon color', 'cards icon colour', 'cards icon color', 'grid cards icon colour', 'grid cards icon color'],
-  buttons: ['button background', 'buttons background', 'button colour', 'buttons colour', 'button color', 'buttons color'],
-  text: ['body text', 'paragraph text', 'main text'],
-  headings: ['heading text', 'headings text', 'titles text'],
-  filters: ['filter text', 'filters text', 'filter text colour', 'filter text color'],
-  inputText: ['input text', 'input text colour', 'input text color', 'placeholder text', 'placeholder colour', 'placeholder color', 'destination text', 'form text', 'field text'],
-  inputBackground: ['input background', 'input text background', 'input text and background', 'input field background', 'field background', 'form field background', 'form background'],
-  background: ['page background', 'site background', 'screen background'],
-  borders: ['border colour', 'border color', 'outline colour', 'outline color'],
-  hero: ['hero background', 'banner background'],
+  links: [
+    "navigation text",
+    "nav text",
+    "menu text",
+    "navbar text",
+    "navigation links",
+    "menu links",
+  ],
+  navBackground: [
+    "navigation colour",
+    "navigation color",
+    "navigation background",
+    "navbar colour",
+    "navbar color",
+    "nav colour",
+    "nav color",
+    "menu background",
+  ],
+  cards: [
+    "card background",
+    "cards background",
+    "grid cards background",
+    "card colour",
+    "cards colour",
+    "card color",
+    "cards color",
+    "grid cards colour",
+    "grid cards color",
+  ],
+  cardText: [
+    "card text",
+    "cards text",
+    "grid card text",
+    "grid cards text",
+    "card text colour",
+    "card text color",
+  ],
+  cardIcons: [
+    "card icon colour",
+    "card icon color",
+    "cards icon colour",
+    "cards icon color",
+    "grid cards icon colour",
+    "grid cards icon color",
+  ],
+  buttons: [
+    "button background",
+    "buttons background",
+    "button colour",
+    "buttons colour",
+    "button color",
+    "buttons color",
+  ],
+  text: ["body text", "paragraph text", "main text"],
+  headings: ["heading text", "headings text", "titles text"],
+  filters: [
+    "filter text",
+    "filters text",
+    "filter text colour",
+    "filter text color",
+  ],
+  inputText: [
+    "input text",
+    "input text colour",
+    "input text color",
+    "placeholder text",
+    "placeholder colour",
+    "placeholder color",
+    "destination text",
+    "form text",
+    "field text",
+  ],
+  inputBackground: [
+    "input background",
+    "input text background",
+    "input text and background",
+    "input field background",
+    "field background",
+    "form field background",
+    "form background",
+  ],
+  background: ["page background", "site background", "screen background"],
+  borders: ["border colour", "border color", "outline colour", "outline color"],
+  heroBackground: ["hero background", "banner background", "header background"],
+  heroText: ["hero text", "banner text", "header text"],
 };
 
 const TARGET_PRIORITY = [
-  'navBackground',
-  'links',
-  'cardText',
-  'cardIcons',
-  'cards',
-  'icons',
-  'buttons',
-  'headings',
-  'filters',
-  'inputBackground',
-  'inputText',
-  'stars',
-  'borders',
-  'hero',
-  'text',
-  'background',
-  'all',
+  "navBackground",
+  "links",
+  "cardText",
+  "cardIcons",
+  "cards",
+  "icons",
+  "buttons",
+  "headings",
+  "filters",
+  "inputBackground",
+  "inputText",
+  "stars",
+  "borders",
+  "heroText",
+  "heroBackground",
+  "text",
+  "background",
+  "all",
 ];
 
 const ACTION_VERB_PATTERN = /\b(make|change|set|turn|update|switch|apply|paint|color|colour)\b/;
 const CONTINUATION_PATTERN = /\b(too|also|as\s+well|same|it|them)\b/;
 const RESET_TERMS = ['reset colours', 'reset colors', 'undo', 'go back to default', 'default theme', 'reset'];
-const HELP_MESSAGE = 'You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filter text, headings, stars, buttons, background, borders, or hero. You can also say: make filter text darker, change input text background, buttons too, increase brightness, turn on protanopia, or turn off deuteranopia.';
+const HELP_MESSAGE =
+  "You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filter text, headings, stars, buttons, hero background, hero text, background, or borders. You can also say: make filter text darker, change input text background, buttons too, increase brightness, turn on protanopia, or turn off deuteranopia.";
 const SMALL_STEP_PATTERN = /\b(a bit|a little|a little bit|little bit|slightly|somewhat|tiny bit)\b/;
 const LARGE_STEP_PATTERN = /\b(a lot|much|way more|way less|far more|far less|significantly)\b/;
 const GENERIC_MORE_PATTERN = /\b(more|increase|higher|stronger)\b/;
@@ -296,40 +476,53 @@ const TARGET_TO_VARS = {
   cards: [],
   cardText: [],
   cardIcons: [],
-  text: ['--color-text', '--color-heading', '--color-text-muted', '--color-filter-text', '--color-filter-heading'],
-  headings: ['--color-heading', '--color-filter-heading'],
-  background: ['--color-bg', '--color-page-background'],
+  text: [
+    "--color-text",
+    "--color-heading",
+    "--color-text-muted",
+    "--color-filter-text",
+    "--color-filter-heading",
+  ],
+  headings: ["--color-heading", "--color-filter-heading"],
+  background: ["--color-bg", "--color-page-background"],
   buttons: [],
-  navBackground: ['--color-nav-bg'],
-  links: ['--color-nav-text'],
-  borders: ['--color-border', '--color-border-footer'],
+  navBackground: ["--color-nav-bg"],
+  links: ["--color-nav-text"],
+  borders: ["--color-border", "--color-border-footer"],
   icons: [],
-  filters: ['--color-filter-text', '--color-filter-heading'],
-  inputText: ['--color-input-text', '--color-input-placeholder', '--color-input-icon', '--color-form-text'],
-  inputBackground: ['--color-input-background'],
-  stars: ['--color-star'],
-  hero: ['--hero-gradient', '--color-hero-text'],
+  filters: ["--color-filter-text", "--color-filter-heading"],
+  inputText: [
+    "--color-input-text",
+    "--color-input-placeholder",
+    "--color-input-icon",
+    "--color-form-text",
+  ],
+  inputBackground: ["--color-input-background"],
+  stars: ["--color-star"],
+  hero: ["--hero-gradient"],
+  heroBackground: ["--hero-gradient"],
+  heroText: ["--color-hero-text"],
   all: [
-    '--color-bg',
-    '--color-page-background',
-    '--color-surface',
-    '--color-section-alt',
-    '--feature-icon-box-bg',
-    '--color-text',
-    '--color-heading',
-    '--color-text-muted',
-    '--color-filter-text',
-    '--color-filter-heading',
-    '--color-input-text',
-    '--color-input-placeholder',
-    '--color-input-icon',
-    '--color-primary',
-    '--color-primary-dark',
-    '--color-cta',
-    '--color-accent-coral',
-    '--color-nav-text',
-    '--color-border',
-    '--color-star',
+    "--color-bg",
+    "--color-page-background",
+    "--color-surface",
+    "--color-section-alt",
+    "--feature-icon-box-bg",
+    "--color-text",
+    "--color-heading",
+    "--color-text-muted",
+    "--color-filter-text",
+    "--color-filter-heading",
+    "--color-input-text",
+    "--color-input-placeholder",
+    "--color-input-icon",
+    "--color-primary",
+    "--color-primary-dark",
+    "--color-cta",
+    "--color-accent-coral",
+    "--color-nav-text",
+    "--color-border",
+    "--color-star",
   ],
 };
 
@@ -339,15 +532,22 @@ const TARGET_HIGHLIGHT_SELECTORS = {
   cardIcons: `${CARD_TARGET_SELECTOR} .material-icons, ${CARD_TARGET_SELECTOR} .material-symbols-outlined, ${CARD_TARGET_SELECTOR} svg, ${CARD_TARGET_SELECTOR} i, ${CARD_TARGET_SELECTOR} [class*="icon"]`,
   buttons: BUTTON_TARGET_SELECTOR,
   icons: ICON_TARGET_SELECTOR,
-  navBackground: '.navbar, .nav-links, .navbar-left, .navbar-right',
-  links: '.navbar a, .nav-links a, a',
-  text: 'p, span, li, label, input, select, textarea',
-  headings: 'h1, h2, h3, h4, h5, h6',
-  filters: '.filters h2, .filters .filter-group h3, .filters .filter-group label, .filters .filter-group p',
-  inputText: '.input-wrap input, .input-wrap select, .input-wrap .material-icons',
-  inputBackground: '.input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea',
-  stars: '.rating .material-icons, .material-icons.star',
+  navBackground: ".navbar, .nav-links, .navbar-left, .navbar-right",
+  links: ".navbar a, .nav-links a, a",
+  text: "p, span, li, label, input, select, textarea",
+  headings: "h1, h2, h3, h4, h5, h6",
+  filters:
+    ".filters h2, .filters .filter-group h3, .filters .filter-group label, .filters .filter-group p",
+  inputText:
+    ".input-wrap input, .input-wrap select, .input-wrap .material-icons",
+  inputBackground:
+    ".input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea",
+  stars: ".rating .material-icons, .material-icons.star",
   hero: '.hero, .flights-hero, .hotels-hero, .rentals-hero, [class$="-hero"]',
+  heroBackground:
+    '.hero, .flights-hero, .hotels-hero, .rentals-hero, [class$="-hero"]',
+  heroText:
+    '.hero h1, .hero h2, .hero h3, .hero p, .flights-hero h1, .flights-hero h2, .flights-hero h3, .flights-hero p, .hotels-hero h1, .hotels-hero h2, .hotels-hero h3, .hotels-hero p, .rentals-hero h1, .rentals-hero h2, .rentals-hero h3, .rentals-hero p, [class$="-hero"] h1, [class$="-hero"] h2, [class$="-hero"] h3, [class$="-hero"] p',
   background: `body, .search-form, .filters, .input-wrap, ${CARD_TARGET_SELECTOR}`,
   borders: `.search-form, .filters, .input-wrap, ${CARD_TARGET_SELECTOR}, .a11y-panel`,
   all: GLOBAL_HIGHLIGHT_SELECTOR,
@@ -409,6 +609,7 @@ class VoiceCommandManager {
     this.lastCommandContext = null;
     this.controls = null;
     this.transcriptClearTimer = null;
+    this.autoRestartEnabled = true;
   }
 
   init(buttonElement, options = {}) {
@@ -431,11 +632,12 @@ class VoiceCommandManager {
     this.recognition.continuous = true;
     this.recognition.interimResults = true;
     this.recognition.lang = 'en-US';
+    this.autoRestartEnabled = !this.isBraveBrowser();
 
     this.recognition.onresult = (event) => this.handleResult(event);
     this.recognition.onerror = (event) => this.handleError(event);
     this.recognition.onend = () => {
-      if (this.restartOnEnd && this.isActive) {
+      if (this.restartOnEnd && this.isActive && this.autoRestartEnabled) {
         this.safeStart();
       }
     };
@@ -548,17 +750,55 @@ class VoiceCommandManager {
   }
 
   handleError(event) {
+    if (!event || !event.error) {
+      this.speakAndToast('Sorry, there was a microphone issue. Please try again.', { icon: '⚠️' });
+      return;
+    }
+
     if (event.error === 'no-speech') return;
+
+    if (event.error === "aborted") {
+      // Some browsers emit aborted during normal stop/restart cycles.
+      return;
+    }
 
     if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
       this.isActive = false;
       this.restartOnEnd = false;
       this.updateButtonState();
+      if (this.isBraveBrowser()) {
+        this.speakAndToast(
+          "Brave is blocking voice service. Turn Shields down for this site, keep microphone allowed, then reload.",
+          { icon: "🛡️" },
+        );
+        return;
+      }
+
       this.speakAndToast('Microphone access is blocked. Please allow microphone permissions and try again.', { icon: '🚫' });
       return;
     }
 
+    if (event.error === "network") {
+      if (this.isBraveBrowser()) {
+        this.speakAndToast(
+          "Voice service is blocked by Brave network/privacy settings. Turn Shields down for this site and reload.",
+          { icon: "🛡️" },
+        );
+        return;
+      }
+
+      this.speakAndToast(
+        "Network issue while using voice recognition. Please check connection and try again.",
+        { icon: "📶" },
+      );
+      return;
+    }
+
     this.speakAndToast('Sorry, there was a microphone issue. Please try again.', { icon: '⚠️' });
+  }
+
+  isBraveBrowser() {
+    return Boolean(window?.navigator?.brave);
   }
 
   emitTranscript(text, isFinal = false) {
@@ -1566,6 +1806,26 @@ class VoiceCommandManager {
     }
 
     const rootStyle = window.getComputedStyle(document.documentElement);
+
+    if (target === "heroBackground" || target === "hero") {
+      return (
+        this.readSelectorColor(
+          TARGET_HIGHLIGHT_SELECTORS.heroBackground,
+          "background-color",
+        ) ||
+        rootStyle.getPropertyValue("--hero-gradient").trim() ||
+        rootStyle.getPropertyValue("--color-primary").trim() ||
+        "#808080"
+      );
+    }
+
+    if (target === "heroText") {
+      return (
+        this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.heroText, "color") ||
+        rootStyle.getPropertyValue("--color-hero-text").trim() ||
+        "#ffffff"
+      );
+    }
 
     if (target === 'cards') {
       return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.cards, 'background-color')

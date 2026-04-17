@@ -159,10 +159,12 @@ import countriesData from '../data/countries.json';
 import hotelDirectoryData from '../data/hotelDirectory.json';
 import hotelsData from '../data/hotels.json';
 import { useCart } from '../services/cartStore';
+import { useToast } from '../services/toastStore';
 
 const route = useRoute();
 const router = useRouter();
 const { addToCart } = useCart();
+const { pushToast } = useToast();
 
 const availableCountries = [...countriesData].sort((a, b) => a.localeCompare(b));
 const hotelDirectory = [...hotelDirectoryData].sort((a, b) => a.name.localeCompare(b.name));
@@ -436,7 +438,7 @@ function handleSearch() {
 
 function bookHotel(hotel) {
   addToCart({ ...hotel, type: 'Hotel' });
-  alert(`Hotel booked: ${hotel.name}`);
+  pushToast(`Added to cart: ${hotel.name}`, { type: 'success' });
   router.push('/cart');
 }
 

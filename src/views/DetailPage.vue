@@ -3,10 +3,12 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import countriesData from '../data/countries.json';
 import { useCart } from '../services/cartStore';
+import { useToast } from '../services/toastStore';
 
 const route = useRoute();
 const router = useRouter();
 const { addToCart } = useCart();
+const { pushToast } = useToast();
 
 const userLocation = ref({
   country: 'Your location',
@@ -408,7 +410,7 @@ function handlePrimaryAction() {
   });
 
   const itemName = item.route || item.name || item.city || 'Item';
-  alert(`${typeMap[detailType.value] || 'Item'} booked: ${itemName}`);
+  pushToast(`Added to cart: ${itemName}`, { type: 'success' });
   router.push('/cart');
 }
 </script>
