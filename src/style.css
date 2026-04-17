@@ -48,6 +48,9 @@
   --color-primary-hero-bg:    #259D91;
   --color-input-background:   #E7E2DA;
   --color-form-text:          #6A7581;
+  --color-input-text:         #BCC5CE;
+  --color-input-placeholder:  #CDD4DB;
+  --color-input-icon:         #B5BEC8;
   --color-page-background:    #FCFAF8;
   --color-hero-text:          #ffffff;
   --color-nav-bg:             rgba(255, 255, 255, 0.80);
@@ -108,26 +111,26 @@
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap input {
-  color: #c2c2c2;
+  color: var(--color-input-text);
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap input::placeholder {
-  color: #e9e9e9;
+  color: var(--color-input-placeholder);
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap .material-icons {
-  color: #e0e0e0;
+  color: var(--color-input-icon);
 }
 
 /* Low-contrast filter text on hotels page: default scheme only */
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters h2,
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters .filter-group h3 {
-  color: #dcdcdb !important;
+  color: var(--color-filter-heading) !important;
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters .filter-group label,
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters .filter-group p {
-  color: #d5d5d5 !important;
+  color: var(--color-filter-text) !important;
 }
 
 :root.a11y-high-contrast {
@@ -141,6 +144,9 @@
   --color-nav-text:           #111111;
   --color-border:             #1f1f1f;
   --color-input-background:   #1f1f1f;
+  --color-input-text:         #1f1f1f;
+  --color-input-placeholder:  #4a4a4a;
+  --color-input-icon:         #1f1f1f;
   --color-text-muted:         #1f1f1f;
   --shadow-soft:              0 4px 20px -4px rgba(0, 0, 0, 0.20);
   --shadow-card:              0 8px 30px -8px rgba(0, 0, 0, 0.25);

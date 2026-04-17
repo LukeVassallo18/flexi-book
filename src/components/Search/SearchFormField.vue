@@ -96,7 +96,7 @@ function updateValue(event) {
 
 .input-wrap .material-icons {
   font-size: 1rem;
-  color: var(--color-text-muted);
+  color: var(--color-input-icon, var(--color-text-muted));
   flex-shrink: 0;
 }
 
@@ -105,12 +105,12 @@ function updateValue(event) {
   border: 0;
   outline: 0;
   background: transparent;
-  color: var(--color-text);
+  color: var(--color-input-text, var(--color-text));
   font-family: inherit;
   font-size: 0.95rem;
 }
 
 .input-wrap input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-input-placeholder, var(--color-text-muted));
 }
 </style>

@@ -180,6 +180,39 @@
   color: var(--color-text-muted);
 }
 
+.voice-guide {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.voice-guide ul {
+  margin: 0;
+  padding-left: 0.9rem;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.voice-guide li {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.voice-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 10px;
+  color: var(--color-heading);
+  background: color-mix(in srgb, var(--color-primary-tint) 70%, transparent);
+  border-radius: 8px;
+  padding: 0.25rem 0.4rem;
+}
+
+.voice-live .material-icons {
+  font-size: 12px;
+  color: var(--color-primary);
+}
+
 .field-group {
   display: grid;
   gap: 0.25rem;

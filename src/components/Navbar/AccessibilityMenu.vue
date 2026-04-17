@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
+import { VoiceCommandManager } from '../../services/VoiceCommandManager';
 
 const CVD_MODES = [
   { value: 'none', label: 'Standard' },
@@ -32,7 +33,21 @@ const THEME_VAR_MAP = {
   heroText: '--color-hero-text',
   filterText: '--color-filter-text',
   filterHeading: '--color-filter-heading',
+  inputText: '--color-input-text',
+  inputPlaceholder: '--color-input-placeholder',
+  inputIcon: '--color-input-icon',
 };
+
+const THEME_CSS_VARS = [
+  ...new Set([
+    ...Object.values(THEME_VAR_MAP),
+    '--color-page-background',
+    '--color-tab-header-text',
+    '--color-search-button',
+    '--color-input-background',
+    '--color-form-text',
+  ]),
+];
 
 const defaultTheme = {
   bg: '#FCFAF8',
@@ -58,6 +73,9 @@ const defaultTheme = {
   heroText: '#FFFFFF',
   filterText: '#6A7581',
   filterHeading: '#181F25',
+  inputText: '#BCC5CE',
+  inputPlaceholder: '#CDD4DB',
+  inputIcon: '#B5BEC8',
 };
 
 const CVD_THEME_OVERRIDES = {
@@ -67,12 +85,18 @@ const CVD_THEME_OVERRIDES = {
     cta: '#ed9822',
     accentCoral: '#ed9822',
     star: '#174dcc',
+    inputText: '#4F4A43',
+    inputPlaceholder: '#7A746C',
+    inputIcon: '#4F4A43',
   },
   deuteranopia: {
     primary: '#3f72b2',
     primaryDark: '#2f588c',
     cta: '#ed9822',
     accentCoral: '#ed9822',
+    inputText: '#4C647A',
+    inputPlaceholder: '#70859A',
+    inputIcon: '#4C647A',
   },
   tritanopia: {
     primary: '#be4d61',
@@ -80,6 +104,9 @@ const CVD_THEME_OVERRIDES = {
     cta: '#35a196',
     accentCoral: '#359f95',
     featureIconBoxBg: '#F2DBDC',
+    inputText: '#5D5670',
+    inputPlaceholder: '#777084',
+    inputIcon: '#5D5670',
   },
 };
 
@@ -94,6 +121,9 @@ const HIGH_CONTRAST_THEME_OVERRIDES = {
   navText: '#111111',
   border: '#1F1F1F',
   primaryTint: 'rgba(0, 0, 0, 0.08)',
+  inputText: '#1F1F1F',
+  inputPlaceholder: '#4A4A4A',
+  inputIcon: '#1F1F1F',
 };
 
 const PRESETS = [
@@ -218,6 +248,8 @@ const colorTab = ref('presets');
 
 const voiceEnabled = ref(false);
 const voiceListening = ref(false);
+const voiceSupported = ref(true);
+const liveVoiceTranscript = ref('');
 const cvdMode = ref('none');
 const cvdSeverity = ref(100);
 const highContrast = ref(false);
@@ -232,6 +264,7 @@ const pickedTarget = ref(null);
 const pickedColor = ref('#6a7581');
 const pickerHint = ref('Click "Pick from page", then click an element to edit its color.');
 let hoveredPickElement = null;
+let voiceManager = null;
 
 const mainTabs = [
   { id: 'vision', label: 'Vision', icon: 'visibility_off' },
@@ -269,6 +302,9 @@ function applyTheme(theme, syncCustom = true) {
   root.style.setProperty('--color-search-button', merged.cta);
   root.style.setProperty('--color-input-background', merged.border);
   root.style.setProperty('--color-form-text', merged.navText);
+  root.style.setProperty('--color-input-text', merged.inputText ?? merged.textMuted);
+  root.style.setProperty('--color-input-placeholder', merged.inputPlaceholder ?? merged.textMuted);
+  root.style.setProperty('--color-input-icon', merged.inputIcon ?? merged.textMuted);
 
   if (syncCustom) {
     customColors.background = merged.bg;
@@ -670,6 +706,44 @@ function applyCurrentTheme(syncCustom = false) {
   applyTheme(resolveTheme(), syncCustom);
 }
 
+function clearInlineThemeOverrides() {
+  const root = document.documentElement;
+  THEME_CSS_VARS.forEach((cssVar) => {
+    root.style.removeProperty(cssVar);
+  });
+}
+
+function clearElementCustomOverrides() {
+  const nodes = document.querySelectorAll('[data-a11y-color-applied="1"]');
+  nodes.forEach((node) => {
+    const originalStyle = node.dataset.a11yOriginalStyle || '';
+    if (originalStyle) {
+      node.setAttribute('style', originalStyle);
+    } else {
+      node.removeAttribute('style');
+    }
+    delete node.dataset.a11yColorApplied;
+    delete node.dataset.a11yOriginalStyle;
+  });
+}
+
+function clearAllCustomColorOverrides() {
+  clearInlineThemeOverrides();
+  clearElementCustomOverrides();
+  voiceManager?.clearScopedTargetRules?.();
+  voiceManager?.clearContext?.();
+}
+
+function applyNativeVisionScheme(mode) {
+  if (!CVD_MODES.some((entry) => entry.value === mode) || mode === 'none') return;
+
+  clearAllCustomColorOverrides();
+  highContrast.value = false;
+  activeTheme.value = { ...defaultTheme };
+  Object.assign(customColors, defaultColors);
+  applyCvdClass(mode);
+}
+
 function applyPreset(preset) {
   activeTheme.value = { ...defaultTheme, ...preset.theme };
   applyCurrentTheme(true);
@@ -679,9 +753,48 @@ function resetColors() {
   window.location.reload();
 }
 
+function applyVoiceVisionPreset(mode) {
+  if (mode === 'highcontrast') {
+    highContrast.value = true;
+    applyCurrentTheme(false);
+    return;
+  }
+
+  if (CVD_MODES.some((entry) => entry.value === mode)) {
+    cvdMode.value = mode;
+  }
+}
+
+function setVoiceVisionMode(mode) {
+  cvdMode.value = mode && CVD_MODES.some((entry) => entry.value === mode)
+    ? mode
+    : 'none';
+  return cvdMode.value;
+}
+
+function resetThemeFromVoice() {
+  highContrast.value = false;
+  cvdMode.value = 'none';
+  cvdSeverity.value = 100;
+  brightness.value = 100;
+  saturation.value = 100;
+  activeTheme.value = { ...defaultTheme };
+  applyCurrentTheme(true);
+}
+
 function toggleVoice() {
-  voiceEnabled.value = !voiceEnabled.value;
-  voiceListening.value = voiceEnabled.value;
+  if (!voiceManager) return;
+
+  if (!voiceSupported.value) {
+    voiceManager.showSupportFallback();
+    return;
+  }
+
+  if (voiceEnabled.value) {
+    voiceManager.stop();
+  } else {
+    voiceManager.start();
+  }
 }
 
 function handleClickOutside(event) {
@@ -751,16 +864,29 @@ watch([brightness, saturation], () => {
 });
 
 watch(cvdMode, (value) => {
+  if (value !== 'none') {
+    applyNativeVisionScheme(value);
+    return;
+  }
+
   applyCvdClass(value);
   applyCurrentTheme(false);
 });
 
 watch(cvdSeverity, () => {
+  if (cvdMode.value !== 'none') return;
   applyCurrentTheme(false);
 });
 
 watch(highContrast, (value) => {
+  if (cvdMode.value !== 'none' && value) {
+    highContrast.value = false;
+    document.documentElement.classList.remove('a11y-high-contrast');
+    return;
+  }
+
   document.documentElement.classList.toggle('a11y-high-contrast', value);
+  if (cvdMode.value !== 'none') return;
   applyCurrentTheme(false);
 });
 
@@ -771,12 +897,66 @@ watch(open, (value) => {
 });
 
 onMounted(() => {
+  voiceManager = new VoiceCommandManager().init(null, {
+    onStateChange: ({ active, supported }) => {
+      voiceEnabled.value = Boolean(active);
+      voiceListening.value = Boolean(active);
+      voiceSupported.value = supported !== false;
+
+      if (!active) {
+        liveVoiceTranscript.value = '';
+      }
+    },
+    onTranscriptChange: ({ text }) => {
+      liveVoiceTranscript.value = text || '';
+    },
+    controls: {
+      getBrightness: () => brightness.value,
+      setBrightness: (value) => {
+        brightness.value = clamp(value, 50, 150);
+        return brightness.value;
+      },
+      getSaturation: () => saturation.value,
+      setSaturation: (value) => {
+        saturation.value = clamp(value, 0, 200);
+        return saturation.value;
+      },
+      getHighContrast: () => highContrast.value,
+      setHighContrast: (value) => {
+        if (cvdMode.value !== 'none') {
+          highContrast.value = false;
+          document.documentElement.classList.remove('a11y-high-contrast');
+          return false;
+        }
+        highContrast.value = Boolean(value);
+        applyCurrentTheme(false);
+        return highContrast.value;
+      },
+      getVisionMode: () => cvdMode.value,
+      setVisionMode: (mode) => setVoiceVisionMode(mode),
+      applyVisionPreset: (mode) => {
+        applyVoiceVisionPreset(mode);
+        return mode;
+      },
+      resetTheme: () => {
+        resetThemeFromVoice();
+      },
+    },
+  });
+
+  voiceSupported.value = voiceManager.isSupported;
+
   document.addEventListener('pointerdown', handleClickOutside, true);
   document.addEventListener('pointermove', handlePagePickHover, true);
   document.addEventListener('click', handlePagePick, true);
 });
 
 onBeforeUnmount(() => {
+  if (voiceManager) {
+    voiceManager.destroy();
+    voiceManager = null;
+  }
+
   document.removeEventListener('pointerdown', handleClickOutside, true);
   document.removeEventListener('pointermove', handlePagePickHover, true);
   document.removeEventListener('click', handlePagePick, true);
@@ -839,7 +1019,20 @@ onBeforeUnmount(() => {
             <span>{{ voiceEnabled ? 'Listening...' : 'Voice Commands' }}</span>
           </button>
 
-          <p v-if="voiceEnabled" class="hint">Say: "protanopia", "high contrast", "reset"</p>
+          <div v-if="voiceEnabled" class="voice-guide">
+            <p class="hint">Try: "change navigation colour", "change navigation text to black", "change input text background", "make filter text darker"</p>
+            <p v-if="liveVoiceTranscript" class="voice-live">
+              <span class="material-icons" aria-hidden="true">graphic_eq</span>
+              <span>{{ liveVoiceTranscript }}</span>
+            </p>
+            <ul>
+              <li>Targets: navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filters, headings, stars, buttons, page background</li>
+              <li>Follow-ups: a bit more, a bit less, darker, lighter, more vibrant, less saturated, buttons too</li>
+              <li>Modes: turn on protanopia, turn off protanopia, turn on deuteranopia, turn off tritanopia, standard vision</li>
+              <li>System controls: increase brightness, decrease saturation, set brightness to 120, high contrast on</li>
+            </ul>
+          </div>
+          <p v-else-if="!voiceSupported" class="hint">Voice commands are unavailable in this browser.</p>
 
           <div class="field-group">
             <label>Colour Vision</label>
