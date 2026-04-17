@@ -2,6 +2,8 @@
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import PaginatedResults from '../components/Cards/PaginatedResults.vue';
+import SearchFormCard from '../components/Search/SearchFormCard.vue';
+import SearchFormField from '../components/Search/SearchFormField.vue';
 import countriesData from '../data/countries.json';
 import flightsData from '../data/flights.json';
 import { useCart } from '../services/cartStore';
@@ -348,42 +350,47 @@ function viewFlightDetails(flight) {
         <h1>Find Your Flight</h1>
         <p>Compare prices from hundreds of airline worldwide</p>
 
-        <form class="search-form" @submit.prevent="handleSearch">
-          <div class="search-grid">
-            <label>
-              <span>From</span>
-              <div class="input-wrap">
-                <span class="material-icons">location_on</span>
-                <input v-model="searchForm.from" list="countries-list-flights" placeholder="Departure Country" />
-              </div>
-            </label>
-            <label>
-              <span>To</span>
-              <div class="input-wrap">
-                <span class="material-icons">location_on</span>
-                <input v-model="searchForm.to" list="countries-list-flights" placeholder="Destination Country" />
-              </div>
-            </label>
-            <label>
-              <span>Depart</span>
-              <div class="input-wrap">
-                <span class="material-icons">calendar_month</span>
-                <input v-model="searchForm.departDate" type="date" placeholder="Date" />
-              </div>
-            </label>
-            <label>
-              <span>Passengers</span>
-              <div class="input-wrap">
-                <span class="material-icons">group</span>
-                <input v-model.number="searchForm.passengers" type="number" min="1" max="9" placeholder="1 Adult" />
-              </div>
-            </label>
-            <button type="submit" class="search-btn">
-              <span class="material-icons">search</span>
-              Search
-            </button>
-          </div>
-        </form>
+        <SearchFormCard
+          max-width="980px"
+          margin-top="1.5rem"
+          padding="1.25rem"
+          gap="0.75rem"
+          @submit="handleSearch"
+        >
+          <SearchFormField
+            v-model="searchForm.from"
+            label="From"
+            icon="location_on"
+            list="countries-list-flights"
+            placeholder="Departure Country"
+          />
+
+          <SearchFormField
+            v-model="searchForm.to"
+            label="To"
+            icon="location_on"
+            list="countries-list-flights"
+            placeholder="Destination Country"
+          />
+
+          <SearchFormField
+            v-model="searchForm.departDate"
+            label="Depart"
+            icon="calendar_month"
+            type="date"
+            placeholder="Date"
+          />
+
+          <SearchFormField
+            v-model="searchForm.passengers"
+            label="Passengers"
+            icon="group"
+            type="number"
+            :min="1"
+            :max="9"
+            placeholder="1 Adult"
+          />
+        </SearchFormCard>
 
         <datalist id="countries-list-flights">
           <option v-for="country in availableCountries" :key="`flights-${country}`" :value="country" />

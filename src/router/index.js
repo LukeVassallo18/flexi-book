@@ -8,6 +8,9 @@ import HotelsPage from "../views/HotelsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior() {
+    return { top: 0, left: 0 };
+  },
   routes: [
     { path: "/", name: "home", component: HomePage },
     { path: "/flights", name: "flights", component: FlightsPage },
@@ -27,6 +30,16 @@ const router = createRouter({
     },
     { path: "/cart", name: "cart", component: CartPage },
   ],
+});
+
+router.afterEach(() => {
+  if (typeof window === "undefined") return;
+
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
 });
 
 export default router;

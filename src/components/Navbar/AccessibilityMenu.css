@@ -207,6 +207,16 @@
   justify-content: space-between;
 }
 
+.range-header label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.range-header label .material-icons {
+  font-size: 12px;
+}
+
 .range-header span {
   font-size: 10px;
   color: var(--color-text-muted);
@@ -289,12 +299,6 @@
   height: 12px;
   border-radius: 999px;
   border: 1px solid #ddd;
-}
-
-.custom-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.35rem;
 }
 
 .picker-box {
@@ -401,25 +405,6 @@
   cursor: pointer;
 }
 
-.color-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  font-size: 9px;
-  color: var(--color-text-muted);
-}
-
-.color-input input[type='color'] {
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
 .preview {
   display: flex;
   align-items: center;
@@ -441,6 +426,20 @@
 
 .preview-link {
   text-decoration: underline;
+}
+
+:global(html.a11y-picking),
+:global(body.a11y-picking) {
+  cursor: crosshair !important;
+}
+
+:global(body.a11y-picking *):not(.a11y-panel):not(.a11y-panel *) {
+  cursor: crosshair !important;
+}
+
+:global(.a11y-pick-highlight) {
+  outline: 2px dashed color-mix(in srgb, var(--color-primary) 80%, #ffffff);
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {

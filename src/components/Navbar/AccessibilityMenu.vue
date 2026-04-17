@@ -64,8 +64,8 @@ const CVD_THEME_OVERRIDES = {
   protanopia: {
     primary: '#2b6dab',
     primaryDark: '#214f83',
-    cta: '#3866d0',
-    accentCoral: '#3866d0',
+    cta: '#ed9822',
+    accentCoral: '#ed9822',
     star: '#174dcc',
   },
   deuteranopia: {
@@ -195,18 +195,6 @@ const PRESETS = [
   },
 ];
 
-const ALL_COLOR_ITEMS = [
-  { key: 'background', label: 'BG' },
-  { key: 'text', label: 'Text' },
-  { key: 'cards', label: 'Cards' },
-  { key: 'buttons', label: 'Btns' },
-  { key: 'links', label: 'Links' },
-  { key: 'navigation', label: 'Nav' },
-  { key: 'headings', label: 'Head' },
-  { key: 'filters', label: 'Filt' },
-  { key: 'borders', label: 'Bord' },
-];
-
 const defaultColors = {
   background: '#FCFAF8',
   text: '#181F25',
@@ -219,50 +207,9 @@ const defaultColors = {
   borders: '#E7E2DA',
 };
 
-const TARGET_PICKERS = [
-  {
-    key: 'iconBg',
-    label: 'Icon background',
-    selector: '.icon-box, .deal-thumb, .hotel-thumb, .rental-thumb',
-    themeKey: 'featureIconBoxBg',
-  },
-  {
-    key: 'buttons',
-    label: 'Buttons',
-    selector: 'button, .btn-primary, .btn-secondary, .search-btn, .page-btn',
-    themeKey: 'cta',
-  },
-  {
-    key: 'cards',
-    label: 'Cards',
-    selector: '.feature-card, .dest-card, .deal-card, .hotel-card, .rental-card, .detail-card, .review-card',
-    themeKey: 'surface',
-  },
-  {
-    key: 'navigation',
-    label: 'Navigation text',
-    selector: '.nav-link, .accessibility-btn, .a11y-trigger',
-    themeKey: 'navText',
-  },
-  {
-    key: 'text',
-    label: 'Body text',
-    selector: 'p, li, span, .subtitle, .deal-details, .review-text',
-    themeKey: 'text',
-  },
-  {
-    key: 'headings',
-    label: 'Headings',
-    selector: 'h1, h2, h3, h4, h5, h6, .section-title',
-    themeKey: 'heading',
-  },
-  {
-    key: 'filters',
-    label: 'Filters',
-    selector: '.filters, .filter-group, .filter-option',
-    themeKey: 'filterText',
-  },
-];
+const PICKABLE_SELECTOR = 'h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li, button, input, textarea, select, .material-icons, svg, path, i, div';
+const BACKGROUND_HINT_SELECTOR = '.feature-card, .dest-card, .deal-card, .hotel-card, .rental-card, .detail-card, .review-card, .icon-box, .deal-thumb, .hotel-thumb, .rental-thumb, .filters, .search-form, .input-wrap';
+const HERO_BACKGROUND_SELECTOR = '.hotels-hero, .flights-hero, .rentals-hero, .hero, [class$="-hero"]';
 
 const open = ref(false);
 const menuWrapRef = ref(null);
@@ -284,6 +231,7 @@ const pickerArmed = ref(false);
 const pickedTarget = ref(null);
 const pickedColor = ref('#6a7581');
 const pickerHint = ref('Click "Pick from page", then click an element to edit its color.');
+let hoveredPickElement = null;
 
 const mainTabs = [
   { id: 'vision', label: 'Vision', icon: 'visibility_off' },
@@ -306,28 +254,6 @@ function applyCvdClass(mode) {
   if (mode !== 'none') {
     root.classList.add(`cvd-${mode}`);
   }
-}
-
-function setCustomColor(key, value) {
-  customColors[key] = value;
-
-  if (key === 'background') {
-    activeTheme.value.bg = value;
-    activeTheme.value.sectionAlt = value;
-  }
-  if (key === 'text') activeTheme.value.text = value;
-  if (key === 'cards') activeTheme.value.surface = value;
-  if (key === 'buttons') activeTheme.value.cta = value;
-  if (key === 'links') activeTheme.value.navText = value;
-  if (key === 'navigation') activeTheme.value.navBg = value;
-  if (key === 'headings') activeTheme.value.heading = value;
-  if (key === 'filters') {
-    activeTheme.value.filterText = value;
-    activeTheme.value.filterHeading = value;
-  }
-  if (key === 'borders') activeTheme.value.border = value;
-
-  applyCurrentTheme(false);
 }
 
 function applyTheme(theme, syncCustom = true) {
@@ -413,36 +339,271 @@ function colorToHexString(value) {
   return `#${toHex(clamp(Math.round(parsed.r), 0, 255))}${toHex(clamp(Math.round(parsed.g), 0, 255))}${toHex(clamp(Math.round(parsed.b), 0, 255))}`;
 }
 
-function detectPickedTarget(element) {
-  let bestMatch = null;
+function setPickerCursorState(active) {
+  document.documentElement.classList.toggle('a11y-picking', active);
+  document.body.classList.toggle('a11y-picking', active);
+}
 
-  for (const target of TARGET_PICKERS) {
-    const closest = element.closest(target.selector);
-    if (!closest) continue;
+function clearHoveredPickElement() {
+  if (hoveredPickElement) {
+    hoveredPickElement.classList.remove('a11y-pick-highlight');
+    hoveredPickElement = null;
+  }
+}
 
-    let distance = 0;
-    let node = element;
-    while (node && node !== closest) {
-      node = node.parentElement;
-      distance += 1;
+function resolveElement(eventTarget) {
+  if (!eventTarget) return null;
+  if (eventTarget.nodeType === Node.ELEMENT_NODE) return eventTarget;
+  if (eventTarget.nodeType === Node.TEXT_NODE) return eventTarget.parentElement;
+  return null;
+}
+
+function toTitleCase(value) {
+  return value
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function friendlyTargetLabel(element, cssProperty) {
+  if (cssProperty === 'background' && element.closest(HERO_BACKGROUND_SELECTOR)) {
+    return 'Hero background';
+  }
+
+  if (cssProperty.startsWith('background')) {
+    if (element.matches('.hotel-card, .deal-card, .rental-card, .dest-card, .feature-card')) return 'Card background';
+    if (element.matches('.input-wrap, input, textarea, select')) return 'Input background';
+    return 'Background';
+  }
+
+  if (element.matches('.material-icons')) {
+    const iconName = (element.textContent || '').trim();
+    if (iconName) {
+      const readable = toTitleCase(iconName);
+      return `${readable} icon`;
     }
+    return 'Icon';
+  }
 
-    if (!bestMatch || distance < bestMatch.distance) {
-      bestMatch = { target, distance };
+  if (element.matches('svg, path, circle, ellipse, line, polyline, polygon, rect, i')) {
+    return 'Icon';
+  }
+
+  if (element.matches('button, .search-btn, .page-btn, .clear-btn, .toggle-filters-btn')) {
+    return 'Button';
+  }
+
+  if (element.matches('h1, h2, h3, h4, h5, h6')) {
+    return 'Heading text';
+  }
+
+  if (element.matches('a')) {
+    return 'Link text';
+  }
+
+  if (element.matches('label, p, span, li, strong, b, em, small, div')) {
+    return 'Text';
+  }
+
+  return 'Element';
+}
+
+function getStableClassSelector(element) {
+  if (!element || !element.classList || element.classList.length === 0) return null;
+  const classNames = Array.from(element.classList)
+    .filter((name) => !name.startsWith('a11y-') && !name.startsWith('router-link'))
+    .filter((name) => !/^v-/.test(name));
+
+  if (!classNames.length) return null;
+
+  return `.${classNames.join('.')}`;
+}
+
+function getElementTagSelector(element) {
+  return element.tagName ? element.tagName.toLowerCase() : 'div';
+}
+
+function buildGroupSelector(element, cssProperty) {
+  const tag = getElementTagSelector(element);
+
+  if (cssProperty === 'background') {
+    const hero = element.closest(HERO_BACKGROUND_SELECTOR);
+    if (hero?.id) return `#${hero.id}`;
+    const heroClass = hero ? getStableClassSelector(hero) : null;
+    if (heroClass) return heroClass;
+    return HERO_BACKGROUND_SELECTOR;
+  }
+
+  if (element.closest('.hotel-tags') && tag === 'span') {
+    return '.hotel-tags span';
+  }
+
+  if (element.closest('.hotel-bottom') && tag === 'strong') {
+    return '.hotel-bottom strong';
+  }
+
+  if (element.closest('.hotel-bottom') && element.matches('button')) {
+    return '.hotel-bottom button';
+  }
+
+  if (element.closest('.amenity')) {
+    if (element.matches('.material-icons')) return '.amenity .material-icons';
+    return '.amenity';
+  }
+
+  if (element.closest('.input-wrap') && element.matches('.material-icons')) {
+    return '.input-wrap .material-icons';
+  }
+
+  if (element.closest('.filters')) {
+    if (element.matches('h2')) return '.filters h2';
+    if (element.matches('h3')) return '.filters h3';
+    if (element.matches('label, p, span')) return '.filters label, .filters p, .filters span';
+  }
+
+  if (cssProperty === 'background-color') {
+    const card = element.closest('.hotel-card, .deal-card, .rental-card, .dest-card, .feature-card, .review-card, .detail-card');
+    if (card) {
+      const cardClass = getStableClassSelector(card);
+      if (cardClass) return cardClass;
     }
   }
 
-  return bestMatch?.target || null;
+  const ownClass = getStableClassSelector(element);
+  if (ownClass) return `${tag}${ownClass}`;
+
+  const parent = element.parentElement;
+  const parentClass = getStableClassSelector(parent);
+  if (parentClass) return `${parentClass} ${tag}`;
+
+  return tag;
+}
+
+function isTransparentColor(value) {
+  if (!value) return true;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === 'transparent') return true;
+  const rgbaMatch = normalized.match(/^rgba\(([^)]+)\)$/);
+  if (!rgbaMatch) return false;
+  const parts = rgbaMatch[1].split(',').map((part) => part.trim());
+  if (parts.length < 4) return false;
+  return Number(parts[3]) === 0;
+}
+
+function hasDirectText(element) {
+  return Array.from(element.childNodes).some(
+    (node) => node.nodeType === Node.TEXT_NODE && (node.textContent || '').trim().length > 0,
+  );
+}
+
+function inferPropertyForElement(element) {
+  if (element.matches(HERO_BACKGROUND_SELECTOR) || element.closest(HERO_BACKGROUND_SELECTOR)) {
+    return 'background';
+  }
+
+  if (element.matches('path, circle, ellipse, line, polyline, polygon, rect')) {
+    return 'fill';
+  }
+
+  if (element.matches('.material-icons, svg, i, input, textarea, select, option')) {
+    return 'color';
+  }
+
+  if (hasDirectText(element) || element.matches('h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li, button')) {
+    return 'color';
+  }
+
+  if (element.matches(BACKGROUND_HINT_SELECTOR)) {
+    return 'background-color';
+  }
+
+  const computed = window.getComputedStyle(element);
+  if (!hasDirectText(element) && (!isTransparentColor(computed.backgroundColor) || computed.backgroundImage !== 'none')) {
+    return computed.backgroundImage !== 'none' ? 'background' : 'background-color';
+  }
+
+  return 'color';
+}
+
+function firstColorFromGradient(value) {
+  if (!value) return null;
+  const match = value.match(/(#(?:[0-9a-fA-F]{6})|rgba?\([^)]+\))/);
+  return match ? match[1] : null;
+}
+
+function sampleEffectiveColor(element, cssProperty) {
+  if (!element) return '#6a7581';
+
+  if (cssProperty === 'background') {
+    const style = window.getComputedStyle(element);
+    const fromGradient = firstColorFromGradient(style.backgroundImage);
+    if (fromGradient) return fromGradient;
+    if (!isTransparentColor(style.backgroundColor)) return style.backgroundColor;
+    const rootPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+    return rootPrimary || '#259d91';
+  }
+
+  let node = element;
+  while (node && node !== document.body) {
+    const style = window.getComputedStyle(node);
+    const value = style.getPropertyValue(cssProperty);
+    if (cssProperty === 'fill' && (!value || value === 'none')) {
+      const fallback = style.color;
+      if (!isTransparentColor(fallback)) return fallback;
+    }
+    if (!isTransparentColor(value)) {
+      return value;
+    }
+    node = node.parentElement;
+  }
+  const endStyle = window.getComputedStyle(element);
+  return endStyle.getPropertyValue(cssProperty) || endStyle.color || '#6a7581';
+}
+
+function detectPickedTarget(element) {
+  const startEl = resolveElement(element);
+  if (!startEl) return null;
+
+  let pickEl = startEl.matches(PICKABLE_SELECTOR)
+    ? startEl
+    : startEl.closest(PICKABLE_SELECTOR) || startEl;
+
+  let cssProperty = inferPropertyForElement(pickEl);
+
+  if (cssProperty === 'background') {
+    const heroEl = pickEl.closest(HERO_BACKGROUND_SELECTOR);
+    if (heroEl) {
+      pickEl = heroEl;
+      cssProperty = 'background';
+    }
+  }
+
+  const sampledColor = sampleEffectiveColor(pickEl, cssProperty);
+  const groupSelector = buildGroupSelector(pickEl, cssProperty);
+  const groupElements = Array.from(document.querySelectorAll(groupSelector)).filter((node) => !menuWrapRef.value?.contains(node));
+
+  return {
+    element: pickEl,
+    cssProperty,
+    sampledColor,
+    groupSelector,
+    groupSize: groupElements.length || 1,
+    label: friendlyTargetLabel(pickEl, cssProperty),
+  };
 }
 
 function armTargetPicker() {
   pickerArmed.value = true;
   pickedTarget.value = null;
-  pickerHint.value = 'Click any button, card, navigation text, filter, or text on the page.';
+  setPickerCursorState(true);
+  pickerHint.value = 'Picker on. Click any exact element (text, icon, button, card) to edit only that element.';
 }
 
 function cancelTargetPicker() {
   pickerArmed.value = false;
+  setPickerCursorState(false);
+  clearHoveredPickElement();
   pickerHint.value = 'Click "Pick from page", then click an element to edit its color.';
 }
 
@@ -453,21 +614,34 @@ function updatePickedColorFromText(value) {
 
 function applyPickedColor() {
   if (!pickedTarget.value) return;
-  const { themeKey } = pickedTarget.value;
-  activeTheme.value[themeKey] = pickedColor.value;
-
-  if (themeKey === 'cta') customColors.buttons = pickedColor.value;
-  if (themeKey === 'surface') customColors.cards = pickedColor.value;
-  if (themeKey === 'navText') customColors.links = pickedColor.value;
-  if (themeKey === 'text') customColors.text = pickedColor.value;
-  if (themeKey === 'heading') customColors.headings = pickedColor.value;
-
-  if (themeKey === 'filterText') {
-    activeTheme.value.filterHeading = pickedColor.value;
-    customColors.filters = pickedColor.value;
+  const { element, cssProperty, groupSelector } = pickedTarget.value;
+  if (!element?.isConnected) {
+    pickerHint.value = 'Selected element is no longer on the page. Pick again.';
+    return;
   }
 
-  applyCurrentTheme(false);
+  const targets = Array.from(document.querySelectorAll(groupSelector)).filter((node) => !menuWrapRef.value?.contains(node));
+  const applyTo = targets.length ? targets : [element];
+
+  applyTo.forEach((targetEl) => {
+    if (!targetEl.dataset.a11yOriginalStyle) {
+      targetEl.dataset.a11yOriginalStyle = targetEl.getAttribute('style') || '';
+    }
+
+    if (cssProperty === 'background') {
+      targetEl.style.setProperty('background-image', 'none', 'important');
+      targetEl.style.setProperty('background-color', pickedColor.value, 'important');
+    } else {
+      targetEl.style.setProperty(cssProperty, pickedColor.value, 'important');
+    }
+    targetEl.dataset.a11yColorApplied = '1';
+
+    if (cssProperty === 'fill') {
+      targetEl.style.setProperty('color', pickedColor.value, 'important');
+    }
+  });
+
+  pickerHint.value = `Applied ${pickedColor.value} to ${pickedTarget.value.label} (${applyTo.length} matching element${applyTo.length === 1 ? '' : 's'}).`;
 }
 
 function resolveTheme() {
@@ -502,17 +676,7 @@ function applyPreset(preset) {
 }
 
 function resetColors() {
-  activeTheme.value = { ...defaultTheme };
-  applyCurrentTheme(true);
-  brightness.value = 100;
-  saturation.value = 100;
-  cvdMode.value = 'none';
-  highContrast.value = false;
-  voiceEnabled.value = false;
-  voiceListening.value = false;
-  cvdSeverity.value = 100;
-  pickerArmed.value = false;
-  pickedTarget.value = null;
+  window.location.reload();
 }
 
 function toggleVoice() {
@@ -537,19 +701,47 @@ function handlePagePick(event) {
 
   const match = detectPickedTarget(event.target);
   if (!match) {
-    pickerHint.value = 'That item type is not editable. Try buttons, cards, nav, filters, or text.';
+    pickerHint.value = 'Could not detect a target here. Try clicking directly on text or an icon.';
     return;
   }
 
   event.preventDefault();
   event.stopPropagation();
 
-  pickedTarget.value = match;
-  const rootStyle = getComputedStyle(document.documentElement);
-  const currentColor = rootStyle.getPropertyValue(THEME_VAR_MAP[match.themeKey]).trim() || '#6a7581';
-  pickedColor.value = colorToHexString(currentColor);
-  pickerHint.value = `Selected: ${match.label}. Choose a color and apply.`;
+  pickedTarget.value = {
+    label: match.label,
+    element: match.element,
+    cssProperty: match.cssProperty,
+    groupSelector: match.groupSelector,
+    groupSize: match.groupSize,
+  };
+  pickedColor.value = colorToHexString(match.sampledColor);
+  pickerHint.value = `Selected: ${match.label} (${match.groupSize} matching element${match.groupSize === 1 ? '' : 's'}). Choose a color and apply.`;
   pickerArmed.value = false;
+  setPickerCursorState(false);
+  clearHoveredPickElement();
+}
+
+function handlePagePickHover(event) {
+  if (!open.value || !pickerArmed.value) return;
+  if (!menuWrapRef.value) return;
+  if (menuWrapRef.value.contains(event.target)) {
+    clearHoveredPickElement();
+    return;
+  }
+
+  const match = detectPickedTarget(event.target);
+  if (!match) {
+    clearHoveredPickElement();
+    return;
+  }
+
+  if (hoveredPickElement && hoveredPickElement !== match.element) {
+    hoveredPickElement.classList.remove('a11y-pick-highlight');
+  }
+
+  hoveredPickElement = match.element;
+  hoveredPickElement.classList.add('a11y-pick-highlight');
 }
 
 watch([brightness, saturation], () => {
@@ -572,14 +764,24 @@ watch(highContrast, (value) => {
   applyCurrentTheme(false);
 });
 
+watch(open, (value) => {
+  if (!value && pickerArmed.value) {
+    cancelTargetPicker();
+  }
+});
+
 onMounted(() => {
   document.addEventListener('pointerdown', handleClickOutside, true);
+  document.addEventListener('pointermove', handlePagePickHover, true);
   document.addEventListener('click', handlePagePick, true);
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('pointerdown', handleClickOutside, true);
+  document.removeEventListener('pointermove', handlePagePickHover, true);
   document.removeEventListener('click', handlePagePick, true);
+  clearHoveredPickElement();
+  setPickerCursorState(false);
   document.body.style.letterSpacing = '';
   document.body.style.lineHeight = '';
   document.documentElement.style.fontSize = '';
@@ -659,12 +861,24 @@ onBeforeUnmount(() => {
           </div>
 
           <div class="field-group">
-            <div class="range-header"><label>Brightness</label><span>{{ brightness }}%</span></div>
+            <div class="range-header">
+              <label>
+                <span class="material-icons" aria-hidden="true">light_mode</span>
+                <span>Brightness</span>
+              </label>
+              <span>{{ brightness }}%</span>
+            </div>
             <input v-model.number="brightness" type="range" min="50" max="150" />
           </div>
 
           <div class="field-group">
-            <div class="range-header"><label>Saturation</label><span>{{ saturation }}%</span></div>
+            <div class="range-header">
+              <label>
+                <span class="material-icons" aria-hidden="true">palette</span>
+                <span>Saturation</span>
+              </label>
+              <span>{{ saturation }}%</span>
+            </div>
             <input v-model.number="saturation" type="range" min="0" max="200" />
           </div>
         </template>
@@ -697,17 +911,6 @@ onBeforeUnmount(() => {
             </button>
           </div>
 
-          <div v-else class="custom-grid">
-            <label v-for="item in ALL_COLOR_ITEMS" :key="item.key" class="color-input">
-              <input
-                type="color"
-                :value="customColors[item.key]"
-                @input="setCustomColor(item.key, $event.target.value)"
-              />
-              <span>{{ item.label }}</span>
-            </label>
-          </div>
-
           <div class="picker-box" v-if="colorTab === 'custom'">
             <div class="picker-row">
               <button
@@ -736,7 +939,7 @@ onBeforeUnmount(() => {
             <p class="picker-hint">{{ pickerHint }}</p>
 
             <div class="picker-actions" v-if="pickedTarget">
-              <span class="picker-target">Target: {{ pickedTarget.label }}</span>
+              <span class="picker-target">Target: {{ pickedTarget.label }} ({{ pickedTarget.cssProperty }})</span>
               <button type="button" class="apply-picked-btn" @click="applyPickedColor">Apply color</button>
             </div>
           </div>

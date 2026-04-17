@@ -8,38 +8,31 @@
         <h1>Rent a Car</h1>
         <p>Find the perfect vehicle for your trip at the best prices</p>
 
-        <form class="search-form" @submit.prevent="handleSearch">
-          <div class="search-grid">
-            <label>
-              <span>Pick-up Location</span>
-              <div class="input-wrap">
-                <span class="material-icons">location_on</span>
-                <input v-model="searchForm.pickupLocation" type="text" list="countries-list-cars" placeholder="Choose country" />
-              </div>
-            </label>
+        <SearchFormCard @submit="handleSearch">
+          <SearchFormField
+            v-model="searchForm.pickupLocation"
+            label="Pick-up Location"
+            icon="location_on"
+            list="countries-list-cars"
+            placeholder="Choose country"
+          />
 
-            <label>
-              <span>Pick-up Date</span>
-              <div class="input-wrap">
-                <span class="material-icons">calendar_today</span>
-                <input v-model="searchForm.pickupDate" type="date" placeholder="Add date" />
-              </div>
-            </label>
+          <SearchFormField
+            v-model="searchForm.pickupDate"
+            label="Pick-up Date"
+            icon="calendar_today"
+            type="date"
+            placeholder="Add date"
+          />
 
-            <label>
-              <span>Drop-off Date</span>
-              <div class="input-wrap">
-                <span class="material-icons">calendar_today</span>
-                <input v-model="searchForm.dropoffDate" type="date" placeholder="Add date" />
-              </div>
-            </label>
-
-            <button type="submit" class="search-btn">
-              <span class="material-icons">search</span>
-              Search
-            </button>
-          </div>
-        </form>
+          <SearchFormField
+            v-model="searchForm.dropoffDate"
+            label="Drop-off Date"
+            icon="calendar_today"
+            type="date"
+            placeholder="Add date"
+          />
+        </SearchFormCard>
 
         <datalist id="countries-list-cars">
           <option v-for="country in availableCountries" :key="`cars-${country}`" :value="country" />
@@ -157,6 +150,8 @@
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import PaginatedResults from '../components/Cards/PaginatedResults.vue';
+import SearchFormCard from '../components/Search/SearchFormCard.vue';
+import SearchFormField from '../components/Search/SearchFormField.vue';
 import carBrandsData from '../data/carBrands.json';
 import carsData from '../data/cars.json';
 import countriesData from '../data/countries.json';

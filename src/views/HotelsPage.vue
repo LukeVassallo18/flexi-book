@@ -8,46 +8,41 @@
         <h1>Find Your Stay</h1>
         <p>Discover hotels, resorts, and unique accommodations worldwide</p>
 
-        <form class="search-form" @submit.prevent="handleSearch">
-          <div class="search-grid">
-            <label>
-              <span>Destination</span>
-              <div class="input-wrap">
-                <span class="material-icons">location_on</span>
-                <input v-model="searchForm.destination" type="text" list="hotel-search-list" placeholder="Choose country or hotel" />
-              </div>
-            </label>
+        <SearchFormCard @submit="handleSearch">
+          <SearchFormField
+            v-model="searchForm.destination"
+            label="Destination"
+            icon="location_on"
+            list="hotel-search-list"
+            placeholder="Choose country or hotel"
+          />
 
-            <label>
-              <span>Check-in</span>
-              <div class="input-wrap">
-                <span class="material-icons">calendar_today</span>
-                <input v-model="searchForm.checkIn" type="date" placeholder="Add date" />
-              </div>
-            </label>
+          <SearchFormField
+            v-model="searchForm.checkIn"
+            label="Check-in"
+            icon="calendar_today"
+            type="date"
+            placeholder="Add date"
+          />
 
-            <label>
-              <span>Check-out</span>
-              <div class="input-wrap">
-                <span class="material-icons">calendar_today</span>
-                <input v-model="searchForm.checkOut" type="date" placeholder="Add date" />
-              </div>
-            </label>
+          <SearchFormField
+            v-model="searchForm.checkOut"
+            label="Check-out"
+            icon="calendar_today"
+            type="date"
+            placeholder="Add date"
+          />
 
-            <label>
-              <span>Guests</span>
-              <div class="input-wrap">
-                <span class="material-icons">group</span>
-                <input v-model.number="searchForm.guests" type="number" min="1" max="9" placeholder="1 Guest" />
-              </div>
-            </label>
-
-            <button type="submit" class="search-btn">
-              <span class="material-icons">search</span>
-              Search
-            </button>
-          </div>
-        </form>
+          <SearchFormField
+            v-model="searchForm.guests"
+            label="Guests"
+            icon="group"
+            type="number"
+            :min="1"
+            :max="9"
+            placeholder="1 Guest"
+          />
+        </SearchFormCard>
 
         <datalist id="hotel-search-list">
           <option v-for="country in availableCountries" :key="`hotels-${country}`" :value="country" />
@@ -158,6 +153,8 @@
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import PaginatedResults from '../components/Cards/PaginatedResults.vue';
+import SearchFormCard from '../components/Search/SearchFormCard.vue';
+import SearchFormField from '../components/Search/SearchFormField.vue';
 import countriesData from '../data/countries.json';
 import hotelDirectoryData from '../data/hotelDirectory.json';
 import hotelsData from '../data/hotels.json';

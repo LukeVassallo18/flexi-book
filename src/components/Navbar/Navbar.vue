@@ -29,9 +29,24 @@ function closeMobileMenu() {
       </div>
 
       <ul class="nav-center" :class="{ active: mobileMenuOpen }" role="list">
-        <li><RouterLink to="/flights" class="nav-link" @click="closeMobileMenu">Flights</RouterLink></li>
-        <li><RouterLink to="/hotels" class="nav-link" @click="closeMobileMenu">Hotels</RouterLink></li>
-        <li><RouterLink to="/car-rentals" class="nav-link" @click="closeMobileMenu">Car Rentals</RouterLink></li>
+        <li>
+          <RouterLink to="/flights" class="nav-link" @click="closeMobileMenu">
+            <span class="material-icons" aria-hidden="true">flight_takeoff</span>
+            <span>Flights</span>
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/hotels" class="nav-link" @click="closeMobileMenu">
+            <span class="material-icons" aria-hidden="true">hotel</span>
+            <span>Hotels</span>
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/car-rentals" class="nav-link" @click="closeMobileMenu">
+            <span class="material-icons" aria-hidden="true">directions_car</span>
+            <span>Car Rentals</span>
+          </RouterLink>
+        </li>
       </ul>
 
       <div class="nav-right">
@@ -41,11 +56,10 @@ function closeMobileMenu() {
           class="hamburger" 
           @click="toggleMobileMenu"
           :aria-label="mobileMenuOpen ? 'Close menu' : 'Open menu'"
-          :class="{ active: mobileMenuOpen }"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span class="material-icons" aria-hidden="true">
+            {{ mobileMenuOpen ? 'close' : 'menu' }}
+          </span>
         </button>
       </div>
 

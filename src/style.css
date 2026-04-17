@@ -64,8 +64,8 @@
   --color-primary:            #2b6dab;
   --color-primary-dark:       #214f83;
   --hero-gradient:            linear-gradient(135deg, #2b6dab, #214f83);
-  --color-cta:                #3866d0;
-  --color-accent-coral:       #3866d0;
+  --color-cta:                #ed9822;
+  --color-accent-coral:       #ed9822;
   --color-star:               #174dcc;
 }
 
@@ -86,19 +86,48 @@
   --feature-icon-box-bg:      #F2DBDC;
 }
 
-/* Intentional challenge targets: only in default (non-CVD) mode */
+/* Intentional challenge targets: only in default (non-CVD) mode
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .features-section .icon-box {
-  background: #8B0000 !important;
+  background: #8B0000 ;
 }
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .features-section .icon-box .material-icons {
-  color: #FF0000 !important;
-}
+  color: #FF0000 ;
+} */
 
 :root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) {
   --color-filter-text: #c7d3e2;
   --color-filter-heading: #c7d3e2;
   --color-nav-text: rgba(24, 31, 37, 0.34);
+}
+
+/* Intentional low-visibility hotel search inputs: default scheme only */
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap {
+  background: #F8F7F6;
+  border-color: #F5F3F1;
+}
+
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap input {
+  color: #c2c2c2;
+}
+
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap input::placeholder {
+  color: #e9e9e9;
+}
+
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .input-wrap .material-icons {
+  color: #e0e0e0;
+}
+
+/* Low-contrast filter text on hotels page: default scheme only */
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters h2,
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters .filter-group h3 {
+  color: #dcdcdb !important;
+}
+
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters .filter-group label,
+:root:not(.cvd-protanopia):not(.cvd-deuteranopia):not(.cvd-tritanopia) .hotels-page .filters .filter-group p {
+  color: #d5d5d5 !important;
 }
 
 :root.a11y-high-contrast {
