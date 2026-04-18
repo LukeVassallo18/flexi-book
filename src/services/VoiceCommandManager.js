@@ -490,7 +490,7 @@ const GLOBAL_HIGHLIGHT_SELECTOR = [
 
 const VISION_MODE_ALIASES = {
   protanopia: /\b(protanopia|protenopia|protanopium|protenopium|protonopia)\b|\bpro\s*(?:ten|to|ta)?\s*op(?:ia|ium)\b/,
-  deuteranopia: /\b(deuteranopia|dueteranopia|deutranopia|duteranopia)\b|\bdeu?\s*(?:ter|tur|tra)?\s*anop(?:ia|ium)\b/,
+  deuteranopia: /\b(deuteranopia|deuteronopia|dueteranopia|deutranopia|duteranopia)\b|\bdeu?\s*(?:ter|tur|tra|tero)?\s*anop(?:ia|ium)\b/,
   tritanopia: /\b(tritanopia|trytanopia|tritonopia)\b|\btr(?:i|y)\s*(?:tan|ton)?\s*op(?:ia|ium)\b/,
 };
 
@@ -566,7 +566,7 @@ const TARGET_HIGHLIGHT_SELECTORS = {
   filters:
     ".filters h2, .filters .filter-group h3, .filters .filter-group label, .filters .filter-group p",
   inputText:
-    ".input-wrap input, .input-wrap select, .input-wrap .material-icons",
+    ".input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea, .input-wrap .material-icons",
   inputBackground:
     ".input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea",
   formBackground: ".search-shell, .search-card",
@@ -1005,7 +1005,7 @@ class VoiceCommandManager {
 
     const compactVariants = {
       protanopia: ['protanopia', 'protenopia', 'protanopium', 'protenopium', 'protonopia', 'protenopiummode'],
-      deuteranopia: ['deuteranopia', 'dueteranopia', 'deutranopia', 'duteranopia'],
+      deuteranopia: ['deuteranopia', 'deuteronopia', 'dueteranopia', 'deutranopia', 'duteranopia'],
       tritanopia: ['tritanopia', 'trytanopia', 'tritonopia'],
     };
 

@@ -525,6 +525,20 @@
   outline-offset: 2px;
 }
 
+:global(.a11y-pick-highlight.input-wrap),
+:global(.a11y-pick-highlight:where(input, textarea, select)) {
+  outline: 2px dashed color-mix(in srgb, var(--color-primary) 80%, #ffffff);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 35%, #ffffff);
+}
+
+:global(.a11y-pick-highlight.input-wrap input),
+:global(.a11y-pick-highlight.input-wrap textarea),
+:global(.a11y-pick-highlight.input-wrap select),
+:global(.a11y-pick-highlight:where(input, textarea, select)) {
+  background-color: color-mix(in srgb, var(--color-primary-tint) 45%, var(--color-surface)) !important;
+}
+
 @media (max-width: 768px) {
   .a11y-panel {
     position: fixed;
