@@ -63,7 +63,7 @@
   align-items: center;
   gap: 0.5rem;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
   text-decoration: none;
@@ -221,7 +221,7 @@
 .checkout-btn {
   width: 100%;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   border: none;
   padding: 0.75rem;
   border-radius: 8px;

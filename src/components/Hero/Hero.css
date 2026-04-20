@@ -227,7 +227,7 @@
   border: 0;
   border-radius: 12px;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   height: 48px;
   font-size: 14px;
   font-weight: 700;
@@ -246,6 +246,7 @@
 
 .search-btn .material-icons {
   font-size: 1rem;
+  color: inherit;
 }
 
 @media (max-width: 900px) {

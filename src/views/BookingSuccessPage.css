@@ -99,7 +99,7 @@
 
 .primary-link {
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
 }
 
 .secondary-link {

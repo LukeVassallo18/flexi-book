@@ -289,7 +289,7 @@
 .deal-bottom button {
   border: 0;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   border-radius: 12px;
   height: 36px;
   padding: 0 1rem;

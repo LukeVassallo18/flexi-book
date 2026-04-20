@@ -78,7 +78,7 @@ const styleVars = computed(() => ({
   border: 0;
   border-radius: 12px;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -98,6 +98,7 @@ const styleVars = computed(() => ({
 
 .search-btn .material-icons {
   font-size: 1rem;
+  color: inherit;
 }
 
 @media (max-width: 1100px) {

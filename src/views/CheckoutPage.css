@@ -87,7 +87,7 @@
 .confirm-btn {
   border: 0;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   font-weight: 700;
   border-radius: 10px;
   min-height: 42px;
@@ -168,7 +168,7 @@
   display: inline-block;
   text-decoration: none;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   border-radius: 10px;
   min-height: 40px;
   line-height: 40px;

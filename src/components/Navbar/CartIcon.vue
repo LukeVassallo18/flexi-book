@@ -45,7 +45,7 @@ function openCart() {
   top: -4px;
   right: -4px;
   background: var(--color-cta);
-  color: #fff;
+  color: var(--color-cta-text);
   width: 20px;
   height: 20px;
   border-radius: 50%;
