@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
+import { trackDisclaimerAccepted } from '../services/analytics';
 
 const DISCLAIMER_STORAGE_KEY = 'flexi-book-disclaimer-accepted';
 
@@ -7,6 +8,7 @@ const route = useRoute();
 const router = useRouter();
 
 function proceedToSite() {
+  trackDisclaimerAccepted();
   window.localStorage.setItem(DISCLAIMER_STORAGE_KEY, 'true');
   const redirectPath = typeof route.query.redirect === 'string' ? route.query.redirect : '/';
   router.replace(redirectPath);

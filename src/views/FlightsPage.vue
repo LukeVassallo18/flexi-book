@@ -8,6 +8,7 @@ import countriesData from '../data/countries.json';
 import flightsData from '../data/flights.json';
 import { useCart } from '../services/cartStore';
 import { useToast } from '../services/toastStore';
+import { trackFlightSearch, trackItemAddedToCart } from '../services/analytics';
 
 const route = useRoute();
 const router = useRouter();
@@ -314,6 +315,13 @@ function handleSearch() {
     passengers: searchForm.value.passengers,
   };
 
+  trackFlightSearch({
+    from: searchForm.value.from,
+    to: searchForm.value.to,
+    depart_date: searchForm.value.departDate,
+    passengers: searchForm.value.passengers,
+  });
+
   router.replace({
     path: '/flights',
     query: {
@@ -331,6 +339,7 @@ function bookFlight(flight) {
     ...flight,
     type: 'Flight',
   });
+  trackItemAddedToCart('Flight', flight);
   pushToast(`Added to cart: ${flight.route}`, { type: 'success' });
   router.push('/cart');
 }

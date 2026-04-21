@@ -157,6 +157,7 @@ import carsData from '../data/cars.json';
 import countriesData from '../data/countries.json';
 import { useCart } from '../services/cartStore';
 import { useToast } from '../services/toastStore';
+import { trackCarSearch, trackItemAddedToCart } from '../services/analytics';
 
 const route = useRoute();
 const router = useRouter();
@@ -420,6 +421,12 @@ function handleSearch() {
     dropoffDate: searchForm.value.dropoffDate,
   };
 
+  trackCarSearch({
+    pickup_location: searchForm.value.pickupLocation,
+    pickup_date: searchForm.value.pickupDate,
+    dropoff_date: searchForm.value.dropoffDate,
+  });
+
   router.replace({
     path: '/car-rentals',
     query: {
@@ -432,6 +439,7 @@ function handleSearch() {
 
 function bookCar(car) {
   addToCart({ ...car, type: 'Car' });
+  trackItemAddedToCart('Car', car);
   pushToast(`Added to cart: ${car.name}`, { type: 'success' });
   router.push('/cart');
 }

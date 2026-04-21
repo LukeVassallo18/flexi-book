@@ -1,3 +1,5 @@
+import { logColorChangeSuccess } from './colorChangeLogger';
+
 const CVD_PRESETS = {
   deuteranopia: {
     '--color-bg': '#F7FAFD',
@@ -304,6 +306,9 @@ const TARGET_PHRASES = {
     "nav colour",
     "nav color",
     "menu background",
+    "navigation bar",
+    "nav bar",
+    "navigation bar background",
   ],
   cards: [
     "card background",
@@ -1530,6 +1535,16 @@ class VoiceCommandManager {
     });
 
     if (uniqueTargets.length) {
+      logColorChangeSuccess({
+        source: 'voice',
+        action: 'set',
+        targets: uniqueTargets,
+        color,
+        matchedCount: uniqueTargets.length,
+      });
+    }
+
+    if (uniqueTargets.length) {
       this.rememberTargetColorContext(uniqueTargets, color, colorLabel);
     }
 
@@ -1723,6 +1738,18 @@ class VoiceCommandManager {
       this.lastTargetColors[target] = nextColor;
       this.highlightTarget(target);
     });
+
+    if (uniqueTargets.length) {
+      logColorChangeSuccess({
+        source: 'voice',
+        action: 'adjust',
+        targets: uniqueTargets,
+        color: uniqueTargets.length === 1 ? this.lastTargetColors[uniqueTargets[0]] : null,
+        matchedCount: uniqueTargets.length,
+        axis,
+        delta,
+      });
+    }
 
     this.lastTargets = uniqueTargets;
     this.lastColor = uniqueTargets.length === 1 ? this.lastTargetColors[uniqueTargets[0]] : null;

@@ -58,6 +58,7 @@ import { computed } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useCart } from '../services/cartStore';
 import { useToast } from '../services/toastStore';
+import { trackBookingCompleted } from '../services/analytics';
 
 const router = useRouter();
 const { getCartItems, getCartTotal, clearCart } = useCart();
@@ -78,6 +79,7 @@ function placeOrder() {
   const itemCount = getCartItems.value.length;
   const totalAmount = grandTotal.value;
 
+  trackBookingCompleted(bookingReference, itemCount, totalAmount);
   clearCart();
 
   pushToast('Booking confirmed. Redirecting to confirmation page...', { type: 'success' });

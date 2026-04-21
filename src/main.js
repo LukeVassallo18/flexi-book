@@ -2,6 +2,15 @@ import "material-icons/iconfont/material-icons.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { initAnalytics } from "./services/analytics";
 import "./style.css";
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App);
+
+initAnalytics();
+
+app.config.errorHandler = (err) => {
+  console.error(err);
+};
+
+app.use(router).mount("#app");

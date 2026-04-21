@@ -160,6 +160,7 @@ import hotelDirectoryData from '../data/hotelDirectory.json';
 import hotelsData from '../data/hotels.json';
 import { useCart } from '../services/cartStore';
 import { useToast } from '../services/toastStore';
+import { trackHotelSearch, trackItemAddedToCart } from '../services/analytics';
 
 const route = useRoute();
 const router = useRouter();
@@ -425,6 +426,13 @@ function handleSearch() {
     guests: searchForm.value.guests,
   };
 
+  trackHotelSearch({
+    destination: searchForm.value.destination,
+    check_in: searchForm.value.checkIn,
+    check_out: searchForm.value.checkOut,
+    guests: searchForm.value.guests,
+  });
+
   router.replace({
     path: '/hotels',
     query: {
@@ -438,6 +446,7 @@ function handleSearch() {
 
 function bookHotel(hotel) {
   addToCart({ ...hotel, type: 'Hotel' });
+  trackItemAddedToCart('Hotel', hotel);
   pushToast(`Added to cart: ${hotel.name}`, { type: 'success' });
   router.push('/cart');
 }

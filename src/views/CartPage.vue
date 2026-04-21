@@ -24,9 +24,9 @@
             <div v-for="item in getCartItems" :key="item.cartId" class="cart-item">
               <div class="item-header">
                 <h3>{{ item.route || item.name || item.location }}</h3>
-                <button 
-                  class="remove-btn" 
-                  @click="removeFromCart(item.cartId)"
+                <button
+                  class="remove-btn"
+                  @click="handleRemoveFromCart(item)"
                   aria-label="Remove item"
                 >
                   <span class="material-icons">close</span>
@@ -151,6 +151,7 @@
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import { useCart } from '../services/cartStore';
+import { trackCartItemRemoved, trackCheckoutStarted } from '../services/analytics';
 
 const router = useRouter();
 const { removeFromCart, getCartItems, getCartTotal } = useCart();
@@ -163,6 +164,11 @@ function getItemType(item) {
   return 'Booking';
 }
 
+function handleRemoveFromCart(item) {
+  trackCartItemRemoved(item);
+  removeFromCart(item.cartId);
+}
+
 function viewDetails(item) {
   selectedItem.value = item;
 }
@@ -172,6 +178,7 @@ function closeDetails() {
 }
 
 function proceedToCheckout() {
+  trackCheckoutStarted(getCartItems.value.length, Math.round(getCartTotal.value * 1.1));
   router.push('/checkout');
 }
 </script>

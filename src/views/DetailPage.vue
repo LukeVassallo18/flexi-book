@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import countriesData from '../data/countries.json';
 import { useCart } from '../services/cartStore';
 import { useToast } from '../services/toastStore';
+import { trackItemViewed, trackItemAddedToCart } from '../services/analytics';
 
 const route = useRoute();
 const router = useRouter();
@@ -179,6 +180,9 @@ function goToRecommendedFlights() {
 
 onMounted(() => {
   inferUserLocation();
+  if (detailItem.value && detailType.value !== 'unknown') {
+    trackItemViewed(detailType.value, detailItem.value);
+  }
 });
 
 function decodePayload(value) {
@@ -408,6 +412,8 @@ function handlePrimaryAction() {
     ...item,
     type: typeMap[detailType.value] || 'Item',
   });
+
+  trackItemAddedToCart(typeMap[detailType.value] || 'Item', item);
 
   const itemName = item.route || item.name || item.city || 'Item';
   pushToast(`Added to cart: ${itemName}`, { type: 'success' });
