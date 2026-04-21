@@ -438,6 +438,10 @@ function friendlyTargetLabel(element, cssProperty) {
     return 'Tab text';
   }
 
+  if (element.matches('[data-a11y-target="tab-background"]')) {
+    return 'Tab background';
+  }
+
   if (element.matches('[data-a11y-target="search-button-text"], .search-btn-label, .search-btn-icon')) {
     return 'Button text';
   }
@@ -514,6 +518,7 @@ function buildGroupSelector(element, cssProperty) {
   if (a11yTarget === 'input-background') return '[data-a11y-target="input-background"]';
   if (a11yTarget === 'input-text') return '[data-a11y-target="input-text"]';
   if (a11yTarget === 'tab-text') return '[data-a11y-target="tab-text"]';
+  if (a11yTarget === 'tab-background') return '[data-a11y-target="tab-background"]';
   if (a11yTarget === 'search-button') return '[data-a11y-target="search-button"]';
   if (a11yTarget === 'search-button-text') return '[data-a11y-target="search-button-text"]';
 
@@ -637,6 +642,10 @@ function inferPropertyForElement(element) {
   }
 
   if (element.matches('[data-a11y-target="form-shell"], [data-a11y-target="form-card"], [data-a11y-target="form-tabs"], [data-a11y-target="input-background"]')) {
+    return 'background-color';
+  }
+
+  if (element.matches('[data-a11y-target="tab-background"]')) {
     return 'background-color';
   }
 
@@ -1361,6 +1370,7 @@ onBeforeUnmount(() => {
                 <div class="voice-guide-chips">
                   <span>“Change navigation text to black”</span>
                   <span>“Change card background to white”</span>
+                  <span>“Change tab background to blue”</span>
                   <span>“Make filter text darker”</span>
                 </div>
               </div>
@@ -1378,6 +1388,10 @@ onBeforeUnmount(() => {
                 <p class="voice-guide-title">Vision modes</p>
                 <div class="voice-guide-chips">
                   <span>“Turn on protanopia”</span>
+                  <span>“I’m protanopic, change the colour scheme”</span>
+                  <span>“I am red colour blind”</span>
+                  <span>“I am green color blind”</span>
+                  <span>“I can’t see blue”</span>
                   <span>“Turn off deuteranopia”</span>
                   <span>“Standard vision”</span>
                 </div>

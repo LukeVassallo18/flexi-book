@@ -109,7 +109,7 @@ function handleSearch(e) {
             type="button"
             role="tab"
             :aria-selected="activeTab === tab.id"
-            data-a11y-target="tab-text"
+            data-a11y-target="tab-background"
             @click="activeTab = tab.id"
           >
             <span class="material-icons tab-icon" aria-hidden="true" data-a11y-target="tab-text">{{ tab.icon }}</span>

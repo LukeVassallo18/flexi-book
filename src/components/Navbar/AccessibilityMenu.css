@@ -195,8 +195,8 @@
   border-radius: 9px;
   min-height: 30px;
   padding: 0 0.5rem;
-  background: var(--color-surface);
-  color: var(--color-heading);
+  background: var(--hero-gradient);
+  color: var(--color-surface);
   font-size: 11px;
   display: inline-flex;
   align-items: center;

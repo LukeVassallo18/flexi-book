@@ -269,6 +269,16 @@ const TARGET_SYNONYMS = {
     "tab labels",
     "form tab text",
   ],
+  tabBackground: [
+    "tab background",
+    "tabs background",
+    "tab button background",
+    "tab buttons background",
+    "tab colour",
+    "tab color",
+    "tabs colour",
+    "tabs color",
+  ],
   heroBackground: [
     "hero",
     "banner",
@@ -386,6 +396,18 @@ const TARGET_PHRASES = {
     "tab labels",
     "form tab text",
   ],
+  tabBackground: [
+    "tab background",
+    "tabs background",
+    "tab button background",
+    "tab buttons background",
+    "active tab background",
+    "selected tab background",
+    "tab colour",
+    "tab color",
+    "tabs colour",
+    "tabs color",
+  ],
   heroBackground: ["hero background", "banner background", "header background"],
   heroText: ["hero text", "banner text", "header text"],
   heroTitle: ["title", "titles", "title only", "hero title"],
@@ -403,6 +425,7 @@ const TARGET_PRIORITY = [
   "filters",
   "inputBackground",
   "formBackground",
+  "tabBackground",
   "tabText",
   "inputText",
   "stars",
@@ -419,7 +442,7 @@ const ACTION_VERB_PATTERN = /\b(make|change|set|turn|update|switch|apply|paint|c
 const CONTINUATION_PATTERN = /\b(too|also|as\s+well|same|it|them)\b/;
 const RESET_TERMS = ['reset colours', 'reset colors', 'undo', 'go back to default', 'default theme', 'reset'];
 const HELP_MESSAGE =
-  "You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, filter text, headings, stars, buttons, hero background, hero title, background, or borders. You can also say: make hero title lighter, change hero title to white, make filter text darker, change input text background, buttons too, increase brightness, turn on protanopia, or turn off deuteranopia.";
+  "You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, tab background, tab text, filter text, headings, stars, buttons, hero background, hero title, background, or borders. You can also say: make hero title lighter, change hero title to white, make filter text darker, change tab background to blue, change input text background, buttons too, increase brightness, I'm protanopic so change the colour scheme, I am red colour blind, I am green colour blind, I cannot see blue, or turn off deuteranopia.";
 const SMALL_STEP_PATTERN = /\b(a bit|a little|a little bit|little bit|slightly|somewhat|tiny bit)\b/;
 const LARGE_STEP_PATTERN = /\b(a lot|much|way more|way less|far more|far less|significantly)\b/;
 const GENERIC_MORE_PATTERN = /\b(more|increase|higher|stronger)\b/;
@@ -504,9 +527,21 @@ const GLOBAL_HIGHLIGHT_SELECTOR = [
 ].join(", ");
 
 const VISION_MODE_ALIASES = {
-  protanopia: /\b(protanopia|protenopia|protanopium|protenopium|protonopia)\b|\bpro\s*(?:ten|to|ta)?\s*op(?:ia|ium)\b/,
-  deuteranopia: /\b(deuteranopia|deuteronopia|dueteranopia|deutranopia|duteranopia)\b|\bdeu?\s*(?:ter|tur|tra|tero)?\s*anop(?:ia|ium)\b/,
-  tritanopia: /\b(tritanopia|trytanopia|tritonopia)\b|\btr(?:i|y)\s*(?:tan|ton)?\s*op(?:ia|ium)\b/,
+  protanopia: /\b(protanopia|protenopia|protanopium|protenopium|protonopia|protanopic|protenopic|protanope|protan|protonopic|protanoby)\b|\bpro\s*(?:ten|to|ta)?\s*op(?:ia|ium|ic)\b/,
+  deuteranopia: /\b(deuteranopia|deuteronopia|dueteranopia|deutranopia|duteranopia|deuteranopic|deutanopic|deuteranope|deutan|deutronopia|deutranopic)\b|\bdeu?\s*(?:ter|tur|tra|tero)?\s*anop(?:ia|ium|ic)\b/,
+  tritanopia: /\b(tritanopia|trytanopia|tritonopia|tritanopic|tritanope|tritan|trytonopia|tritanoby)\b|\btr(?:i|y)\s*(?:tan|ton)?\s*op(?:ia|ium|ic)\b/,
+};
+
+const VISION_MODE_VARIANTS = {
+  protanopia: ['protanopia', 'protenopia', 'protanopium', 'protenopium', 'protonopia', 'protanopic', 'protenopic', 'protanope', 'protan', 'protonopic', 'protanoby', 'protenopiummode'],
+  deuteranopia: ['deuteranopia', 'deuteronopia', 'dueteranopia', 'deutranopia', 'duteranopia', 'deuteranopic', 'deutanopic', 'deuteranope', 'deutan', 'deutronopia', 'deutranopic'],
+  tritanopia: ['tritanopia', 'trytanopia', 'tritonopia', 'tritanopic', 'tritanope', 'tritan', 'trytonopia', 'tritanoby'],
+};
+
+const VISION_MODE_ROOT_HINTS = {
+  protanopia: ['pro', 'prot'],
+  deuteranopia: ['deu', 'deut'],
+  tritanopia: ['tri', 'trit'],
 };
 
 const TARGET_TO_VARS = {
@@ -537,6 +572,7 @@ const TARGET_TO_VARS = {
   ],
   inputBackground: ["--color-input-background"],
   formBackground: [],
+  tabBackground: [],
   tabText: [],
   stars: ["--color-star"],
   hero: ["--hero-gradient"],
@@ -586,6 +622,8 @@ const TARGET_HIGHLIGHT_SELECTORS = {
     '.input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea, [data-a11y-target="input-background"]',
   formBackground:
     '.search-form, .search-shell, .search-card, [data-a11y-target="form-shell"], [data-a11y-target="form-tabs"], [data-a11y-target="form-card"]',
+  tabBackground:
+    '.travel-tabs .tab, .travel-tabs .tab.active, [data-a11y-target="tab-background"]',
   tabText:
     '.travel-tabs .tab, .travel-tabs .tab .material-icons, .travel-tabs .tab span, [data-a11y-target="tab-text"]',
   stars: ".rating .material-icons, .material-icons.star",
@@ -642,6 +680,11 @@ class VoiceCommandManager {
     this.isActive = false;
     this.isSupported = false;
     this.toastEl = null;
+    this.toastMessageEl = null;
+    this.toastIconEl = null;
+    this.toastCloseEl = null;
+    this.boundToastCloseHandler = null;
+    this.toastTimer = null;
     this.fallbackEl = null;
     this.restartOnEnd = false;
     this.onStateChange = null;
@@ -953,7 +996,11 @@ class VoiceCommandManager {
 
   parseCommand(transcript) {
     const text = transcript.toLowerCase();
-    const normalized = text.replace(/[^a-z0-9#(),\s-]/g, ' ').replace(/\s+/g, ' ').trim();
+    const normalized = text
+      .replace(/[’']/g, '')
+      .replace(/[^a-z0-9#(),\s-]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
     const colorToken = this.extractColorToken(normalized);
     const color = colorToken?.value || null;
     const colorLabel = colorToken?.label || 'selected colour';
@@ -1019,32 +1066,148 @@ class VoiceCommandManager {
       .replace(/\b10\b/g, 'ten')
       .replace(/[^a-z]/g, '');
 
-    const compactVariants = {
-      protanopia: ['protanopia', 'protenopia', 'protanopium', 'protenopium', 'protonopia', 'protenopiummode'],
-      deuteranopia: ['deuteranopia', 'deuteronopia', 'dueteranopia', 'deutranopia', 'duteranopia'],
-      tritanopia: ['tritanopia', 'trytanopia', 'tritonopia'],
-    };
+    const directMatch = this.matchVisionModeByAliases(normalized, compact);
+    if (directMatch) return directMatch;
 
+    const fuzzyMatch = this.matchVisionModeByFuzzyToken(normalized);
+    if (fuzzyMatch) return fuzzyMatch;
+
+    return null;
+  }
+
+  matchVisionModeByAliases(normalized, compact) {
     if (
       VISION_MODE_ALIASES.deuteranopia.test(normalized)
-      || compactVariants.deuteranopia.some((token) => compact.includes(token))
+      || VISION_MODE_VARIANTS.deuteranopia.some((token) => compact.includes(token))
     ) return 'deuteranopia';
 
     if (
       VISION_MODE_ALIASES.protanopia.test(normalized)
-      || compactVariants.protanopia.some((token) => compact.includes(token))
+      || VISION_MODE_VARIANTS.protanopia.some((token) => compact.includes(token))
     ) return 'protanopia';
 
     if (
       VISION_MODE_ALIASES.tritanopia.test(normalized)
-      || compactVariants.tritanopia.some((token) => compact.includes(token))
+      || VISION_MODE_VARIANTS.tritanopia.some((token) => compact.includes(token))
     ) return 'tritanopia';
+
+    return null;
+  }
+
+  matchVisionModeByFuzzyToken(normalized) {
+    const candidates = this.buildVisionTokenCandidates(normalized);
+    let bestMode = null;
+    let bestDistance = Number.POSITIVE_INFINITY;
+
+    for (const [mode, variants] of Object.entries(VISION_MODE_VARIANTS)) {
+      const roots = VISION_MODE_ROOT_HINTS[mode] || [];
+      for (const candidate of candidates) {
+        if (!roots.some((root) => candidate.includes(root))) continue;
+
+        for (const variant of variants) {
+          const maxDistance = this.getVisionModeFuzzyThreshold(variant.length);
+          const distance = this.editDistanceWithin(candidate, variant, maxDistance);
+          if (distance <= maxDistance && distance < bestDistance) {
+            bestDistance = distance;
+            bestMode = mode;
+          }
+        }
+      }
+    }
+
+    return bestMode;
+  }
+
+  buildVisionTokenCandidates(normalized) {
+    const words = normalized
+      .split(/\s+/)
+      .map((token) => token.replace(/[^a-z]/g, ''))
+      .filter((token) => token.length >= 4);
+
+    const candidates = new Set(words.filter((token) => token.length <= 20));
+
+    for (let i = 0; i < words.length - 1; i += 1) {
+      const joined = `${words[i]}${words[i + 1]}`;
+      if (joined.length <= 20) candidates.add(joined);
+    }
+
+    for (let i = 0; i < words.length - 2; i += 1) {
+      const joined = `${words[i]}${words[i + 1]}${words[i + 2]}`;
+      if (joined.length <= 20) candidates.add(joined);
+    }
+
+    const compact = normalized
+      .replace(/\b10\b/g, 'ten')
+      .replace(/[^a-z]/g, '');
+
+    if (compact.length >= 6 && compact.length <= 20) {
+      candidates.add(compact);
+    }
+
+    return [...candidates];
+  }
+
+  getVisionModeFuzzyThreshold(length) {
+    if (length <= 6) return 1;
+    if (length <= 10) return 2;
+    return 3;
+  }
+
+  editDistanceWithin(source, target, maxDistance) {
+    const sourceLen = source.length;
+    const targetLen = target.length;
+    const lengthDelta = Math.abs(sourceLen - targetLen);
+    if (lengthDelta > maxDistance) return Number.POSITIVE_INFINITY;
+
+    const previous = new Array(targetLen + 1);
+    for (let j = 0; j <= targetLen; j += 1) previous[j] = j;
+
+    for (let i = 1; i <= sourceLen; i += 1) {
+      const current = [i];
+      let rowMin = current[0];
+
+      for (let j = 1; j <= targetLen; j += 1) {
+        const substitutionCost = source[i - 1] === target[j - 1] ? 0 : 1;
+        const nextValue = Math.min(
+          previous[j] + 1,
+          current[j - 1] + 1,
+          previous[j - 1] + substitutionCost,
+        );
+        current[j] = nextValue;
+        if (nextValue < rowMin) rowMin = nextValue;
+      }
+
+      if (rowMin > maxDistance) return Number.POSITIVE_INFINITY;
+
+      for (let j = 0; j <= targetLen; j += 1) {
+        previous[j] = current[j];
+      }
+    }
+
+    return previous[targetLen];
+  }
+
+  extractSelfReportedBlindnessMode(text) {
+    const normalized = text.toLowerCase();
+
+    const redBlindPattern = /\bred\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*red\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:red\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
+    const greenBlindPattern = /\bgreen\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*green\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:green\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
+    const blueBlindPattern = /\bblue\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*blue\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:blue\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
+
+    const cantSeeRedPattern = /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?red\b/;
+    const cantSeeGreenPattern = /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?green\b/;
+    const cantSeeBluePattern = /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?blue\b/;
+
+    if (redBlindPattern.test(normalized) || cantSeeRedPattern.test(normalized)) return 'protanopia';
+    if (greenBlindPattern.test(normalized) || cantSeeGreenPattern.test(normalized)) return 'deuteranopia';
+    if (blueBlindPattern.test(normalized) || cantSeeBluePattern.test(normalized)) return 'tritanopia';
 
     return null;
   }
 
   extractVisionModeCommand(text) {
     const requestedMode = this.extractPreset(text);
+    const selfReportedMode = this.extractSelfReportedBlindnessMode(text);
     const turnOffRequested = /\b(turn off|switch off|disable|stop|remove|exit)\b/.test(text);
     const standardModeRequested = /\b(standard|normal|default)\s+(vision|mode|colou?r vision|theme)?\b/.test(text)
       || /\b(turn off|disable|remove)\s+(colou?r vision|vision mode)\b/.test(text);
@@ -1053,6 +1216,13 @@ class VoiceCommandManager {
       return {
         intent: 'SET_VISION_MODE',
         mode: turnOffRequested ? 'none' : requestedMode,
+      };
+    }
+
+    if (selfReportedMode) {
+      return {
+        intent: 'SET_VISION_MODE',
+        mode: turnOffRequested ? 'none' : selfReportedMode,
       };
     }
 
@@ -1142,6 +1312,19 @@ class VoiceCommandManager {
       }
     }
 
+    const hasTabContext = /\b(tab|tabs)\b/.test(text);
+    if (hasTabContext) {
+      if (/\b(background|colour|color|shade)\b/.test(text)) {
+        foundTargets.add('tabBackground');
+        foundTargets.delete('background');
+      }
+
+      if (/\b(text|label|labels|words|font|copy)\b/.test(text)) {
+        foundTargets.add('tabText');
+        foundTargets.delete('text');
+      }
+    }
+
     if (
       foundTargets.has('inputBackground')
       && foundTargets.has('inputText')
@@ -1160,6 +1343,14 @@ class VoiceCommandManager {
 
     if (foundTargets.has('cardText')) {
       foundTargets.delete('text');
+    }
+
+    if (foundTargets.has('tabText')) {
+      foundTargets.delete('text');
+    }
+
+    if (foundTargets.has('tabBackground')) {
+      foundTargets.delete('background');
     }
 
     if (foundTargets.has('cardIcons')) {
@@ -1707,6 +1898,38 @@ class VoiceCommandManager {
       return;
     }
 
+    if (target === "tabBackground") {
+      const activeBorderColor = this.adjustColorBrightness(color, -0.2);
+      this.setScopedTargetRule(
+        "tabBackground",
+        `
+        [data-a11y-target="tab-background"] {
+          background: ${color} !important;
+          background-color: ${color} !important;
+          border-color: ${activeBorderColor} !important;
+        }
+
+        .travel-tabs::before {
+          background: ${color} !important;
+          box-shadow: 0 6px 16px rgba(24, 31, 37, 0.10), inset 0 0 0 1px ${activeBorderColor} !important;
+        }
+
+        .travel-tabs .tab.active {
+          background: ${color} !important;
+          border-color: ${activeBorderColor} !important;
+          box-shadow: inset 0 0 0 1px ${activeBorderColor} !important;
+        }
+      `,
+      );
+      this.lastTargetColors[target] = color;
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
+      return;
+    }
+
     const vars = TARGET_TO_VARS[target] || [];
     vars.forEach((cssVar) => {
       if (cssVar === '--hero-gradient') {
@@ -1965,6 +2188,15 @@ class VoiceCommandManager {
       );
     }
 
+    if (target === "tabBackground") {
+      return (
+        this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.tabBackground, "background-color") ||
+        this.readSelectorColor(".travel-tabs", "background-color") ||
+        rootStyle.getPropertyValue("--color-surface").trim() ||
+        "#ffffff"
+      );
+    }
+
     if (target === 'cards') {
       return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.cards, 'background-color')
         || rootStyle.getPropertyValue('--color-surface').trim()
@@ -2000,7 +2232,7 @@ class VoiceCommandManager {
       }
     }
 
-    const fallbackProperty = ['background', 'cards', 'buttons', 'inputBackground', 'navBackground'].includes(target)
+    const fallbackProperty = ['background', 'cards', 'buttons', 'inputBackground', 'navBackground', 'tabBackground'].includes(target)
       ? 'background-color'
       : 'color';
     return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS[target], fallbackProperty) || this.lastColor || '#808080';
@@ -2293,45 +2525,122 @@ class VoiceCommandManager {
     const toast = document.createElement('div');
     toast.className = 'voice-toast';
     toast.setAttribute('aria-live', 'polite');
+
+    const iconEl = document.createElement('span');
+    iconEl.className = 'voice-toast-icon';
+    iconEl.setAttribute('aria-hidden', 'true');
+
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'voice-toast-close';
+    closeButton.setAttribute('aria-label', 'Dismiss voice feedback');
+    closeButton.innerHTML = '<span class="material-icons" aria-hidden="true">close</span>';
+
+    const messageEl = document.createElement('p');
+    messageEl.className = 'voice-toast-message';
+
+    toast.appendChild(iconEl);
+    toast.appendChild(messageEl);
+    toast.appendChild(closeButton);
+
     document.body.appendChild(toast);
 
     const style = document.createElement('style');
     style.textContent = `
       .voice-toast {
         position: fixed;
-        left: 50%;
+        right: 1rem;
         bottom: 1rem;
-        transform: translateX(-50%) translateY(120%);
+        transform: translateY(120%);
         z-index: 9999;
-        background: #ffffff;
-        color: #111111;
-        border: 1px solid #cfd7df;
+        width: min(360px, calc(100vw - 1.25rem));
+        background: rgba(8, 33, 69, 0.92);
+        color: #ffffff;
+        border: 1px solid rgba(122, 199, 255, 0.36);
         border-radius: 10px;
-        padding: 0.5rem 0.8rem;
-        font-size: 0.85rem;
+        padding: 0.45rem 0.55rem;
+        min-height: 44px;
+        box-sizing: border-box;
         opacity: 0;
-        transition: transform 180ms ease, opacity 180ms ease;
-        display: inline-flex;
+        transition: transform 190ms ease, opacity 190ms ease;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
-        gap: 0.45rem;
+        gap: 0.42rem;
+        box-shadow: 0 10px 24px rgba(6, 15, 28, 0.26);
+        backdrop-filter: blur(6px);
       }
 
       .voice-toast .voice-toast-icon {
-        font-size: 0.95rem;
+        font-size: 16px;
         line-height: 1;
+        color: #8adfff;
       }
 
       .voice-toast .voice-toast-message {
+        margin: 0;
+        font-size: 0.82rem;
         line-height: 1.25;
+        letter-spacing: 0.005em;
+      }
+
+      .voice-toast .voice-toast-close {
+        border: 0;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.9);
+        cursor: pointer;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.16s ease;
+      }
+
+      .voice-toast .voice-toast-close:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .voice-toast .voice-toast-close .material-icons {
+        font-size: 16px;
       }
 
       .voice-toast.show {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
+      }
+
+      @media (max-width: 680px) {
+        .voice-toast {
+          right: 0.6rem;
+          bottom: 0.75rem;
+          width: min(320px, calc(100vw - 1.2rem));
+          min-height: 40px;
+          border-radius: 9px;
+          padding: 0.4rem 0.5rem;
+        }
+
+        .voice-toast .voice-toast-icon {
+          font-size: 15px;
+        }
+
+        .voice-toast .voice-toast-message {
+          font-size: 0.78rem;
+        }
       }
     `;
     document.head.appendChild(style);
 
+    this.boundToastCloseHandler = () => {
+      toast.classList.remove('show');
+      window.clearTimeout(this.toastTimer);
+    };
+    closeButton.addEventListener('click', this.boundToastCloseHandler);
+
+    this.toastMessageEl = messageEl;
+    this.toastIconEl = iconEl;
+    this.toastCloseEl = closeButton;
     this.toastEl = toast;
   }
 
@@ -2342,7 +2651,8 @@ class VoiceCommandManager {
   showToast(message, options = {}) {
     if (!this.toastEl) this.ensureToast();
     const icon = options.icon || '💬';
-    this.toastEl.innerHTML = `<span class="voice-toast-icon" aria-hidden="true">${icon}</span><span class="voice-toast-message">${message}</span>`;
+    if (this.toastIconEl) this.toastIconEl.textContent = icon;
+    if (this.toastMessageEl) this.toastMessageEl.textContent = message;
     this.toastEl.classList.add('show');
 
     window.clearTimeout(this.toastTimer);
@@ -2373,6 +2683,12 @@ class VoiceCommandManager {
     if (this.onStateChange) {
       this.onStateChange({ active: false, supported: this.isSupported });
     }
+
+    if (this.toastCloseEl && this.boundToastCloseHandler) {
+      this.toastCloseEl.removeEventListener('click', this.boundToastCloseHandler);
+    }
+
+    window.clearTimeout(this.toastTimer);
 
     this.emitTranscript('', false);
     window.clearTimeout(this.transcriptClearTimer);

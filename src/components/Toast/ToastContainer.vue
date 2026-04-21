@@ -21,11 +21,14 @@ function iconFor(type) {
         :class="`toast-${toast.type}`"
         role="status"
       >
-        <span class="material-icons toast-icon" aria-hidden="true">{{ iconFor(toast.type) }}</span>
-        <span class="toast-message">{{ toast.message }}</span>
-        <button type="button" class="toast-close" aria-label="Dismiss notification" @click="removeToast(toast.id)">
-          <span class="material-icons" aria-hidden="true">close</span>
-        </button>
+        <div class="toast-rail">
+          <span class="toast-rail-line" aria-hidden="true"></span>
+          <span class="material-icons toast-icon" aria-hidden="true">{{ iconFor(toast.type) }}</span>
+          <button type="button" class="toast-close" aria-label="Dismiss notification" @click="removeToast(toast.id)">
+            <span class="material-icons" aria-hidden="true">close</span>
+          </button>
+        </div>
+        <p class="toast-message">{{ toast.message }}</p>
       </div>
     </TransitionGroup>
   </div>
@@ -45,36 +48,61 @@ function iconFor(type) {
 .toast-stack {
   display: grid;
   gap: 0.5rem;
-  width: min(560px, 100%);
+  width: min(760px, 100%);
 }
 
 .toast-item {
+  --toast-accent: #66d9ff;
   pointer-events: auto;
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 0.45rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(135deg, #0b1f3a, #102a4d);
+  grid-template-columns: 44px 1fr;
+  align-items: stretch;
+  gap: 0.52rem;
+  border-radius: 14px;
+  border: 2px solid color-mix(in srgb, var(--toast-accent) 70%, transparent);
+  background: linear-gradient(135deg, #082145 0%, #0b2b56 100%);
   color: #ffffff;
-  padding: 0.65rem 0.7rem;
-  box-shadow: 0 18px 40px rgba(6, 15, 28, 0.28), 0 0 0 1px rgba(92, 150, 255, 0.14);
+  padding: 0.52rem 0.68rem;
+  min-height: 62px;
+  box-shadow: 0 18px 40px rgba(6, 15, 28, 0.36), 0 0 0 1px rgba(111, 178, 255, 0.12);
+}
+
+.toast-rail {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-items: start;
+  justify-items: center;
+  gap: 0.3rem;
+  padding-top: 0.03rem;
+}
+
+.toast-rail-line {
+  width: 5px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--toast-accent);
 }
 
 .toast-icon {
-  font-size: 18px;
+  font-size: 23px;
+  line-height: 1;
+  color: var(--toast-accent);
 }
 
 .toast-message {
+  margin: 0;
+  display: flex;
+  align-items: center;
   font-size: 0.9rem;
   line-height: 1.25;
+  letter-spacing: 0.01em;
+  padding-right: 0.12rem;
 }
 
 .toast-close {
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   width: 26px;
   height: 26px;
@@ -82,55 +110,28 @@ function iconFor(type) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-top: auto;
+  transition: background-color 0.16s ease;
+}
+
+.toast-close:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .toast-close .material-icons {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .toast-success {
-  border-color: rgba(76, 198, 255, 0.45);
+  --toast-accent: #66d9ff;
 }
 
 .toast-error {
-  border-color: rgba(255, 140, 120, 0.55);
+  --toast-accent: #ff9582;
 }
 
 .toast-warning {
-  border-color: rgba(255, 214, 102, 0.55);
-}
-
-.toast-success .toast-icon {
-  color: #66d9ff;
-}
-
-.toast-error .toast-icon {
-  color: #ff9a86;
-}
-
-.toast-warning .toast-icon {
-  color: #ffd96a;
-}
-
-.toast-item::before {
-  content: '';
-  width: 4px;
-  align-self: stretch;
-  border-radius: 999px;
-  background: rgba(102, 217, 255, 0.95);
-  margin-right: 0.15rem;
-}
-
-.toast-success::before {
-  background: linear-gradient(180deg, #70e2ff, #57c0ff);
-}
-
-.toast-error::before {
-  background: linear-gradient(180deg, #ffb2a3, #ff8b73);
-}
-
-.toast-warning::before {
-  background: linear-gradient(180deg, #ffe48f, #ffd15b);
+  --toast-accent: #ffd96a;
 }
 
 .toast-slide-enter-active,
@@ -141,6 +142,24 @@ function iconFor(type) {
 .toast-slide-enter-from,
 .toast-slide-leave-to {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(20px) scale(0.98);
+}
+
+@media (max-width: 680px) {
+  .toast-item {
+    min-height: 58px;
+    border-radius: 12px;
+    padding: 0.46rem 0.58rem;
+    grid-template-columns: 40px 1fr;
+    gap: 0.46rem;
+  }
+
+  .toast-icon {
+    font-size: 20px;
+  }
+
+  .toast-message {
+    font-size: 0.84rem;
+  }
 }
 </style>
