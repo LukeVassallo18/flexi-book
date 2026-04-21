@@ -453,45 +453,50 @@ const CARD_TARGET_SELECTOR = [
 ].join(', ');
 
 const BUTTON_TARGET_SELECTOR = [
-  '.search-btn',
-  '.book-btn',
-  '.checkout-btn',
-  '.toggle-filters-btn',
-  '.clear-btn',
-  '.page-btn',
-  '.back-btn',
-  '.recommend-btn',
-  '.btn-primary',
-  '.btn-secondary',
-  '.remove-btn',
-  '.view-details-btn',
-  '.secondary-btn',
-  '.primary-btn',
-  '.proceed-btn',
-  '.cart-btn',
-  '.signin-btn',
-  '.accessibility-btn',
-  '.cta-btn',
-  '.deal-bottom button',
-  '.hotel-bottom button',
-  '.rental-bottom button',
-].join(', ');
+  '[data-a11y-target="search-button"]',
+  ".search-btn",
+  ".book-btn",
+  ".checkout-btn",
+  ".toggle-filters-btn",
+  ".clear-btn",
+  ".page-btn",
+  ".back-btn",
+  ".recommend-btn",
+  ".btn-primary",
+  ".btn-secondary",
+  ".remove-btn",
+  ".view-details-btn",
+  ".secondary-btn",
+  ".primary-btn",
+  ".proceed-btn",
+  ".cart-btn",
+  ".signin-btn",
+  ".accessibility-btn",
+  ".cta-btn",
+  ".deal-bottom button",
+  ".hotel-bottom button",
+  ".rental-bottom button",
+].join(", ");
 
 const ICON_TARGET_SELECTOR = '.material-icons, .material-symbols-outlined, svg, i, [class*="icon"]';
 const GLOBAL_HIGHLIGHT_SELECTOR = [
-  '#app',
-  '.navbar',
-  '.hero',
-  '.flights-hero',
-  '.hotels-hero',
-  '.rentals-hero',
-  '.search-form',
-  '.search-card',
-  '.filters',
-  '.input-wrap',
+  "#app",
+  ".navbar",
+  ".hero",
+  ".flights-hero",
+  ".hotels-hero",
+  ".rentals-hero",
+  ".search-form",
+  '[data-a11y-target="form-shell"]',
+  '[data-a11y-target="form-card"]',
+  '[data-a11y-target="form-tabs"]',
+  '[data-a11y-target="input-background"]',
+  ".search-card",
+  ".filters",
+  ".input-wrap",
   CARD_TARGET_SELECTOR,
   BUTTON_TARGET_SELECTOR,
-].join(', ');
+].join(", ");
 
 const VISION_MODE_ALIASES = {
   protanopia: /\b(protanopia|protenopia|protanopium|protenopium|protonopia)\b|\bpro\s*(?:ten|to|ta)?\s*op(?:ia|ium)\b/,
@@ -571,12 +576,13 @@ const TARGET_HIGHLIGHT_SELECTORS = {
   filters:
     ".filters h2, .filters .filter-group h3, .filters .filter-group label, .filters .filter-group p",
   inputText:
-    ".input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea, .input-wrap .material-icons",
+    '.input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea, .input-wrap .material-icons, [data-a11y-target="input-text"], [data-a11y-target="input-background"] .field-icon',
   inputBackground:
-    ".input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea",
-  formBackground: ".search-shell, .search-card",
+    '.input-wrap, .input-wrap input, .input-wrap select, .input-wrap textarea, [data-a11y-target="input-background"]',
+  formBackground:
+    '.search-form, .search-shell, .search-card, [data-a11y-target="form-shell"], [data-a11y-target="form-tabs"], [data-a11y-target="form-card"]',
   tabText:
-    ".travel-tabs .tab, .travel-tabs .tab .material-icons, .travel-tabs .tab span",
+    '.travel-tabs .tab, .travel-tabs .tab .material-icons, .travel-tabs .tab span, [data-a11y-target="tab-text"]',
   stars: ".rating .material-icons, .material-icons.star",
   hero: '.hero, .flights-hero, .hotels-hero, .rentals-hero, [class$="-hero"]',
   heroBackground:
@@ -2304,18 +2310,6 @@ class VoiceCommandManager {
 
   speakAndToast(message, options = {}) {
     this.showToast(message, options);
-
-    if (!('speechSynthesis' in window)) return;
-    try {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(message);
-      utterance.lang = 'en-US';
-      utterance.rate = 1;
-      utterance.pitch = 1;
-      window.speechSynthesis.speak(utterance);
-    } catch (_) {
-      // no-op
-    }
   }
 
   showToast(message, options = {}) {

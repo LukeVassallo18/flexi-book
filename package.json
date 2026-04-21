@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "analytics": "github:vercel/analytics",
     "material-icons": "^1.13.14",
     "vue": "^3.5.25",
     "vue-router": "^4.6.4"

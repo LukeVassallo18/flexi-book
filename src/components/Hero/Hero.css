@@ -60,6 +60,7 @@
   border-radius: 12px;
   background: var(--color-surface);
   overflow: hidden;
+  box-shadow: 0 14px 30px rgba(24, 31, 37, 0.12);
 }
 
 /* Tabs */
@@ -136,6 +137,7 @@
   border-radius: 0 0 12px 12px;
   padding: 24px;
   box-shadow: var(--shadow-elevated);
+  border-top: 1px solid color-mix(in srgb, var(--color-border) 65%, transparent);
 }
 
 .field-grid {
@@ -149,6 +151,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-height: 78px;
 }
 
 .field-label {
@@ -168,10 +171,16 @@
   width: 100%;
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  height: 46px;
+  min-height: 48px;
   background: var(--color-bg);
   padding: 0 12px;
   gap: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-wrap:focus-within {
+  border-color: color-mix(in srgb, var(--color-primary) 60%, var(--color-border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-tint) 60%, transparent);
 }
 
 .field-icon {
@@ -246,6 +255,11 @@
 
 .search-btn .material-icons {
   font-size: 1rem;
+  color: inherit;
+}
+
+.search-btn-label,
+.tab-label {
   color: inherit;
 }
 

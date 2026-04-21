@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
+import { trackUiClick } from '../../services/analytics';
 import { VoiceCommandManager } from '../../services/VoiceCommandManager';
 
 const CVD_MODES = [
@@ -247,8 +248,9 @@ const defaultColors = {
 };
 
 const PICKABLE_SELECTOR = 'h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li, button, input, textarea, select, .material-icons, svg, path, i, div';
-const BACKGROUND_HINT_SELECTOR = '.feature-card, .dest-card, .deal-card, .hotel-card, .rental-card, .detail-card, .review-card, .icon-box, .deal-thumb, .hotel-thumb, .rental-thumb, .filters, .search-form, .input-wrap';
+const BACKGROUND_HINT_SELECTOR = '.feature-card, .dest-card, .deal-card, .hotel-card, .rental-card, .detail-card, .review-card, .icon-box, .deal-thumb, .hotel-thumb, .rental-thumb, .filters, .search-form, .input-wrap, [data-a11y-target="form-shell"], [data-a11y-target="form-card"], [data-a11y-target="input-background"]';
 const HERO_BACKGROUND_SELECTOR = '.hotels-hero, .flights-hero, .rentals-hero, .hero, [class$="-hero"]';
+const BUTTON_HINT_SELECTOR = 'button, .search-btn, .book-btn, .checkout-btn, .toggle-filters-btn, .clear-btn, .page-btn, .back-btn, .recommend-btn, .btn-primary, .btn-secondary, .remove-btn, .view-details-btn, .secondary-btn, .primary-btn, .proceed-btn, .cta-btn, .cart-btn, .signin-btn, [data-a11y-target="search-button"]';
 
 const open = ref(false);
 const menuWrapRef = ref(null);
@@ -419,6 +421,26 @@ function friendlyTargetLabel(element, cssProperty) {
     return 'Input placeholder';
   }
 
+  if (element.matches('[data-a11y-target="form-shell"], [data-a11y-target="form-card"], [data-a11y-target="form-tabs"]')) {
+    return 'Form background';
+  }
+
+  if (element.matches('[data-a11y-target="input-background"]')) {
+    return 'Input background';
+  }
+
+  if (element.matches('[data-a11y-target="input-text"], .field-icon')) {
+    return 'Input text';
+  }
+
+  if (element.matches('[data-a11y-target="tab-text"], .tab-label')) {
+    return 'Tab text';
+  }
+
+  if (element.matches('[data-a11y-target="search-button-text"], .search-btn-label, .search-btn-icon')) {
+    return 'Button text';
+  }
+
   if (cssProperty === 'background' && element.closest(HERO_BACKGROUND_SELECTOR)) {
     return 'Hero background';
   }
@@ -428,6 +450,7 @@ function friendlyTargetLabel(element, cssProperty) {
   }
 
   if (cssProperty.startsWith('background')) {
+    if (element.closest(BUTTON_HINT_SELECTOR)) return 'Button background';
     if (element.matches('.hotel-card, .deal-card, .rental-card, .dest-card, .feature-card')) return 'Card background';
     if (element.matches('.input-wrap, input, textarea, select')) return 'Input background';
     return 'Background';
@@ -482,6 +505,25 @@ function getElementTagSelector(element) {
 
 function buildGroupSelector(element, cssProperty) {
   const tag = getElementTagSelector(element);
+  const a11yTarget = element?.getAttribute?.('data-a11y-target');
+
+  if (a11yTarget === 'form-shell' || a11yTarget === 'form-card' || a11yTarget === 'form-tabs') {
+    return '[data-a11y-target="form-shell"], [data-a11y-target="form-tabs"], [data-a11y-target="form-card"]';
+  }
+  if (a11yTarget === 'input-background') return '[data-a11y-target="input-background"]';
+  if (a11yTarget === 'input-text') return '[data-a11y-target="input-text"]';
+  if (a11yTarget === 'tab-text') return '[data-a11y-target="tab-text"]';
+  if (a11yTarget === 'search-button') return '[data-a11y-target="search-button"]';
+  if (a11yTarget === 'search-button-text') return '[data-a11y-target="search-button-text"]';
+
+  if (cssProperty.startsWith('background')) {
+    const buttonEl = element.closest(BUTTON_HINT_SELECTOR);
+    if (buttonEl) {
+      const buttonClass = getStableClassSelector(buttonEl);
+      if (buttonClass) return `${buttonEl.tagName.toLowerCase()}${buttonClass}`;
+      return buttonEl.tagName.toLowerCase();
+    }
+  }
 
   if (cssProperty === 'placeholder-color') {
     if (element.matches('.hero-city-input')) {
@@ -583,7 +625,38 @@ function hasDirectText(element) {
 }
 
 function inferPropertyForElement(element) {
-  const isTextElement = element.matches('h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li, button');
+  const isTextElement = element.matches('h1, h2, h3, h4, h5, h6, p, span, strong, b, em, small, label, a, li');
+
+  if (element.matches('[data-a11y-target="search-button"]')) {
+    return 'background-color';
+  }
+
+  if (element.matches('[data-a11y-target="search-button-text"], .search-btn-label, .search-btn-icon')) {
+    return 'color';
+  }
+
+  if (element.matches('[data-a11y-target="form-shell"], [data-a11y-target="form-card"], [data-a11y-target="form-tabs"], [data-a11y-target="input-background"]')) {
+    return 'background-color';
+  }
+
+  if (element.matches('[data-a11y-target="input-text"], [data-a11y-target="tab-text"], .tab-label')) {
+    if (element.matches('input, textarea')) {
+      const placeholder = (element.getAttribute('placeholder') || '').trim();
+      const currentValue = typeof element.value === 'string' ? element.value.trim() : '';
+      if (placeholder && !currentValue) {
+        return 'placeholder-color';
+      }
+    }
+    return 'color';
+  }
+
+  if (element.matches(BUTTON_HINT_SELECTOR)) {
+    const buttonStyle = window.getComputedStyle(element);
+    const hasButtonBackground = !isTransparentColor(buttonStyle.backgroundColor) || buttonStyle.backgroundImage !== 'none';
+    if (hasButtonBackground) {
+      return buttonStyle.backgroundImage !== 'none' ? 'background' : 'background-color';
+    }
+  }
 
   if (element.matches('path, circle, ellipse, line, polyline, polygon, rect')) {
     return 'fill';
@@ -719,6 +792,18 @@ function cancelTargetPicker() {
   setPickerCursorState(false);
   clearHoveredPickElement();
   pickerHint.value = 'Click "Pick from page", then click an element to edit its color.';
+}
+
+function handlePickerToggleClick() {
+  const nextState = pickerArmed.value ? 'off' : 'on';
+  trackUiClick('a11y_color_picker_toggle', { nextState });
+
+  if (pickerArmed.value) {
+    cancelTargetPicker();
+    return;
+  }
+
+  armTargetPicker();
 }
 
 function updatePickedColorFromText(value) {
@@ -858,6 +943,13 @@ function applyPickedColor() {
 
   saveColorOverride(groupSelector, cssProperty, pickedColor.value);
 
+  trackUiClick('a11y_color_picker_apply', {
+    targetLabel: pickedTarget.value.label,
+    cssProperty,
+    color: pickedColor.value,
+    matchedCount: applyTo.length,
+  });
+
   pickerHint.value = `Applied ${pickedColor.value} to ${pickedTarget.value.label} (${applyTo.length} matching element${applyTo.length === 1 ? '' : 's'}).`;
 }
 
@@ -919,20 +1011,34 @@ function applyNativeVisionScheme(mode) {
   if (!CVD_MODES.some((entry) => entry.value === mode) || mode === 'none') return;
 
   clearAllCustomColorOverrides();
-  highContrast.value = false;
   activeTheme.value = { ...defaultTheme };
   Object.assign(customColors, defaultColors);
   applyCvdClass(mode);
+  applyCurrentTheme(false);
 }
 
 function applyPreset(preset) {
+  trackUiClick('a11y_preset_click', { presetName: preset?.name || 'unknown' });
   activeTheme.value = { ...defaultTheme, ...preset.theme };
   applyCurrentTheme(true);
 }
 
+function toggleHighContrast() {
+  const nextState = highContrast.value ? 'off' : 'on';
+  trackUiClick('a11y_high_contrast_toggle', { nextState });
+  highContrast.value = !highContrast.value;
+}
+
 function resetColors() {
+  trackUiClick('a11y_reset_click');
   clearPersistedColorOverrides();
   window.location.reload();
+}
+
+function toggleA11yMenu() {
+  const nextState = open.value ? 'closed' : 'open';
+  trackUiClick('a11y_menu_toggle', { nextState });
+  open.value = !open.value;
 }
 
 function applyVoiceVisionPreset(mode) {
@@ -981,6 +1087,12 @@ function resetThemeFromVoice() {
 function toggleVoice() {
   if (!voiceManager) return;
 
+  const nextState = voiceEnabled.value ? 'off' : 'on';
+  trackUiClick('a11y_voice_trigger_click', {
+    nextState,
+    supported: voiceSupported.value,
+  });
+
   if (!voiceSupported.value) {
     voiceManager.showSupportFallback();
     return;
@@ -1026,6 +1138,11 @@ function handlePagePick(event) {
     groupSize: match.groupSize,
   };
   pickedColor.value = colorToHexString(match.sampledColor);
+  trackUiClick('a11y_color_picker_target_selected', {
+    targetLabel: match.label,
+    cssProperty: match.cssProperty,
+    matchedCount: match.groupSize,
+  });
   pickerHint.value = `Selected: ${match.label} (${match.groupSize} matching element${match.groupSize === 1 ? '' : 's'}). Choose a color and apply.`;
   pickerArmed.value = false;
   setPickerCursorState(false);
@@ -1078,19 +1195,11 @@ watch(cvdMode, (value) => {
 });
 
 watch(cvdSeverity, () => {
-  if (cvdMode.value !== 'none') return;
   applyCurrentTheme(false);
 });
 
 watch(highContrast, (value) => {
-  if (cvdMode.value !== 'none' && value) {
-    highContrast.value = false;
-    document.documentElement.classList.remove('a11y-high-contrast');
-    return;
-  }
-
   document.documentElement.classList.toggle('a11y-high-contrast', value);
-  if (cvdMode.value !== 'none') return;
   applyCurrentTheme(false);
 });
 
@@ -1131,11 +1240,6 @@ onMounted(() => {
       },
       getHighContrast: () => highContrast.value,
       setHighContrast: (value) => {
-        if (cvdMode.value !== 'none') {
-          highContrast.value = false;
-          document.documentElement.classList.remove('a11y-high-contrast');
-          return false;
-        }
         highContrast.value = Boolean(value);
         applyCurrentTheme(false);
         return highContrast.value;
@@ -1187,7 +1291,7 @@ onBeforeUnmount(() => {
       class="a11y-trigger"
       aria-label="Accessibility settings"
       :aria-expanded="open"
-      @click="open = !open"
+      @click="toggleA11yMenu"
     >
       <span class="material-icons" aria-hidden="true">accessibility_new</span>
       <span class="a11y-label">Accessibility</span>
@@ -1301,7 +1405,7 @@ onBeforeUnmount(() => {
 
           <div class="switch-row">
             <label>High Contrast</label>
-            <button class="switch" :class="{ on: highContrast }" @click="highContrast = !highContrast">
+            <button class="switch" :class="{ on: highContrast }" @click="toggleHighContrast">
               <span></span>
             </button>
           </div>
@@ -1363,7 +1467,7 @@ onBeforeUnmount(() => {
                 type="button"
                 class="picker-btn"
                 :class="{ active: pickerArmed }"
-                @click="pickerArmed ? cancelTargetPicker() : armTargetPicker()"
+                @click="handlePickerToggleClick"
               >
                 <span class="material-icons">ads_click</span>
                 <span>{{ pickerArmed ? 'Cancel picking' : 'Pick from page' }}</span>
