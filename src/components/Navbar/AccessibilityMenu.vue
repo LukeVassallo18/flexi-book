@@ -1049,8 +1049,7 @@ function toggleHighContrast() {
 
 function resetColors() {
   trackUiClick('a11y_reset_click');
-  clearPersistedColorOverrides();
-  window.location.reload();
+  resetThemeToStandard();
 }
 
 function toggleA11yMenu() {
@@ -1089,16 +1088,22 @@ function setVoiceVisionMode(mode) {
 }
 
 function resetThemeFromVoice() {
+  resetThemeToStandard();
+}
+
+function resetThemeToStandard() {
   highContrast.value = false;
   cvdMode.value = 'none';
   cvdSeverity.value = 100;
   brightness.value = 100;
   saturation.value = 100;
   clearPersistedColorOverrides();
-  clearElementCustomOverrides();
+  clearAllCustomColorOverrides();
   const persistedStyleEl = document.getElementById(PERSISTED_COLOR_OVERRIDES_STYLE_ID);
   if (persistedStyleEl) persistedStyleEl.textContent = '';
   activeTheme.value = { ...defaultTheme };
+  Object.assign(customColors, defaultColors);
+  applyCvdClass('none');
   applyCurrentTheme(true);
 }
 

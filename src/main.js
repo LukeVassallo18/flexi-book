@@ -5,6 +5,12 @@ import router from "./router";
 import { initAnalytics } from "./services/analytics";
 import "./style.css";
 
+const DISCLAIMER_STORAGE_KEY = "flexi-book-disclaimer-accepted";
+
+if (typeof window !== "undefined") {
+  window.localStorage.removeItem(DISCLAIMER_STORAGE_KEY);
+}
+
 const app = createApp(App);
 
 initAnalytics();
