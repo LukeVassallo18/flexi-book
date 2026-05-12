@@ -1,7 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import { trackUiClick } from '../../services/analytics';
-import { logColorChangeSuccess } from '../../services/colorChangeLogger';
 import { VoiceCommandManager } from '../../services/VoiceCommandManager';
 
 const CVD_MODES = [
@@ -952,14 +951,6 @@ function applyPickedColor() {
   });
 
   saveColorOverride(groupSelector, cssProperty, pickedColor.value);
-
-  logColorChangeSuccess({
-    source: 'picker',
-    targetLabel: pickedTarget.value.label,
-    cssProperty,
-    color: pickedColor.value,
-    matchedCount: applyTo.length,
-  });
 
   trackUiClick('a11y_color_picker_apply', {
     targetLabel: pickedTarget.value.label,
