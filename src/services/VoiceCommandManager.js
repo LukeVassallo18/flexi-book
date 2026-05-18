@@ -1,157 +1,155 @@
-import { logColorChangeSuccess } from './colorChangeLogger';
-
 const CVD_PRESETS = {
   deuteranopia: {
-    '--color-bg': '#F7FAFD',
-    '--color-surface': '#EAF3FB',
-    '--color-section-alt': 'rgba(226, 236, 247, 0.60)',
-    '--color-text': '#10253A',
-    '--color-heading': '#0A1B2D',
-    '--color-text-muted': '#4C647A',
-    '--color-text-on-dark': 'rgba(255, 255, 255, 0.86)',
-    '--color-primary': '#E69F00',
-    '--color-primary-dark': '#B97D00',
-    '--color-primary-tint': 'rgba(230, 159, 0, 0.18)',
-    '--color-accent-coral': '#E69F00',
-    '--color-cta-text': '#111111',
-    '--feature-icon-box-bg': 'rgba(230, 159, 0, 0.14)',
-    '--color-cta': '#E69F00',
-    '--color-star': '#174DCC',
-    '--color-nav-bg': 'rgba(247, 250, 253, 0.92)',
-    '--color-nav-text': '#17344D',
-    '--color-border': '#C8D8E8',
-    '--color-border-footer': 'rgba(255, 255, 255, 0.20)',
-    '--color-footer-bg': '#0A1B2D',
-    '--hero-gradient': 'linear-gradient(135deg, #3F72B2, #2F588C)',
-    '--color-hero-text': '#F7FBFF',
-    '--color-filter-text': '#4C647A',
-    '--color-filter-heading': '#0A1B2D',
-    '--color-input-text': '#4C647A',
-    '--color-input-placeholder': '#70859A',
-    '--color-input-icon': '#4C647A',
-    '--color-page-background': '#F7FAFD',
+    "--color-bg": "#F7FAFD",
+    "--color-surface": "#EAF3FB",
+    "--color-section-alt": "rgba(226, 236, 247, 0.60)",
+    "--color-text": "#10253A",
+    "--color-heading": "#0A1B2D",
+    "--color-text-muted": "#4C647A",
+    "--color-text-on-dark": "rgba(255, 255, 255, 0.86)",
+    "--color-primary": "#E69F00",
+    "--color-primary-dark": "#B97D00",
+    "--color-primary-tint": "rgba(230, 159, 0, 0.18)",
+    "--color-accent-coral": "#E69F00",
+    "--color-cta-text": "#111111",
+    "--feature-icon-box-bg": "rgba(230, 159, 0, 0.14)",
+    "--color-cta": "#E69F00",
+    "--color-star": "#174DCC",
+    "--color-nav-bg": "rgba(247, 250, 253, 0.92)",
+    "--color-nav-text": "#17344D",
+    "--color-border": "#C8D8E8",
+    "--color-border-footer": "rgba(255, 255, 255, 0.20)",
+    "--color-footer-bg": "#0A1B2D",
+    "--hero-gradient": "linear-gradient(135deg, #3F72B2, #2F588C)",
+    "--color-hero-text": "#F7FBFF",
+    "--color-filter-text": "#4C647A",
+    "--color-filter-heading": "#0A1B2D",
+    "--color-input-text": "#4C647A",
+    "--color-input-placeholder": "#70859A",
+    "--color-input-icon": "#4C647A",
+    "--color-page-background": "#F7FAFD",
   },
   protanopia: {
-    '--color-bg': '#FCF9F2',
-    '--color-surface': '#FFF6EA',
-    '--color-section-alt': 'rgba(255, 242, 221, 0.62)',
-    '--color-text': '#111111',
-    '--color-heading': '#0A0A0A',
-    '--color-text-muted': '#4F4A43',
-    '--color-text-on-dark': 'rgba(255, 255, 255, 0.88)',
-    '--color-primary': '#56B4E9',
-    '--color-primary-dark': '#2D89BF',
-    '--color-primary-tint': 'rgba(86, 180, 233, 0.18)',
-    '--color-accent-coral': '#56B4E9',
-    '--color-cta-text': '#111111',
-    '--feature-icon-box-bg': 'rgba(86, 180, 233, 0.14)',
-    '--color-cta': '#56B4E9',
-    '--color-star': '#174DCC',
-    '--color-nav-bg': 'rgba(255, 250, 243, 0.94)',
-    '--color-nav-text': '#1B1B1B',
-    '--color-border': '#E7DCCB',
-    '--color-border-footer': 'rgba(255, 255, 255, 0.20)',
-    '--color-footer-bg': '#121212',
-    '--hero-gradient': 'linear-gradient(135deg, #56B4E9, #2D89BF)',
-    '--color-hero-text': '#FFFFFF',
-    '--color-filter-text': '#4F4A43',
-    '--color-filter-heading': '#101010',
-    '--color-input-text': '#4F4A43',
-    '--color-input-placeholder': '#7A746C',
-    '--color-input-icon': '#4F4A43',
-    '--color-page-background': '#FCF9F2',
+    "--color-bg": "#FCF9F2",
+    "--color-surface": "#FFF6EA",
+    "--color-section-alt": "rgba(255, 242, 221, 0.62)",
+    "--color-text": "#111111",
+    "--color-heading": "#0A0A0A",
+    "--color-text-muted": "#4F4A43",
+    "--color-text-on-dark": "rgba(255, 255, 255, 0.88)",
+    "--color-primary": "#56B4E9",
+    "--color-primary-dark": "#2D89BF",
+    "--color-primary-tint": "rgba(86, 180, 233, 0.18)",
+    "--color-accent-coral": "#56B4E9",
+    "--color-cta-text": "#111111",
+    "--feature-icon-box-bg": "rgba(86, 180, 233, 0.14)",
+    "--color-cta": "#56B4E9",
+    "--color-star": "#174DCC",
+    "--color-nav-bg": "rgba(255, 250, 243, 0.94)",
+    "--color-nav-text": "#1B1B1B",
+    "--color-border": "#E7DCCB",
+    "--color-border-footer": "rgba(255, 255, 255, 0.20)",
+    "--color-footer-bg": "#121212",
+    "--hero-gradient": "linear-gradient(135deg, #56B4E9, #2D89BF)",
+    "--color-hero-text": "#FFFFFF",
+    "--color-filter-text": "#4F4A43",
+    "--color-filter-heading": "#101010",
+    "--color-input-text": "#4F4A43",
+    "--color-input-placeholder": "#7A746C",
+    "--color-input-icon": "#4F4A43",
+    "--color-page-background": "#FCF9F2",
   },
   tritanopia: {
-    '--color-bg': '#FAF5FF',
-    '--color-surface': '#F1E9FF',
-    '--color-section-alt': 'rgba(236, 225, 255, 0.60)',
-    '--color-text': '#151321',
-    '--color-heading': '#0F0C1A',
-    '--color-text-muted': '#5D5670',
-    '--color-text-on-dark': 'rgba(255, 255, 255, 0.88)',
-    '--color-primary': '#D55E00',
-    '--color-primary-dark': '#A14600',
-    '--color-primary-tint': 'rgba(213, 94, 0, 0.20)',
-    '--color-accent-coral': '#D55E00',
-    '--color-cta-text': '#111111',
-    '--feature-icon-box-bg': 'rgba(213, 94, 0, 0.13)',
-    '--color-cta': '#D55E00',
-    '--color-star': '#174DCC',
-    '--color-nav-bg': 'rgba(250, 245, 255, 0.92)',
-    '--color-nav-text': '#26203A',
-    '--color-border': '#D8CCF3',
-    '--color-border-footer': 'rgba(255, 255, 255, 0.22)',
-    '--color-footer-bg': '#1A1528',
-    '--hero-gradient': 'linear-gradient(135deg, #D55E00, #A14600)',
-    '--color-hero-text': '#FFFFFF',
-    '--color-filter-text': '#5D5670',
-    '--color-filter-heading': '#0F0C1A',
-    '--color-input-text': '#5D5670',
-    '--color-input-placeholder': '#777084',
-    '--color-input-icon': '#5D5670',
-    '--color-page-background': '#FAF5FF',
+    "--color-bg": "#FAF5FF",
+    "--color-surface": "#F1E9FF",
+    "--color-section-alt": "rgba(236, 225, 255, 0.60)",
+    "--color-text": "#151321",
+    "--color-heading": "#0F0C1A",
+    "--color-text-muted": "#5D5670",
+    "--color-text-on-dark": "rgba(255, 255, 255, 0.88)",
+    "--color-primary": "#D55E00",
+    "--color-primary-dark": "#A14600",
+    "--color-primary-tint": "rgba(213, 94, 0, 0.20)",
+    "--color-accent-coral": "#D55E00",
+    "--color-cta-text": "#111111",
+    "--feature-icon-box-bg": "rgba(213, 94, 0, 0.13)",
+    "--color-cta": "#D55E00",
+    "--color-star": "#174DCC",
+    "--color-nav-bg": "rgba(250, 245, 255, 0.92)",
+    "--color-nav-text": "#26203A",
+    "--color-border": "#D8CCF3",
+    "--color-border-footer": "rgba(255, 255, 255, 0.22)",
+    "--color-footer-bg": "#1A1528",
+    "--hero-gradient": "linear-gradient(135deg, #D55E00, #A14600)",
+    "--color-hero-text": "#FFFFFF",
+    "--color-filter-text": "#5D5670",
+    "--color-filter-heading": "#0F0C1A",
+    "--color-input-text": "#5D5670",
+    "--color-input-placeholder": "#777084",
+    "--color-input-icon": "#5D5670",
+    "--color-page-background": "#FAF5FF",
   },
   highcontrast: {
-    '--color-bg': '#000000',
-    '--color-surface': '#000000',
-    '--color-section-alt': '#000000',
-    '--color-text': '#FFFFFF',
-    '--color-heading': '#FFFFFF',
-    '--color-text-muted': '#FFFFFF',
-    '--color-text-on-dark': '#FFFFFF',
-    '--color-primary': '#FFFF00',
-    '--color-primary-dark': '#E3E300',
-    '--color-primary-tint': 'rgba(255, 255, 0, 0.20)',
-    '--color-accent-coral': '#FFFF00',
-    '--color-cta-text': '#000000',
-    '--feature-icon-box-bg': 'rgba(255, 255, 0, 0.16)',
-    '--color-cta': '#FFFF00',
-    '--color-star': '#FFFF00',
-    '--color-nav-bg': '#000000',
-    '--color-nav-text': '#FFFFFF',
-    '--color-border': '#FFFFFF',
-    '--color-border-footer': 'rgba(255, 255, 255, 0.40)',
-    '--color-footer-bg': '#000000',
-    '--hero-gradient': 'linear-gradient(135deg, #000000, #0B0B0B)',
-    '--color-hero-text': '#FFFFFF',
-    '--color-filter-text': '#FFFFFF',
-    '--color-filter-heading': '#FFFFFF',
-    '--color-input-text': '#FFFFFF',
-    '--color-input-placeholder': '#FFFFFF',
-    '--color-input-icon': '#FFFFFF',
-    '--color-page-background': '#000000',
+    "--color-bg": "#000000",
+    "--color-surface": "#000000",
+    "--color-section-alt": "#000000",
+    "--color-text": "#FFFFFF",
+    "--color-heading": "#FFFFFF",
+    "--color-text-muted": "#FFFFFF",
+    "--color-text-on-dark": "#FFFFFF",
+    "--color-primary": "#FFFF00",
+    "--color-primary-dark": "#E3E300",
+    "--color-primary-tint": "rgba(255, 255, 0, 0.20)",
+    "--color-accent-coral": "#FFFF00",
+    "--color-cta-text": "#000000",
+    "--feature-icon-box-bg": "rgba(255, 255, 0, 0.16)",
+    "--color-cta": "#FFFF00",
+    "--color-star": "#FFFF00",
+    "--color-nav-bg": "#000000",
+    "--color-nav-text": "#FFFFFF",
+    "--color-border": "#FFFFFF",
+    "--color-border-footer": "rgba(255, 255, 255, 0.40)",
+    "--color-footer-bg": "#000000",
+    "--hero-gradient": "linear-gradient(135deg, #000000, #0B0B0B)",
+    "--color-hero-text": "#FFFFFF",
+    "--color-filter-text": "#FFFFFF",
+    "--color-filter-heading": "#FFFFFF",
+    "--color-input-text": "#FFFFFF",
+    "--color-input-placeholder": "#FFFFFF",
+    "--color-input-icon": "#FFFFFF",
+    "--color-page-background": "#000000",
   },
 };
 
 const RESET_TOKENS = {
-  '--color-heading': '#181F25',
-  '--color-text': '#181F25',
-  '--color-text-muted': '#6A7581',
-  '--color-filter-text': '#6A7581',
-  '--color-filter-heading': '#181F25',
-  '--color-input-text': '#BCC5CE',
-  '--color-input-placeholder': '#CDD4DB',
-  '--color-input-icon': '#B5BEC8',
-  '--color-text-on-dark': 'rgba(255, 255, 255, 0.70)',
-  '--color-primary': '#259D91',
-  '--color-primary-dark': '#1B746B',
-  '--color-primary-tint': 'rgba(37, 157, 145, 0.10)',
-  '--feature-icon-box-bg': 'var(--color-primary-tint)',
-  '--hero-gradient': 'linear-gradient(135deg, #259D91, #1B746B)',
-  '--color-cta': '#EC7051',
-  '--color-cta-text': '#111111',
-  '--color-accent-coral': '#EC7051',
-  '--color-star': '#F4B625',
-  '--color-bg': '#FCFAF8',
-  '--color-surface': '#ffffff',
-  '--color-section-alt': 'rgba(246, 242, 234, 0.30)',
-  '--color-nav-bg': 'rgba(255, 255, 255, 0.80)',
-  '--color-nav-text': '#3F4B57',
-  '--color-footer-bg': '#181F25',
-  '--color-border': '#E7E2DA',
-  '--color-border-footer': 'rgba(255, 255, 255, 0.10)',
-  '--color-page-background': '#FCFAF8',
-  '--color-hero-text': '#ffffff',
+  "--color-heading": "#181F25",
+  "--color-text": "#181F25",
+  "--color-text-muted": "#6A7581",
+  "--color-filter-text": "#6A7581",
+  "--color-filter-heading": "#181F25",
+  "--color-input-text": "#BCC5CE",
+  "--color-input-placeholder": "#CDD4DB",
+  "--color-input-icon": "#B5BEC8",
+  "--color-text-on-dark": "rgba(255, 255, 255, 0.70)",
+  "--color-primary": "#259D91",
+  "--color-primary-dark": "#1B746B",
+  "--color-primary-tint": "rgba(37, 157, 145, 0.10)",
+  "--feature-icon-box-bg": "var(--color-primary-tint)",
+  "--hero-gradient": "linear-gradient(135deg, #259D91, #1B746B)",
+  "--color-cta": "#EC7051",
+  "--color-cta-text": "#111111",
+  "--color-accent-coral": "#EC7051",
+  "--color-star": "#F4B625",
+  "--color-bg": "#FCFAF8",
+  "--color-surface": "#ffffff",
+  "--color-section-alt": "rgba(246, 242, 234, 0.30)",
+  "--color-nav-bg": "rgba(255, 255, 255, 0.80)",
+  "--color-nav-text": "#3F4B57",
+  "--color-footer-bg": "#181F25",
+  "--color-border": "#E7E2DA",
+  "--color-border-footer": "rgba(255, 255, 255, 0.10)",
+  "--color-page-background": "#FCFAF8",
+  "--color-hero-text": "#ffffff",
 };
 
 const TARGET_SYNONYMS = {
@@ -438,47 +436,64 @@ const TARGET_PRIORITY = [
   "all",
 ];
 
-const ACTION_VERB_PATTERN = /\b(make|change|set|turn|update|switch|apply|paint|color|colour)\b/;
+const ACTION_VERB_PATTERN =
+  /\b(make|change|set|turn|update|switch|apply|paint|color|colour)\b/;
 const CONTINUATION_PATTERN = /\b(too|also|as\s+well|same|it|them)\b/;
-const RESET_TERMS = ['reset colours', 'reset colors', 'undo', 'go back to default', 'default theme', 'reset'];
+const RESET_TERMS = [
+  "reset colours",
+  "reset colors",
+  "undo",
+  "go back to default",
+  "default theme",
+  "reset",
+];
 const HELP_MESSAGE =
   "You can change navigation background, navigation text, icons, cards background, card text, card icons, input text, input background, tab background, tab text, filter text, headings, stars, buttons, hero background, hero title, background, or borders. You can also say: make hero title lighter, change hero title to white, make filter text darker, change tab background to blue, change input text background, buttons too, increase brightness, I'm protanopic so change the colour scheme, I am red colour blind, I am green colour blind, I cannot see blue, or turn off deuteranopia.";
-const SMALL_STEP_PATTERN = /\b(a bit|a little|a little bit|little bit|slightly|somewhat|tiny bit)\b/;
-const LARGE_STEP_PATTERN = /\b(a lot|much|way more|way less|far more|far less|significantly)\b/;
+const SMALL_STEP_PATTERN =
+  /\b(a bit|a little|a little bit|little bit|slightly|somewhat|tiny bit)\b/;
+const LARGE_STEP_PATTERN =
+  /\b(a lot|much|way more|way less|far more|far less|significantly)\b/;
 const GENERIC_MORE_PATTERN = /\b(more|increase|higher|stronger)\b/;
 const GENERIC_LESS_PATTERN = /\b(less|decrease|lower|reduce|weaker)\b/;
 const TOO_DARK_PATTERN = /\b(too dark)\b/;
 const TOO_LIGHT_PATTERN = /\b(too light|too pale|too faint)\b/;
 const TOO_BRIGHT_PATTERN = /\b(too bright)\b/;
-const BRIGHTNESS_TERMS = ['brightness', 'screen brightness', 'page brightness'];
-const SATURATION_TERMS = ['saturation', 'saturate', 'saturated', 'vibrancy', 'vibrant', 'vivid'];
+const BRIGHTNESS_TERMS = ["brightness", "screen brightness", "page brightness"];
+const SATURATION_TERMS = [
+  "saturation",
+  "saturate",
+  "saturated",
+  "vibrancy",
+  "vibrant",
+  "vivid",
+];
 const LIGHTNESS_STEPS = { small: 0.08, default: 0.14, large: 0.22 };
-const SATURATION_STEPS = { small: 0.12, default: 0.18, large: 0.30 };
+const SATURATION_STEPS = { small: 0.12, default: 0.18, large: 0.3 };
 const CONTROL_STEPS = {
   brightness: { small: 8, default: 12, large: 18 },
   saturation: { small: 10, default: 18, large: 28 },
 };
 const CONTROL_LIMITS = {
-  brightness: { min: 50, max: 150, defaultValue: 100, label: 'brightness' },
-  saturation: { min: 0, max: 200, defaultValue: 100, label: 'saturation' },
+  brightness: { min: 50, max: 150, defaultValue: 100, label: "brightness" },
+  saturation: { min: 0, max: 200, defaultValue: 100, label: "saturation" },
 };
 
 const CARD_TARGET_SELECTOR = [
-  '.feature-card',
-  '.dest-card',
-  '.deal-card',
-  '.hotel-card',
-  '.rental-card',
-  '.detail-card',
-  '.review-card',
-  '.summary-card',
-  '.cart-item',
-  '.cart-item-card',
-  '.search-card',
-  '.section-card',
-  '.sidebar-card',
+  ".feature-card",
+  ".dest-card",
+  ".deal-card",
+  ".hotel-card",
+  ".rental-card",
+  ".detail-card",
+  ".review-card",
+  ".summary-card",
+  ".cart-item",
+  ".cart-item-card",
+  ".search-card",
+  ".section-card",
+  ".sidebar-card",
   '[class$="-card"]',
-].join(', ');
+].join(", ");
 
 const BUTTON_TARGET_SELECTOR = [
   '[data-a11y-target="search-button"]',
@@ -506,7 +521,8 @@ const BUTTON_TARGET_SELECTOR = [
   ".rental-bottom button",
 ].join(", ");
 
-const ICON_TARGET_SELECTOR = '.material-icons, .material-symbols-outlined, svg, i, [class*="icon"]';
+const ICON_TARGET_SELECTOR =
+  '.material-icons, .material-symbols-outlined, svg, i, [class*="icon"]';
 const GLOBAL_HIGHLIGHT_SELECTOR = [
   "#app",
   ".navbar",
@@ -527,21 +543,58 @@ const GLOBAL_HIGHLIGHT_SELECTOR = [
 ].join(", ");
 
 const VISION_MODE_ALIASES = {
-  protanopia: /\b(protanopia|protenopia|protanopium|protenopium|protonopia|protanopic|protenopic|protanope|protan|protonopic|protanoby)\b|\bpro\s*(?:ten|to|ta)?\s*op(?:ia|ium|ic)\b/,
-  deuteranopia: /\b(deuteranopia|deuteronopia|dueteranopia|deutranopia|duteranopia|deuteranopic|deutanopic|deuteranope|deutan|deutronopia|deutranopic)\b|\bdeu?\s*(?:ter|tur|tra|tero)?\s*anop(?:ia|ium|ic)\b/,
-  tritanopia: /\b(tritanopia|trytanopia|tritonopia|tritanopic|tritanope|tritan|trytonopia|tritanoby)\b|\btr(?:i|y)\s*(?:tan|ton)?\s*op(?:ia|ium|ic)\b/,
+  protanopia:
+    /\b(protanopia|protenopia|protanopium|protenopium|protonopia|protanopic|protenopic|protanope|protan|protonopic|protanoby)\b|\bpro\s*(?:ten|to|ta)?\s*op(?:ia|ium|ic)\b/,
+  deuteranopia:
+    /\b(deuteranopia|deuteronopia|dueteranopia|deutranopia|duteranopia|deuteranopic|deutanopic|deuteranope|deutan|deutronopia|deutranopic)\b|\bdeu?\s*(?:ter|tur|tra|tero)?\s*anop(?:ia|ium|ic)\b/,
+  tritanopia:
+    /\b(tritanopia|trytanopia|tritonopia|tritanopic|tritanope|tritan|trytonopia|tritanoby)\b|\btr(?:i|y)\s*(?:tan|ton)?\s*op(?:ia|ium|ic)\b/,
 };
 
 const VISION_MODE_VARIANTS = {
-  protanopia: ['protanopia', 'protenopia', 'protanopium', 'protenopium', 'protonopia', 'protanopic', 'protenopic', 'protanope', 'protan', 'protonopic', 'protanoby', 'protenopiummode'],
-  deuteranopia: ['deuteranopia', 'deuteronopia', 'dueteranopia', 'deutranopia', 'duteranopia', 'deuteranopic', 'deutanopic', 'deuteranope', 'deutan', 'deutronopia', 'deutranopic'],
-  tritanopia: ['tritanopia', 'trytanopia', 'tritonopia', 'tritanopic', 'tritanope', 'tritan', 'trytonopia', 'tritanoby'],
+  protanopia: [
+    "protanopia",
+    "protenopia",
+    "protanopium",
+    "protenopium",
+    "protonopia",
+    "protanopic",
+    "protenopic",
+    "protanope",
+    "protan",
+    "protonopic",
+    "protanoby",
+    "protenopiummode",
+  ],
+  deuteranopia: [
+    "deuteranopia",
+    "deuteronopia",
+    "dueteranopia",
+    "deutranopia",
+    "duteranopia",
+    "deuteranopic",
+    "deutanopic",
+    "deuteranope",
+    "deutan",
+    "deutronopia",
+    "deutranopic",
+  ],
+  tritanopia: [
+    "tritanopia",
+    "trytanopia",
+    "tritonopia",
+    "tritanopic",
+    "tritanope",
+    "tritan",
+    "trytonopia",
+    "tritanoby",
+  ],
 };
 
 const VISION_MODE_ROOT_HINTS = {
-  protanopia: ['pro', 'prot'],
-  deuteranopia: ['deu', 'deut'],
-  tritanopia: ['tri', 'trit'],
+  protanopia: ["pro", "prot"],
+  deuteranopia: ["deu", "deut"],
+  tritanopia: ["tri", "trit"],
 };
 
 const TARGET_TO_VARS = {
@@ -640,37 +693,37 @@ const TARGET_HIGHLIGHT_SELECTORS = {
 };
 
 const NAMED_COLORS = {
-  black: '#000000',
-  white: '#ffffff',
-  red: '#ff0000',
-  green: '#008000',
-  blue: '#0000ff',
-  yellow: '#ffff00',
-  orange: '#ffa500',
-  purple: '#800080',
-  pink: '#ff69b4',
-  gray: '#808080',
-  grey: '#808080',
-  brown: '#8b4513',
-  navy: '#001f3f',
-  cyan: '#00ffff',
-  magenta: '#ff00ff',
-  teal: '#008080',
-  beige: '#f5f5dc',
-  gold: '#ffd700',
-  silver: '#c0c0c0',
-  maroon: '#800000',
-  olive: '#808000',
-  lime: '#00ff00',
-  aqua: '#00ffff',
-  turquoise: '#40e0d0',
-  violet: '#8f00ff',
-  indigo: '#4b0082',
-  coral: '#ff7f50',
-  salmon: '#fa8072',
-  cream: '#fffdd0',
-  ivory: '#fffff0',
-  charcoal: '#36454f',
+  black: "#000000",
+  white: "#ffffff",
+  red: "#ff0000",
+  green: "#008000",
+  blue: "#0000ff",
+  yellow: "#ffff00",
+  orange: "#ffa500",
+  purple: "#800080",
+  pink: "#ff69b4",
+  gray: "#808080",
+  grey: "#808080",
+  brown: "#8b4513",
+  navy: "#001f3f",
+  cyan: "#00ffff",
+  magenta: "#ff00ff",
+  teal: "#008080",
+  beige: "#f5f5dc",
+  gold: "#ffd700",
+  silver: "#c0c0c0",
+  maroon: "#800000",
+  olive: "#808000",
+  lime: "#00ff00",
+  aqua: "#00ffff",
+  turquoise: "#40e0d0",
+  violet: "#8f00ff",
+  indigo: "#4b0082",
+  coral: "#ff7f50",
+  salmon: "#fa8072",
+  cream: "#fffdd0",
+  ivory: "#fffff0",
+  charcoal: "#36454f",
 };
 
 class VoiceCommandManager {
@@ -705,13 +758,20 @@ class VoiceCommandManager {
 
   init(buttonElement, options = {}) {
     this.button = buttonElement || null;
-    this.onStateChange = typeof options.onStateChange === 'function' ? options.onStateChange : null;
-    this.onTranscriptChange = typeof options.onTranscriptChange === 'function' ? options.onTranscriptChange : null;
+    this.onStateChange =
+      typeof options.onStateChange === "function"
+        ? options.onStateChange
+        : null;
+    this.onTranscriptChange =
+      typeof options.onTranscriptChange === "function"
+        ? options.onTranscriptChange
+        : null;
     this.controls = this.createControls(options.controls || {});
     this.ensureToast();
     this.ensureHighlightStyleElement();
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       this.isSupported = false;
       this.showSupportFallback();
@@ -722,7 +782,7 @@ class VoiceCommandManager {
     this.recognition = new SpeechRecognition();
     this.recognition.continuous = true;
     this.recognition.interimResults = true;
-    this.recognition.lang = 'en-US';
+    this.recognition.lang = "en-US";
     this.autoRestartEnabled = !this.isBraveBrowser();
 
     this.recognition.onresult = (event) => this.handleResult(event);
@@ -742,8 +802,8 @@ class VoiceCommandManager {
 
   wireButton(buttonElement) {
     this.button = buttonElement;
-    this.button.setAttribute('aria-pressed', 'false');
-    this.button.classList.remove('active');
+    this.button.setAttribute("aria-pressed", "false");
+    this.button.classList.remove("active");
 
     this.boundButtonHandler = () => {
       if (!this.isSupported) {
@@ -758,7 +818,7 @@ class VoiceCommandManager {
       }
     };
 
-    this.button.addEventListener('click', this.boundButtonHandler);
+    this.button.addEventListener("click", this.boundButtonHandler);
   }
 
   start() {
@@ -767,8 +827,8 @@ class VoiceCommandManager {
     this.restartOnEnd = true;
     this.updateButtonState();
     this.safeStart();
-    this.emitTranscript('Listening…', false);
-    this.speakAndToast('Voice commands are now active.', { icon: '🎤' });
+    this.emitTranscript("Listening…", false);
+    this.speakAndToast("Voice commands are now active.", { icon: "🎤" });
   }
 
   stop() {
@@ -776,13 +836,13 @@ class VoiceCommandManager {
     this.isActive = false;
     this.restartOnEnd = false;
     this.updateButtonState();
-    this.emitTranscript('', false);
+    this.emitTranscript("", false);
     try {
       this.recognition.stop();
     } catch (_) {
       // no-op
     }
-    this.speakAndToast('Voice commands stopped.', { icon: '🛑' });
+    this.speakAndToast("Voice commands stopped.", { icon: "🛑" });
   }
 
   safeStart() {
@@ -795,21 +855,27 @@ class VoiceCommandManager {
 
   updateButtonState() {
     if (this.button) {
-      this.button.setAttribute('aria-pressed', this.isActive ? 'true' : 'false');
-      this.button.classList.toggle('active', this.isActive);
+      this.button.setAttribute(
+        "aria-pressed",
+        this.isActive ? "true" : "false",
+      );
+      this.button.classList.toggle("active", this.isActive);
     }
 
     if (this.onStateChange) {
-      this.onStateChange({ active: this.isActive, supported: this.isSupported });
+      this.onStateChange({
+        active: this.isActive,
+        supported: this.isSupported,
+      });
     }
   }
 
   handleResult(event) {
-    let interimTranscript = '';
+    let interimTranscript = "";
 
     for (let i = event.resultIndex; i < event.results.length; i += 1) {
       const result = event.results[i];
-      const transcript = (result[0]?.transcript || '').toLowerCase().trim();
+      const transcript = (result[0]?.transcript || "").toLowerCase().trim();
       const confidence = Number(result[0]?.confidence || 0);
 
       if (!transcript) continue;
@@ -823,7 +889,10 @@ class VoiceCommandManager {
 
       // Chrome sometimes reports confidence=0 even for valid speech; only reject when confidence is explicitly low.
       if (confidence > 0 && confidence < 0.45) {
-        this.speakAndToast('I am not fully sure. Please repeat that command more clearly.', { icon: '⚠️' });
+        this.speakAndToast(
+          "I am not fully sure. Please repeat that command more clearly.",
+          { icon: "⚠️" },
+        );
         continue;
       }
 
@@ -831,7 +900,7 @@ class VoiceCommandManager {
 
       window.clearTimeout(this.transcriptClearTimer);
       this.transcriptClearTimer = window.setTimeout(() => {
-        this.emitTranscript('', false);
+        this.emitTranscript("", false);
       }, 1500);
     }
 
@@ -842,18 +911,24 @@ class VoiceCommandManager {
 
   handleError(event) {
     if (!event || !event.error) {
-      this.speakAndToast('Sorry, there was a microphone issue. Please try again.', { icon: '⚠️' });
+      this.speakAndToast(
+        "Sorry, there was a microphone issue. Please try again.",
+        { icon: "⚠️" },
+      );
       return;
     }
 
-    if (event.error === 'no-speech') return;
+    if (event.error === "no-speech") return;
 
     if (event.error === "aborted") {
       // Some browsers emit aborted during normal stop/restart cycles.
       return;
     }
 
-    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+    if (
+      event.error === "not-allowed" ||
+      event.error === "service-not-allowed"
+    ) {
       this.isActive = false;
       this.restartOnEnd = false;
       this.updateButtonState();
@@ -865,7 +940,10 @@ class VoiceCommandManager {
         return;
       }
 
-      this.speakAndToast('Microphone access is blocked. Please allow microphone permissions and try again.', { icon: '🚫' });
+      this.speakAndToast(
+        "Microphone access is blocked. Please allow microphone permissions and try again.",
+        { icon: "🚫" },
+      );
       return;
     }
 
@@ -885,7 +963,10 @@ class VoiceCommandManager {
       return;
     }
 
-    this.speakAndToast('Sorry, there was a microphone issue. Please try again.', { icon: '⚠️' });
+    this.speakAndToast(
+      "Sorry, there was a microphone issue. Please try again.",
+      { icon: "⚠️" },
+    );
   }
 
   isBraveBrowser() {
@@ -899,36 +980,62 @@ class VoiceCommandManager {
 
   createControls(overrides = {}) {
     const defaults = {
-      getBrightness: () => this.readPercentCssVar('--a11y-brightness', CONTROL_LIMITS.brightness.defaultValue),
+      getBrightness: () =>
+        this.readPercentCssVar(
+          "--a11y-brightness",
+          CONTROL_LIMITS.brightness.defaultValue,
+        ),
       setBrightness: (value) => {
-        const nextValue = this.clampNumber(value, CONTROL_LIMITS.brightness.min, CONTROL_LIMITS.brightness.max);
-        document.documentElement.style.setProperty('--a11y-brightness', `${nextValue}%`);
+        const nextValue = this.clampNumber(
+          value,
+          CONTROL_LIMITS.brightness.min,
+          CONTROL_LIMITS.brightness.max,
+        );
+        document.documentElement.style.setProperty(
+          "--a11y-brightness",
+          `${nextValue}%`,
+        );
         return nextValue;
       },
-      getSaturation: () => this.readPercentCssVar('--a11y-saturation', CONTROL_LIMITS.saturation.defaultValue),
+      getSaturation: () =>
+        this.readPercentCssVar(
+          "--a11y-saturation",
+          CONTROL_LIMITS.saturation.defaultValue,
+        ),
       setSaturation: (value) => {
-        const nextValue = this.clampNumber(value, CONTROL_LIMITS.saturation.min, CONTROL_LIMITS.saturation.max);
-        document.documentElement.style.setProperty('--a11y-saturation', `${nextValue}%`);
+        const nextValue = this.clampNumber(
+          value,
+          CONTROL_LIMITS.saturation.min,
+          CONTROL_LIMITS.saturation.max,
+        );
+        document.documentElement.style.setProperty(
+          "--a11y-saturation",
+          `${nextValue}%`,
+        );
         return nextValue;
       },
-      getHighContrast: () => document.documentElement.classList.contains('a11y-high-contrast'),
+      getHighContrast: () =>
+        document.documentElement.classList.contains("a11y-high-contrast"),
       setHighContrast: (enabled) => {
-        document.documentElement.classList.toggle('a11y-high-contrast', Boolean(enabled));
+        document.documentElement.classList.toggle(
+          "a11y-high-contrast",
+          Boolean(enabled),
+        );
         return Boolean(enabled);
       },
       getVisionMode: () => {
         const root = document.documentElement;
-        if (root.classList.contains('cvd-protanopia')) return 'protanopia';
-        if (root.classList.contains('cvd-deuteranopia')) return 'deuteranopia';
-        if (root.classList.contains('cvd-tritanopia')) return 'tritanopia';
-        return 'none';
+        if (root.classList.contains("cvd-protanopia")) return "protanopia";
+        if (root.classList.contains("cvd-deuteranopia")) return "deuteranopia";
+        if (root.classList.contains("cvd-tritanopia")) return "tritanopia";
+        return "none";
       },
       setVisionMode: (mode) => {
         this.clearModeClasses();
-        if (mode && mode !== 'none') {
+        if (mode && mode !== "none") {
           document.documentElement.classList.add(`cvd-${mode}`);
         }
-        return mode || 'none';
+        return mode || "none";
       },
       applyVisionPreset: null,
       resetTheme: null,
@@ -943,52 +1050,52 @@ class VoiceCommandManager {
     if (!parsed) {
       this.speakAndToast(
         "I didn't catch that. Try saying: change cards to blue, make the text a bit less dark, or increase brightness.",
-        { icon: '🤔' },
+        { icon: "🤔" },
       );
       return;
     }
 
-    if (parsed.intent === 'HELP') {
-      this.speakAndToast(HELP_MESSAGE, { icon: '💡' });
+    if (parsed.intent === "HELP") {
+      this.speakAndToast(HELP_MESSAGE, { icon: "💡" });
       return;
     }
 
-    if (parsed.intent === 'RESET') {
+    if (parsed.intent === "RESET") {
       this.resetExperience();
       return;
     }
 
-    if (parsed.intent === 'APPLY_PRESET') {
+    if (parsed.intent === "APPLY_PRESET") {
       this.applyPreset(parsed.preset);
       return;
     }
 
-    if (parsed.intent === 'SET_VISION_MODE') {
+    if (parsed.intent === "SET_VISION_MODE") {
       this.setVisionMode(parsed.mode);
       return;
     }
 
-    if (parsed.intent === 'SET_COLOUR') {
+    if (parsed.intent === "SET_COLOUR") {
       this.applyColorToTargets(parsed.targets, parsed.color, parsed.colorLabel);
       return;
     }
 
-    if (parsed.intent === 'ADJUST_COLOUR') {
+    if (parsed.intent === "ADJUST_COLOUR") {
       this.adjustTargetsColor(parsed.targets, parsed.axis, parsed.delta);
       return;
     }
 
-    if (parsed.intent === 'SET_CONTROL') {
+    if (parsed.intent === "SET_CONTROL") {
       this.setAccessibilityControl(parsed.control, parsed.value);
       return;
     }
 
-    if (parsed.intent === 'ADJUST_CONTROL') {
+    if (parsed.intent === "ADJUST_CONTROL") {
       this.adjustAccessibilityControl(parsed.control, parsed.delta);
       return;
     }
 
-    if (parsed.intent === 'SET_HIGH_CONTRAST') {
+    if (parsed.intent === "SET_HIGH_CONTRAST") {
       this.setHighContrast(parsed.enabled);
       return;
     }
@@ -997,27 +1104,39 @@ class VoiceCommandManager {
   parseCommand(transcript) {
     const text = transcript.toLowerCase();
     const normalized = text
-      .replace(/[’']/g, '')
-      .replace(/[^a-z0-9#(),\s-]/g, ' ')
-      .replace(/\s+/g, ' ')
+      .replace(/[’']/g, "")
+      .replace(/[^a-z0-9#(),\s-]/g, " ")
+      .replace(/\s+/g, " ")
       .trim();
     const colorToken = this.extractColorToken(normalized);
     const color = colorToken?.value || null;
-    const colorLabel = colorToken?.label || 'selected colour';
+    const colorLabel = colorToken?.label || "selected colour";
     const targets = this.extractTargets(normalized);
     const setVerb = ACTION_VERB_PATTERN.test(normalized);
     const hasContinuation = CONTINUATION_PATTERN.test(normalized);
     const intensity = this.extractIntensity(normalized);
 
-    if (this.containsAny(normalized, ['what can i say', 'help', 'commands', 'command list', 'what are my options'])) {
-      return { intent: 'HELP' };
+    if (
+      this.containsAny(normalized, [
+        "what can i say",
+        "help",
+        "commands",
+        "command list",
+        "what are my options",
+      ])
+    ) {
+      return { intent: "HELP" };
     }
 
     if (this.containsAny(normalized, RESET_TERMS)) {
-      return { intent: 'RESET' };
+      return { intent: "RESET" };
     }
 
-    const accessibilityCommand = this.extractAccessibilityCommand(normalized, intensity, targets);
+    const accessibilityCommand = this.extractAccessibilityCommand(
+      normalized,
+      intensity,
+      targets,
+    );
     if (accessibilityCommand) {
       return accessibilityCommand;
     }
@@ -1029,10 +1148,14 @@ class VoiceCommandManager {
 
     const presetMatch = this.extractPreset(normalized);
     if (presetMatch) {
-      return { intent: 'APPLY_PRESET', preset: presetMatch };
+      return { intent: "APPLY_PRESET", preset: presetMatch };
     }
 
-    const explicitColorAdjustment = this.extractExplicitColorAdjustment(normalized, targets, intensity);
+    const explicitColorAdjustment = this.extractExplicitColorAdjustment(
+      normalized,
+      targets,
+      intensity,
+    );
     if (explicitColorAdjustment) {
       return explicitColorAdjustment;
     }
@@ -1040,15 +1163,39 @@ class VoiceCommandManager {
     if (setVerb && color) {
       const resolvedTargets = targets.length ? targets : this.lastTargets;
       if (resolvedTargets.length) {
-        return { intent: 'SET_COLOUR', color, colorLabel, targets: resolvedTargets };
+        return {
+          intent: "SET_COLOUR",
+          color,
+          colorLabel,
+          targets: resolvedTargets,
+        };
       }
     }
 
-    if (!color && targets.length && this.lastColor && (hasContinuation || this.containsAny(normalized, ['same colour', 'same color', 'same shade']))) {
-      return { intent: 'SET_COLOUR', color: this.lastColor, colorLabel: this.lastColorLabel || 'selected colour', targets };
+    if (
+      !color &&
+      targets.length &&
+      this.lastColor &&
+      (hasContinuation ||
+        this.containsAny(normalized, [
+          "same colour",
+          "same color",
+          "same shade",
+        ]))
+    ) {
+      return {
+        intent: "SET_COLOUR",
+        color: this.lastColor,
+        colorLabel: this.lastColorLabel || "selected colour",
+        targets,
+      };
     }
 
-    const relativeContinuation = this.extractRelativeContinuation(normalized, targets, intensity);
+    const relativeContinuation = this.extractRelativeContinuation(
+      normalized,
+      targets,
+      intensity,
+    );
     if (relativeContinuation) {
       return relativeContinuation;
     }
@@ -1062,9 +1209,7 @@ class VoiceCommandManager {
 
   extractPreset(text) {
     const normalized = text.toLowerCase();
-    const compact = normalized
-      .replace(/\b10\b/g, 'ten')
-      .replace(/[^a-z]/g, '');
+    const compact = normalized.replace(/\b10\b/g, "ten").replace(/[^a-z]/g, "");
 
     const directMatch = this.matchVisionModeByAliases(normalized, compact);
     if (directMatch) return directMatch;
@@ -1077,19 +1222,22 @@ class VoiceCommandManager {
 
   matchVisionModeByAliases(normalized, compact) {
     if (
-      VISION_MODE_ALIASES.deuteranopia.test(normalized)
-      || VISION_MODE_VARIANTS.deuteranopia.some((token) => compact.includes(token))
-    ) return 'deuteranopia';
+      VISION_MODE_ALIASES.deuteranopia.test(normalized) ||
+      VISION_MODE_VARIANTS.deuteranopia.some((token) => compact.includes(token))
+    )
+      return "deuteranopia";
 
     if (
-      VISION_MODE_ALIASES.protanopia.test(normalized)
-      || VISION_MODE_VARIANTS.protanopia.some((token) => compact.includes(token))
-    ) return 'protanopia';
+      VISION_MODE_ALIASES.protanopia.test(normalized) ||
+      VISION_MODE_VARIANTS.protanopia.some((token) => compact.includes(token))
+    )
+      return "protanopia";
 
     if (
-      VISION_MODE_ALIASES.tritanopia.test(normalized)
-      || VISION_MODE_VARIANTS.tritanopia.some((token) => compact.includes(token))
-    ) return 'tritanopia';
+      VISION_MODE_ALIASES.tritanopia.test(normalized) ||
+      VISION_MODE_VARIANTS.tritanopia.some((token) => compact.includes(token))
+    )
+      return "tritanopia";
 
     return null;
   }
@@ -1106,7 +1254,11 @@ class VoiceCommandManager {
 
         for (const variant of variants) {
           const maxDistance = this.getVisionModeFuzzyThreshold(variant.length);
-          const distance = this.editDistanceWithin(candidate, variant, maxDistance);
+          const distance = this.editDistanceWithin(
+            candidate,
+            variant,
+            maxDistance,
+          );
           if (distance <= maxDistance && distance < bestDistance) {
             bestDistance = distance;
             bestMode = mode;
@@ -1121,7 +1273,7 @@ class VoiceCommandManager {
   buildVisionTokenCandidates(normalized) {
     const words = normalized
       .split(/\s+/)
-      .map((token) => token.replace(/[^a-z]/g, ''))
+      .map((token) => token.replace(/[^a-z]/g, ""))
       .filter((token) => token.length >= 4);
 
     const candidates = new Set(words.filter((token) => token.length <= 20));
@@ -1136,9 +1288,7 @@ class VoiceCommandManager {
       if (joined.length <= 20) candidates.add(joined);
     }
 
-    const compact = normalized
-      .replace(/\b10\b/g, 'ten')
-      .replace(/[^a-z]/g, '');
+    const compact = normalized.replace(/\b10\b/g, "ten").replace(/[^a-z]/g, "");
 
     if (compact.length >= 6 && compact.length <= 20) {
       candidates.add(compact);
@@ -1190,17 +1340,32 @@ class VoiceCommandManager {
   extractSelfReportedBlindnessMode(text) {
     const normalized = text.toLowerCase();
 
-    const redBlindPattern = /\bred\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*red\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:red\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
-    const greenBlindPattern = /\bgreen\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*green\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:green\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
-    const blueBlindPattern = /\bblue\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*blue\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:blue\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
+    const redBlindPattern =
+      /\bred\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*red\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:red\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
+    const greenBlindPattern =
+      /\bgreen\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*green\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:green\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
+    const blueBlindPattern =
+      /\bblue\s*[- ]*(?:colou?r[-\s]*)?blind(?:ness)?\b|\bblind(?:ness)?\s*(?:to|for)?\s*blue\b|\b(i\s*(?:am|m)|im|i have|have)\s+(?:a\s+)?(?:blue\s*)?(?:colou?r[-\s]*)?blind(?:ness)?\b/;
 
-    const cantSeeRedPattern = /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?red\b/;
-    const cantSeeGreenPattern = /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?green\b/;
-    const cantSeeBluePattern = /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?blue\b/;
+    const cantSeeRedPattern =
+      /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?red\b/;
+    const cantSeeGreenPattern =
+      /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?green\b/;
+    const cantSeeBluePattern =
+      /\b(?:i\s*)?(?:can(?:\s*not)?|cant|can\s+t|cannot|dont|don\s+t)\s*(?:really\s*)?(?:see|spot|distinguish|tell)\s*(?:the\s*)?(?:colou?r\s*)?blue\b/;
 
-    if (redBlindPattern.test(normalized) || cantSeeRedPattern.test(normalized)) return 'protanopia';
-    if (greenBlindPattern.test(normalized) || cantSeeGreenPattern.test(normalized)) return 'deuteranopia';
-    if (blueBlindPattern.test(normalized) || cantSeeBluePattern.test(normalized)) return 'tritanopia';
+    if (redBlindPattern.test(normalized) || cantSeeRedPattern.test(normalized))
+      return "protanopia";
+    if (
+      greenBlindPattern.test(normalized) ||
+      cantSeeGreenPattern.test(normalized)
+    )
+      return "deuteranopia";
+    if (
+      blueBlindPattern.test(normalized) ||
+      cantSeeBluePattern.test(normalized)
+    )
+      return "tritanopia";
 
     return null;
   }
@@ -1208,26 +1373,30 @@ class VoiceCommandManager {
   extractVisionModeCommand(text) {
     const requestedMode = this.extractPreset(text);
     const selfReportedMode = this.extractSelfReportedBlindnessMode(text);
-    const turnOffRequested = /\b(turn off|switch off|disable|stop|remove|exit)\b/.test(text);
-    const standardModeRequested = /\b(standard|normal|default)\s+(vision|mode|colou?r vision|theme)?\b/.test(text)
-      || /\b(turn off|disable|remove)\s+(colou?r vision|vision mode)\b/.test(text);
+    const turnOffRequested =
+      /\b(turn off|switch off|disable|stop|remove|exit)\b/.test(text);
+    const standardModeRequested =
+      /\b(standard|normal|default)\s+(vision|mode|colou?r vision|theme)?\b/.test(
+        text,
+      ) ||
+      /\b(turn off|disable|remove)\s+(colou?r vision|vision mode)\b/.test(text);
 
     if (requestedMode) {
       return {
-        intent: 'SET_VISION_MODE',
-        mode: turnOffRequested ? 'none' : requestedMode,
+        intent: "SET_VISION_MODE",
+        mode: turnOffRequested ? "none" : requestedMode,
       };
     }
 
     if (selfReportedMode) {
       return {
-        intent: 'SET_VISION_MODE',
-        mode: turnOffRequested ? 'none' : selfReportedMode,
+        intent: "SET_VISION_MODE",
+        mode: turnOffRequested ? "none" : selfReportedMode,
       };
     }
 
     if (standardModeRequested) {
-      return { intent: 'SET_VISION_MODE', mode: 'none' };
+      return { intent: "SET_VISION_MODE", mode: "none" };
     }
 
     return null;
@@ -1235,12 +1404,13 @@ class VoiceCommandManager {
 
   extractTargets(text) {
     const phraseMatchedTargets = new Set();
-    const wantsMultiTarget = /\b(and|plus|also|too|as well|&|then)\b/.test(text) || text.includes(',');
+    const wantsMultiTarget =
+      /\b(and|plus|also|too|as well|&|then)\b/.test(text) || text.includes(",");
 
     for (const [target, phrases] of Object.entries(TARGET_PHRASES)) {
       const phraseMatch = phrases.some((phrase) => {
         const safe = this.escapeRegExp(phrase);
-        return new RegExp(`\\b${safe}\\b`, 'i').test(text);
+        return new RegExp(`\\b${safe}\\b`, "i").test(text);
       });
       if (phraseMatch) phraseMatchedTargets.add(target);
     }
@@ -1264,7 +1434,7 @@ class VoiceCommandManager {
       let score = 0;
       words.forEach((word) => {
         const safe = this.escapeRegExp(word);
-        if (new RegExp(`\\b${safe}\\b`, 'i').test(text)) {
+        if (new RegExp(`\\b${safe}\\b`, "i").test(text)) {
           score += 1;
         }
       });
@@ -1273,9 +1443,14 @@ class VoiceCommandManager {
       }
     }
 
-    if (Object.keys(scores).length > 0 && (wantsMultiTarget || phraseMatchedTargets.size === 0)) {
+    if (
+      Object.keys(scores).length > 0 &&
+      (wantsMultiTarget || phraseMatchedTargets.size === 0)
+    ) {
       const bestScore = Math.max(...Object.values(scores));
-      const bestTargets = Object.keys(scores).filter((key) => scores[key] === bestScore);
+      const bestTargets = Object.keys(scores).filter(
+        (key) => scores[key] === bestScore,
+      );
 
       for (const preferred of TARGET_PRIORITY) {
         if (bestTargets.includes(preferred)) {
@@ -1294,67 +1469,71 @@ class VoiceCommandManager {
     const hasCardContext = /\b(grid cards?|grid card|cards?|card)\b/.test(text);
     if (hasCardContext) {
       if (/\b(text|words|font|copy)\b/.test(text)) {
-        foundTargets.add('cardText');
-        foundTargets.delete('text');
+        foundTargets.add("cardText");
+        foundTargets.delete("text");
       }
 
       if (/\b(icon|icons)\b/.test(text) && !/\ball icons?\b/.test(text)) {
-        foundTargets.add('cardIcons');
-        foundTargets.delete('icons');
+        foundTargets.add("cardIcons");
+        foundTargets.delete("icons");
       }
 
       if (
-        /\b(background|colour|color|shade)\b/.test(text)
-        && !/\b(page|site|screen)\s+background\b/.test(text)
+        /\b(background|colour|color|shade)\b/.test(text) &&
+        !/\b(page|site|screen)\s+background\b/.test(text)
       ) {
-        foundTargets.add('cards');
-        foundTargets.delete('background');
+        foundTargets.add("cards");
+        foundTargets.delete("background");
       }
     }
 
     const hasTabContext = /\b(tab|tabs)\b/.test(text);
     if (hasTabContext) {
       if (/\b(background|colour|color|shade)\b/.test(text)) {
-        foundTargets.add('tabBackground');
-        foundTargets.delete('background');
+        foundTargets.add("tabBackground");
+        foundTargets.delete("background");
       }
 
       if (/\b(text|label|labels|words|font|copy)\b/.test(text)) {
-        foundTargets.add('tabText');
-        foundTargets.delete('text');
+        foundTargets.add("tabText");
+        foundTargets.delete("text");
       }
     }
 
     if (
-      foundTargets.has('inputBackground')
-      && foundTargets.has('inputText')
-      && /\b(input text background|input field background|form field background|field background)\b/.test(text)
-      && !/\b(input text and (input )?background|input background and (input )?text)\b/.test(text)
+      foundTargets.has("inputBackground") &&
+      foundTargets.has("inputText") &&
+      /\b(input text background|input field background|form field background|field background)\b/.test(
+        text,
+      ) &&
+      !/\b(input text and (input )?background|input background and (input )?text)\b/.test(
+        text,
+      )
     ) {
-      foundTargets.delete('inputText');
+      foundTargets.delete("inputText");
     }
 
-    if (foundTargets.has('inputText') || foundTargets.has('inputBackground')) {
-      foundTargets.delete('text');
-      if (foundTargets.has('inputBackground')) {
-        foundTargets.delete('background');
+    if (foundTargets.has("inputText") || foundTargets.has("inputBackground")) {
+      foundTargets.delete("text");
+      if (foundTargets.has("inputBackground")) {
+        foundTargets.delete("background");
       }
     }
 
-    if (foundTargets.has('cardText')) {
-      foundTargets.delete('text');
+    if (foundTargets.has("cardText")) {
+      foundTargets.delete("text");
     }
 
-    if (foundTargets.has('tabText')) {
-      foundTargets.delete('text');
+    if (foundTargets.has("tabText")) {
+      foundTargets.delete("text");
     }
 
-    if (foundTargets.has('tabBackground')) {
-      foundTargets.delete('background');
+    if (foundTargets.has("tabBackground")) {
+      foundTargets.delete("background");
     }
 
-    if (foundTargets.has('cardIcons')) {
-      foundTargets.delete('icons');
+    if (foundTargets.has("cardIcons")) {
+      foundTargets.delete("icons");
     }
 
     if (foundTargets.has("background")) {
@@ -1367,9 +1546,11 @@ class VoiceCommandManager {
       }
     }
 
-    if (foundTargets.has('all')) return ['all'];
+    if (foundTargets.has("all")) return ["all"];
 
-    const ordered = TARGET_PRIORITY.filter((target) => foundTargets.has(target));
+    const ordered = TARGET_PRIORITY.filter((target) =>
+      foundTargets.has(target),
+    );
     return ordered;
   }
 
@@ -1379,7 +1560,7 @@ class VoiceCommandManager {
   }
 
   escapeRegExp(value) {
-    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
   extractColor(text) {
@@ -1391,52 +1572,73 @@ class VoiceCommandManager {
     const hexMatch = text.match(/#([0-9a-f]{3}|[0-9a-f]{6})\b/i);
     if (hexMatch) {
       const hex = hexMatch[0];
-      const normalized = hex.length === 4
-        ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
-        : hex;
-      return { value: normalized, label: 'selected shade' };
+      const normalized =
+        hex.length === 4
+          ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
+          : hex;
+      return { value: normalized, label: "selected shade" };
     }
 
     const rgbMatch = text.match(/rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)/i);
-    if (rgbMatch) return { value: rgbMatch[0], label: 'selected shade' };
+    if (rgbMatch) return { value: rgbMatch[0], label: "selected shade" };
 
-    const sortedNames = Object.keys(NAMED_COLORS).sort((a, b) => b.length - a.length);
-    const found = sortedNames.find((name) => new RegExp(`\\b${name}\\b`, 'i').test(text));
+    const sortedNames = Object.keys(NAMED_COLORS).sort(
+      (a, b) => b.length - a.length,
+    );
+    const found = sortedNames.find((name) =>
+      new RegExp(`\\b${name}\\b`, "i").test(text),
+    );
     if (found) return { value: NAMED_COLORS[found], label: found };
 
     return null;
   }
 
   extractIntensity(text) {
-    if (LARGE_STEP_PATTERN.test(text)) return 'large';
-    if (SMALL_STEP_PATTERN.test(text)) return 'small';
-    return 'default';
+    if (LARGE_STEP_PATTERN.test(text)) return "large";
+    if (SMALL_STEP_PATTERN.test(text)) return "small";
+    return "default";
   }
 
   extractAccessibilityCommand(text, intensity, targets = []) {
-    const hasScopedTargets = targets.length > 0 && !targets.includes('all');
+    const hasScopedTargets = targets.length > 0 && !targets.includes("all");
     const highContrastIntent = this.extractHighContrastIntent(text);
     if (highContrastIntent !== null) {
-      return { intent: 'SET_HIGH_CONTRAST', enabled: highContrastIntent };
+      return { intent: "SET_HIGH_CONTRAST", enabled: highContrastIntent };
     }
 
     if (this.containsAny(text, BRIGHTNESS_TERMS)) {
       const numericValue = this.extractNumericValue(text);
       if (numericValue !== null) {
-        return { intent: 'SET_CONTROL', control: 'brightness', value: numericValue };
+        return {
+          intent: "SET_CONTROL",
+          control: "brightness",
+          value: numericValue,
+        };
       }
 
       if (TOO_BRIGHT_PATTERN.test(text) || this.hasDarkerIntent(text)) {
-        return { intent: 'ADJUST_CONTROL', control: 'brightness', delta: -this.getControlStep('brightness', intensity) };
+        return {
+          intent: "ADJUST_CONTROL",
+          control: "brightness",
+          delta: -this.getControlStep("brightness", intensity),
+        };
       }
 
       if (TOO_DARK_PATTERN.test(text) || this.hasLighterIntent(text)) {
-        return { intent: 'ADJUST_CONTROL', control: 'brightness', delta: this.getControlStep('brightness', intensity) };
+        return {
+          intent: "ADJUST_CONTROL",
+          control: "brightness",
+          delta: this.getControlStep("brightness", intensity),
+        };
       }
 
       const relation = this.extractGenericRelation(text);
       if (relation !== 0) {
-        return { intent: 'ADJUST_CONTROL', control: 'brightness', delta: relation * this.getControlStep('brightness', intensity) };
+        return {
+          intent: "ADJUST_CONTROL",
+          control: "brightness",
+          delta: relation * this.getControlStep("brightness", intensity),
+        };
       }
     }
 
@@ -1445,20 +1647,36 @@ class VoiceCommandManager {
 
       const numericValue = this.extractNumericValue(text);
       if (numericValue !== null) {
-        return { intent: 'SET_CONTROL', control: 'saturation', value: numericValue };
+        return {
+          intent: "SET_CONTROL",
+          control: "saturation",
+          value: numericValue,
+        };
       }
 
       if (this.hasMoreSaturationIntent(text)) {
-        return { intent: 'ADJUST_CONTROL', control: 'saturation', delta: this.getControlStep('saturation', intensity) };
+        return {
+          intent: "ADJUST_CONTROL",
+          control: "saturation",
+          delta: this.getControlStep("saturation", intensity),
+        };
       }
 
       if (this.hasLessSaturationIntent(text)) {
-        return { intent: 'ADJUST_CONTROL', control: 'saturation', delta: -this.getControlStep('saturation', intensity) };
+        return {
+          intent: "ADJUST_CONTROL",
+          control: "saturation",
+          delta: -this.getControlStep("saturation", intensity),
+        };
       }
 
       const relation = this.extractGenericRelation(text);
       if (relation !== 0) {
-        return { intent: 'ADJUST_CONTROL', control: 'saturation', delta: relation * this.getControlStep('saturation', intensity) };
+        return {
+          intent: "ADJUST_CONTROL",
+          control: "saturation",
+          delta: relation * this.getControlStep("saturation", intensity),
+        };
       }
     }
 
@@ -1471,36 +1689,40 @@ class VoiceCommandManager {
 
     if (TOO_DARK_PATTERN.test(text) || this.hasLighterIntent(text)) {
       return {
-        intent: 'ADJUST_COLOUR',
-        axis: 'lightness',
-        delta: this.getColorStep('lightness', intensity),
+        intent: "ADJUST_COLOUR",
+        axis: "lightness",
+        delta: this.getColorStep("lightness", intensity),
         targets: scopedTargets,
       };
     }
 
-    if (TOO_LIGHT_PATTERN.test(text) || TOO_BRIGHT_PATTERN.test(text) || this.hasDarkerIntent(text)) {
+    if (
+      TOO_LIGHT_PATTERN.test(text) ||
+      TOO_BRIGHT_PATTERN.test(text) ||
+      this.hasDarkerIntent(text)
+    ) {
       return {
-        intent: 'ADJUST_COLOUR',
-        axis: 'lightness',
-        delta: -this.getColorStep('lightness', intensity),
+        intent: "ADJUST_COLOUR",
+        axis: "lightness",
+        delta: -this.getColorStep("lightness", intensity),
         targets: scopedTargets,
       };
     }
 
     if (this.hasMoreSaturationIntent(text)) {
       return {
-        intent: 'ADJUST_COLOUR',
-        axis: 'saturation',
-        delta: this.getColorStep('saturation', intensity),
+        intent: "ADJUST_COLOUR",
+        axis: "saturation",
+        delta: this.getColorStep("saturation", intensity),
         targets: scopedTargets,
       };
     }
 
     if (this.hasLessSaturationIntent(text)) {
       return {
-        intent: 'ADJUST_COLOUR',
-        axis: 'saturation',
-        delta: -this.getColorStep('saturation', intensity),
+        intent: "ADJUST_COLOUR",
+        axis: "saturation",
+        delta: -this.getColorStep("saturation", intensity),
         targets: scopedTargets,
       };
     }
@@ -1513,27 +1735,33 @@ class VoiceCommandManager {
     const context = this.lastCommandContext;
     if (!context) return null;
 
-    const hasRelativeSignal = relation !== 0 || TOO_DARK_PATTERN.test(text) || TOO_LIGHT_PATTERN.test(text) || TOO_BRIGHT_PATTERN.test(text);
+    const hasRelativeSignal =
+      relation !== 0 ||
+      TOO_DARK_PATTERN.test(text) ||
+      TOO_LIGHT_PATTERN.test(text) ||
+      TOO_BRIGHT_PATTERN.test(text);
     if (!hasRelativeSignal) return null;
 
-    if (context.kind === 'target-colour') {
-      const resolvedTargets = targets.length ? targets : context.targets || this.lastTargets;
+    if (context.kind === "target-colour") {
+      const resolvedTargets = targets.length
+        ? targets
+        : context.targets || this.lastTargets;
       if (!resolvedTargets.length) return null;
 
       if (TOO_DARK_PATTERN.test(text)) {
         return {
-          intent: 'ADJUST_COLOUR',
-          axis: 'lightness',
-          delta: this.getColorStep('lightness', intensity),
+          intent: "ADJUST_COLOUR",
+          axis: "lightness",
+          delta: this.getColorStep("lightness", intensity),
           targets: resolvedTargets,
         };
       }
 
       if (TOO_LIGHT_PATTERN.test(text) || TOO_BRIGHT_PATTERN.test(text)) {
         return {
-          intent: 'ADJUST_COLOUR',
-          axis: 'lightness',
-          delta: -this.getColorStep('lightness', intensity),
+          intent: "ADJUST_COLOUR",
+          axis: "lightness",
+          delta: -this.getColorStep("lightness", intensity),
           targets: resolvedTargets,
         };
       }
@@ -1541,42 +1769,56 @@ class VoiceCommandManager {
       if (relation === 0) return null;
 
       return {
-        intent: 'ADJUST_COLOUR',
+        intent: "ADJUST_COLOUR",
         axis: context.axis,
-        delta: context.direction * relation * this.getColorStep(context.axis, intensity),
+        delta:
+          context.direction *
+          relation *
+          this.getColorStep(context.axis, intensity),
         targets: resolvedTargets,
       };
     }
 
-    if (context.kind === 'accessibility-control') {
-      if (context.control === 'contrast') {
+    if (context.kind === "accessibility-control") {
+      if (context.control === "contrast") {
         if (TOO_BRIGHT_PATTERN.test(text) || relation < 0) {
-          return { intent: 'SET_HIGH_CONTRAST', enabled: false };
+          return { intent: "SET_HIGH_CONTRAST", enabled: false };
         }
 
         if (relation > 0) {
-          return { intent: 'SET_HIGH_CONTRAST', enabled: true };
+          return { intent: "SET_HIGH_CONTRAST", enabled: true };
         }
 
         return null;
       }
 
-      if (context.control === 'brightness') {
+      if (context.control === "brightness") {
         if (TOO_BRIGHT_PATTERN.test(text)) {
-          return { intent: 'ADJUST_CONTROL', control: 'brightness', delta: -this.getControlStep('brightness', intensity) };
+          return {
+            intent: "ADJUST_CONTROL",
+            control: "brightness",
+            delta: -this.getControlStep("brightness", intensity),
+          };
         }
 
         if (TOO_DARK_PATTERN.test(text)) {
-          return { intent: 'ADJUST_CONTROL', control: 'brightness', delta: this.getControlStep('brightness', intensity) };
+          return {
+            intent: "ADJUST_CONTROL",
+            control: "brightness",
+            delta: this.getControlStep("brightness", intensity),
+          };
         }
       }
 
       if (relation === 0) return null;
 
       return {
-        intent: 'ADJUST_CONTROL',
+        intent: "ADJUST_CONTROL",
         control: context.control,
-        delta: context.direction * relation * this.getControlStep(context.control, intensity),
+        delta:
+          context.direction *
+          relation *
+          this.getControlStep(context.control, intensity),
       };
     }
 
@@ -1592,13 +1834,33 @@ class VoiceCommandManager {
   }
 
   extractHighContrastIntent(text) {
-    const mentionsContrast = /\b(high\s*contrast|highcontrast|contrast mode)\b/.test(text);
+    const mentionsContrast =
+      /\b(high\s*contrast|highcontrast|contrast mode)\b/.test(text);
 
-    if (this.containsAny(text, ['turn off high contrast', 'disable high contrast', 'high contrast off', 'less contrast', 'normal contrast', 'contrast off'])) {
+    if (
+      this.containsAny(text, [
+        "turn off high contrast",
+        "disable high contrast",
+        "high contrast off",
+        "less contrast",
+        "normal contrast",
+        "contrast off",
+      ])
+    ) {
       return false;
     }
 
-    if (this.containsAny(text, ['turn on high contrast', 'enable high contrast', 'switch to high contrast', 'activate high contrast', 'use high contrast', 'high contrast on', 'more contrast'])) {
+    if (
+      this.containsAny(text, [
+        "turn on high contrast",
+        "enable high contrast",
+        "switch to high contrast",
+        "activate high contrast",
+        "use high contrast",
+        "high contrast on",
+        "more contrast",
+      ])
+    ) {
       return true;
     }
 
@@ -1610,7 +1872,9 @@ class VoiceCommandManager {
   }
 
   extractNumericValue(text) {
-    const targettedMatch = text.match(/\b(?:to|at)\s+(\d{1,3})(?:\s*(?:%|percent))?\b/);
+    const targettedMatch = text.match(
+      /\b(?:to|at)\s+(\d{1,3})(?:\s*(?:%|percent))?\b/,
+    );
     if (targettedMatch) return Number(targettedMatch[1]);
 
     if (!ACTION_VERB_PATTERN.test(text)) return null;
@@ -1622,7 +1886,9 @@ class VoiceCommandManager {
   }
 
   hasDarkerIntent(text) {
-    return /\b(darker|darken|deeper|more dark|less light|less bright)\b/.test(text);
+    return /\b(darker|darken|deeper|more dark|less light|less bright)\b/.test(
+      text,
+    );
   }
 
   hasLighterIntent(text) {
@@ -1630,15 +1896,19 @@ class VoiceCommandManager {
   }
 
   hasMoreSaturationIntent(text) {
-    return /\b(more saturated|increase saturation|more saturation|more vibrant|more vivid|richer|stronger colour|stronger color)\b/.test(text);
+    return /\b(more saturated|increase saturation|more saturation|more vibrant|more vivid|richer|stronger colour|stronger color)\b/.test(
+      text,
+    );
   }
 
   hasLessSaturationIntent(text) {
-    return /\b(less saturated|decrease saturation|less saturation|desaturate|more muted|muted|less vibrant|less vivid|softer colour|softer color)\b/.test(text);
+    return /\b(less saturated|decrease saturation|less saturation|desaturate|more muted|muted|less vibrant|less vivid|softer colour|softer color)\b/.test(
+      text,
+    );
   }
 
   getColorStep(axis, intensity) {
-    const stepSet = axis === 'saturation' ? SATURATION_STEPS : LIGHTNESS_STEPS;
+    const stepSet = axis === "saturation" ? SATURATION_STEPS : LIGHTNESS_STEPS;
     return stepSet[intensity] || stepSet.default;
   }
 
@@ -1657,25 +1927,31 @@ class VoiceCommandManager {
 
     if (this.controls?.applyVisionPreset) {
       this.controls.applyVisionPreset(presetName);
-      this.highlightTarget('all');
-      this.speakAndToast(`Successfully applied ${presetName.replace('highcontrast', 'high contrast')} mode.`, { icon: '✅' });
+      this.highlightTarget("all");
+      this.speakAndToast(
+        `Successfully applied ${presetName.replace("highcontrast", "high contrast")} mode.`,
+        { icon: "✅" },
+      );
       return;
     }
 
     this.clearModeClasses();
     this.applyTokens(preset);
-    this.highlightTarget('all');
-    this.speakAndToast(`Successfully applied ${presetName.replace('highcontrast', 'high contrast')} mode.`, { icon: '✅' });
+    this.highlightTarget("all");
+    this.speakAndToast(
+      `Successfully applied ${presetName.replace("highcontrast", "high contrast")} mode.`,
+      { icon: "✅" },
+    );
   }
 
   setVisionMode(mode) {
-    const nextMode = mode || 'none';
+    const nextMode = mode || "none";
     this.clearScopedTargetRules();
     this.clearContext();
 
     if (this.controls?.setVisionMode) {
       this.controls.setVisionMode(nextMode);
-    } else if (nextMode === 'none') {
+    } else if (nextMode === "none") {
       this.clearModeClasses();
       this.applyTokens(RESET_TOKENS);
     } else {
@@ -1683,19 +1959,26 @@ class VoiceCommandManager {
       this.applyTokens(CVD_PRESETS[nextMode] || {});
     }
 
-    this.highlightTarget('all');
+    this.highlightTarget("all");
 
-    if (nextMode === 'none') {
-      this.speakAndToast('Successfully turned off colour vision mode.', { icon: '✅' });
+    if (nextMode === "none") {
+      this.speakAndToast("Successfully turned off colour vision mode.", {
+        icon: "✅",
+      });
       return;
     }
 
-    this.speakAndToast(`Successfully turned on ${nextMode}.`, { icon: '✅' });
+    this.speakAndToast(`Successfully turned on ${nextMode}.`, { icon: "✅" });
   }
 
   clearModeClasses() {
     const root = document.documentElement;
-    root.classList.remove('cvd-protanopia', 'cvd-deuteranopia', 'cvd-tritanopia', 'a11y-high-contrast');
+    root.classList.remove(
+      "cvd-protanopia",
+      "cvd-deuteranopia",
+      "cvd-tritanopia",
+      "a11y-high-contrast",
+    );
   }
 
   resetExperience() {
@@ -1712,11 +1995,13 @@ class VoiceCommandManager {
       this.controls?.setHighContrast?.(false);
     }
 
-    this.highlightTarget('all');
-    this.speakAndToast('Successfully reset colours to default.', { icon: '✅' });
+    this.highlightTarget("all");
+    this.speakAndToast("Successfully reset colours to default.", {
+      icon: "✅",
+    });
   }
 
-  applyColorToTargets(targets, color, colorLabel = 'selected colour') {
+  applyColorToTargets(targets, color, colorLabel = "selected colour") {
     const targetList = Array.isArray(targets) ? targets : [targets];
     const uniqueTargets = [...new Set(targetList)].filter(Boolean);
 
@@ -1726,32 +2011,28 @@ class VoiceCommandManager {
     });
 
     if (uniqueTargets.length) {
-      logColorChangeSuccess({
-        source: 'voice',
-        action: 'set',
-        targets: uniqueTargets,
-        color,
-        matchedCount: uniqueTargets.length,
-      });
-    }
-
-    if (uniqueTargets.length) {
       this.rememberTargetColorContext(uniqueTargets, color, colorLabel);
     }
 
-    const targetLabel = uniqueTargets.length > 1
-      ? uniqueTargets.map((target) => this.formatTargetName(target)).join(', ')
-      : this.formatTargetName(uniqueTargets[0]);
-    this.speakAndToast(`Successfully changed ${targetLabel} colour to ${colorLabel}.`, { icon: '✅' });
+    const targetLabel =
+      uniqueTargets.length > 1
+        ? uniqueTargets
+            .map((target) => this.formatTargetName(target))
+            .join(", ")
+        : this.formatTargetName(uniqueTargets[0]);
+    this.speakAndToast(
+      `Successfully changed ${targetLabel} colour to ${colorLabel}.`,
+      { icon: "✅" },
+    );
   }
 
   applyColorToTarget(target, color, options = {}) {
     const { silent = false } = options;
     const root = document.documentElement;
 
-    if (target === 'cards') {
+    if (target === "cards") {
       this.setScopedTargetRule(
-        'cards',
+        "cards",
         `
         ${CARD_TARGET_SELECTOR} {
           background: ${color} !important;
@@ -1760,13 +2041,17 @@ class VoiceCommandManager {
       `,
       );
       this.lastTargetColors[target] = color;
-      if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
       return;
     }
 
-    if (target === 'icons') {
+    if (target === "icons") {
       this.setScopedTargetRule(
-        'icons',
+        "icons",
         `
         ${ICON_TARGET_SELECTOR} {
           color: ${color} !important;
@@ -1776,13 +2061,17 @@ class VoiceCommandManager {
       `,
       );
       this.lastTargetColors[target] = color;
-      if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
       return;
     }
 
-    if (target === 'cardText') {
+    if (target === "cardText") {
       this.setScopedTargetRule(
-        'cardText',
+        "cardText",
         `
         ${TARGET_HIGHLIGHT_SELECTORS.cardText} {
           color: ${color} !important;
@@ -1790,13 +2079,17 @@ class VoiceCommandManager {
       `,
       );
       this.lastTargetColors[target] = color;
-      if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
       return;
     }
 
-    if (target === 'cardIcons') {
+    if (target === "cardIcons") {
       this.setScopedTargetRule(
-        'cardIcons',
+        "cardIcons",
         `
         ${TARGET_HIGHLIGHT_SELECTORS.cardIcons} {
           color: ${color} !important;
@@ -1806,16 +2099,20 @@ class VoiceCommandManager {
       `,
       );
       this.lastTargetColors[target] = color;
-      if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
       return;
     }
 
-    if (target === 'buttons') {
+    if (target === "buttons") {
       const readableTextColor = this.getReadableTextColor(color);
       const hoverColor = this.adjustColorBrightness(color, -0.18);
 
       this.setScopedTargetRule(
-        'buttons',
+        "buttons",
         `
         ${BUTTON_TARGET_SELECTOR} {
           background: ${color} !important;
@@ -1842,13 +2139,17 @@ class VoiceCommandManager {
       `,
       );
       this.lastTargetColors[target] = color;
-      if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
       return;
     }
 
-    if (target === 'inputBackground') {
+    if (target === "inputBackground") {
       this.setScopedTargetRule(
-        'inputBackground',
+        "inputBackground",
         `
         ${TARGET_HIGHLIGHT_SELECTORS.inputBackground} {
           background: ${color} !important;
@@ -1857,7 +2158,11 @@ class VoiceCommandManager {
       `,
       );
       this.lastTargetColors[target] = color;
-      if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+      if (!silent)
+        this.speakAndToast(
+          `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+          { icon: "✅" },
+        );
       return;
     }
 
@@ -1932,65 +2237,75 @@ class VoiceCommandManager {
 
     const vars = TARGET_TO_VARS[target] || [];
     vars.forEach((cssVar) => {
-      if (cssVar === '--hero-gradient') {
+      if (cssVar === "--hero-gradient") {
         const darker = this.adjustColorBrightness(color, -0.18);
-        root.style.setProperty(cssVar, `linear-gradient(135deg, ${color}, ${darker})`, 'important');
+        root.style.setProperty(
+          cssVar,
+          `linear-gradient(135deg, ${color}, ${darker})`,
+          "important",
+        );
       } else {
-        root.style.setProperty(cssVar, color, 'important');
+        root.style.setProperty(cssVar, color, "important");
       }
     });
 
     this.lastTargetColors[target] = color;
-    if (!silent) this.speakAndToast(`Successfully changed ${this.formatTargetName(target)} colour to selected colour.`, { icon: '✅' });
+    if (!silent)
+      this.speakAndToast(
+        `Successfully changed ${this.formatTargetName(target)} colour to selected colour.`,
+        { icon: "✅" },
+      );
   }
 
   adjustTargetsColor(targets, axis, delta) {
     const targetList = Array.isArray(targets) ? targets : [targets];
     const uniqueTargets = [...new Set(targetList)].filter(Boolean);
     if (!uniqueTargets.length) {
-      this.speakAndToast('Please tell me what to adjust. For example: make cards darker.');
+      this.speakAndToast(
+        "Please tell me what to adjust. For example: make cards darker.",
+      );
       return;
     }
 
     uniqueTargets.forEach((target) => {
       const baseColor = this.resolveBaseColorForTarget(target);
-      const nextColor = axis === 'saturation'
-        ? this.adjustColorSaturation(baseColor, delta)
-        : this.adjustColorBrightness(baseColor, delta);
+      const nextColor =
+        axis === "saturation"
+          ? this.adjustColorSaturation(baseColor, delta)
+          : this.adjustColorBrightness(baseColor, delta);
       this.applyColorToTarget(target, nextColor, { silent: true });
       this.lastTargetColors[target] = nextColor;
       this.highlightTarget(target);
     });
 
-    if (uniqueTargets.length) {
-      logColorChangeSuccess({
-        source: 'voice',
-        action: 'adjust',
-        targets: uniqueTargets,
-        color: uniqueTargets.length === 1 ? this.lastTargetColors[uniqueTargets[0]] : null,
-        matchedCount: uniqueTargets.length,
-        axis,
-        delta,
-      });
-    }
-
     this.lastTargets = uniqueTargets;
-    this.lastColor = uniqueTargets.length === 1 ? this.lastTargetColors[uniqueTargets[0]] : null;
-    this.lastColorLabel = this.lastColor ? 'adjusted colour' : null;
+    this.lastColor =
+      uniqueTargets.length === 1
+        ? this.lastTargetColors[uniqueTargets[0]]
+        : null;
+    this.lastColorLabel = this.lastColor ? "adjusted colour" : null;
     this.rememberTargetAdjustmentContext(uniqueTargets, axis, delta);
 
-    const direction = axis === 'saturation'
-      ? (delta < 0 ? 'less saturated' : 'more saturated')
-      : (delta < 0 ? 'darker' : 'lighter');
-    this.speakAndToast(`Successfully made ${uniqueTargets.map((target) => this.formatTargetName(target)).join(', ')} ${direction}.`, { icon: '✅' });
+    const direction =
+      axis === "saturation"
+        ? delta < 0
+          ? "less saturated"
+          : "more saturated"
+        : delta < 0
+          ? "darker"
+          : "lighter";
+    this.speakAndToast(
+      `Successfully made ${uniqueTargets.map((target) => this.formatTargetName(target)).join(", ")} ${direction}.`,
+      { icon: "✅" },
+    );
   }
 
   formatTargetName(target) {
-    if (!target) return 'section';
+    if (!target) return "section";
     if (target === "heroText" || target === "heroTitle") return "hero title";
     return target
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      .replace(/\bnav\b/gi, 'navigation')
+      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .replace(/\bnav\b/gi, "navigation")
       .toLowerCase();
   }
 
@@ -1999,14 +2314,16 @@ class VoiceCommandManager {
     if (nextValue === null) return;
 
     this.lastCommandContext = {
-      kind: 'accessibility-control',
+      kind: "accessibility-control",
       control,
       direction: 1,
     };
 
-    this.highlightTarget('all');
+    this.highlightTarget("all");
     const label = CONTROL_LIMITS[control]?.label || control;
-    this.speakAndToast(`Successfully set ${label} to ${nextValue} percent.`, { icon: '✅' });
+    this.speakAndToast(`Successfully set ${label} to ${nextValue} percent.`, {
+      icon: "✅",
+    });
   }
 
   adjustAccessibilityControl(control, delta) {
@@ -2015,35 +2332,47 @@ class VoiceCommandManager {
     if (nextValue === null) return;
 
     this.lastCommandContext = {
-      kind: 'accessibility-control',
+      kind: "accessibility-control",
       control,
       direction: delta >= 0 ? 1 : -1,
     };
 
-    this.highlightTarget('all');
-    const direction = delta >= 0 ? 'increased' : 'decreased';
+    this.highlightTarget("all");
+    const direction = delta >= 0 ? "increased" : "decreased";
     const label = CONTROL_LIMITS[control]?.label || control;
-    this.speakAndToast(`Successfully ${direction} ${label} to ${nextValue} percent.`, { icon: '✅' });
+    this.speakAndToast(
+      `Successfully ${direction} ${label} to ${nextValue} percent.`,
+      { icon: "✅" },
+    );
   }
 
   setHighContrast(enabled) {
-    const applied = this.controls?.setHighContrast ? this.controls.setHighContrast(Boolean(enabled)) : Boolean(enabled);
+    const applied = this.controls?.setHighContrast
+      ? this.controls.setHighContrast(Boolean(enabled))
+      : Boolean(enabled);
     this.lastCommandContext = {
-      kind: 'accessibility-control',
-      control: 'contrast',
+      kind: "accessibility-control",
+      control: "contrast",
       direction: applied ? 1 : -1,
     };
-    this.highlightTarget('all');
-    this.speakAndToast(`Successfully turned ${applied ? 'on' : 'off'} high contrast.`, { icon: '✅' });
+    this.highlightTarget("all");
+    this.speakAndToast(
+      `Successfully turned ${applied ? "on" : "off"} high contrast.`,
+      { icon: "✅" },
+    );
   }
 
   getAccessibilityControlValue(control) {
-    if (control === 'brightness') {
-      return this.controls?.getBrightness ? this.controls.getBrightness() : CONTROL_LIMITS.brightness.defaultValue;
+    if (control === "brightness") {
+      return this.controls?.getBrightness
+        ? this.controls.getBrightness()
+        : CONTROL_LIMITS.brightness.defaultValue;
     }
 
-    if (control === 'saturation') {
-      return this.controls?.getSaturation ? this.controls.getSaturation() : CONTROL_LIMITS.saturation.defaultValue;
+    if (control === "saturation") {
+      return this.controls?.getSaturation
+        ? this.controls.getSaturation()
+        : CONTROL_LIMITS.saturation.defaultValue;
     }
 
     return null;
@@ -2055,11 +2384,11 @@ class VoiceCommandManager {
 
     const nextValue = this.clampNumber(value, limits.min, limits.max);
 
-    if (control === 'brightness' && this.controls?.setBrightness) {
+    if (control === "brightness" && this.controls?.setBrightness) {
       return this.controls.setBrightness(nextValue);
     }
 
-    if (control === 'saturation' && this.controls?.setSaturation) {
+    if (control === "saturation" && this.controls?.setSaturation) {
       return this.controls.setSaturation(nextValue);
     }
 
@@ -2074,7 +2403,7 @@ class VoiceCommandManager {
     this.lastColor = color;
     this.lastColorLabel = colorLabel;
     this.lastCommandContext = {
-      kind: 'target-colour',
+      kind: "target-colour",
       targets: uniqueTargets,
       axis: continuation.axis,
       direction: continuation.direction,
@@ -2083,7 +2412,7 @@ class VoiceCommandManager {
 
   rememberTargetAdjustmentContext(targets, axis, delta) {
     this.lastCommandContext = {
-      kind: 'target-colour',
+      kind: "target-colour",
       targets: [...new Set(targets)].filter(Boolean),
       axis,
       direction: delta >= 0 ? 1 : -1,
@@ -2093,24 +2422,24 @@ class VoiceCommandManager {
   inferContinuationFromColor(color) {
     const rgb = this.parseColorToRgb(color);
     if (!rgb) {
-      return { axis: 'lightness', direction: -1 };
+      return { axis: "lightness", direction: -1 };
     }
 
     const { s, l } = this.rgbToHsl(rgb);
 
     if (l <= 0.28) {
-      return { axis: 'lightness', direction: -1 };
+      return { axis: "lightness", direction: -1 };
     }
 
     if (l >= 0.72) {
-      return { axis: 'lightness', direction: 1 };
+      return { axis: "lightness", direction: 1 };
     }
 
     if (s >= 0.35) {
-      return { axis: 'saturation', direction: 1 };
+      return { axis: "saturation", direction: 1 };
     }
 
-    return { axis: 'lightness', direction: l >= 0.5 ? 1 : -1 };
+    return { axis: "lightness", direction: l >= 0.5 ? 1 : -1 };
   }
 
   adjustColorBrightness(color, delta) {
@@ -2190,30 +2519,45 @@ class VoiceCommandManager {
 
     if (target === "tabBackground") {
       return (
-        this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.tabBackground, "background-color") ||
+        this.readSelectorColor(
+          TARGET_HIGHLIGHT_SELECTORS.tabBackground,
+          "background-color",
+        ) ||
         this.readSelectorColor(".travel-tabs", "background-color") ||
         rootStyle.getPropertyValue("--color-surface").trim() ||
         "#ffffff"
       );
     }
 
-    if (target === 'cards') {
-      return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.cards, 'background-color')
-        || rootStyle.getPropertyValue('--color-surface').trim()
-        || '#808080';
+    if (target === "cards") {
+      return (
+        this.readSelectorColor(
+          TARGET_HIGHLIGHT_SELECTORS.cards,
+          "background-color",
+        ) ||
+        rootStyle.getPropertyValue("--color-surface").trim() ||
+        "#808080"
+      );
     }
 
-    if (target === 'buttons') {
-      return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.buttons, 'background-color')
-        || rootStyle.getPropertyValue('--color-cta').trim()
-        || rootStyle.getPropertyValue('--color-primary').trim()
-        || '#808080';
+    if (target === "buttons") {
+      return (
+        this.readSelectorColor(
+          TARGET_HIGHLIGHT_SELECTORS.buttons,
+          "background-color",
+        ) ||
+        rootStyle.getPropertyValue("--color-cta").trim() ||
+        rootStyle.getPropertyValue("--color-primary").trim() ||
+        "#808080"
+      );
     }
 
-    if (target === 'icons') {
-      return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.icons, 'color')
-        || rootStyle.getPropertyValue('--color-primary').trim()
-        || '#808080';
+    if (target === "icons") {
+      return (
+        this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS.icons, "color") ||
+        rootStyle.getPropertyValue("--color-primary").trim() ||
+        "#808080"
+      );
     }
 
     const vars = TARGET_TO_VARS[target] || [];
@@ -2221,7 +2565,7 @@ class VoiceCommandManager {
       const value = rootStyle.getPropertyValue(cssVar).trim();
       if (!value) continue;
 
-      if (cssVar === '--hero-gradient') {
+      if (cssVar === "--hero-gradient") {
         const gradientColor = this.extractFirstCssColor(value);
         if (gradientColor) return gradientColor;
         continue;
@@ -2232,30 +2576,45 @@ class VoiceCommandManager {
       }
     }
 
-    const fallbackProperty = ['background', 'cards', 'buttons', 'inputBackground', 'navBackground', 'tabBackground'].includes(target)
-      ? 'background-color'
-      : 'color';
-    return this.readSelectorColor(TARGET_HIGHLIGHT_SELECTORS[target], fallbackProperty) || this.lastColor || '#808080';
+    const fallbackProperty = [
+      "background",
+      "cards",
+      "buttons",
+      "inputBackground",
+      "navBackground",
+      "tabBackground",
+    ].includes(target)
+      ? "background-color"
+      : "color";
+    return (
+      this.readSelectorColor(
+        TARGET_HIGHLIGHT_SELECTORS[target],
+        fallbackProperty,
+      ) ||
+      this.lastColor ||
+      "#808080"
+    );
   }
 
   readSelectorColor(selector, property) {
     if (!selector) return null;
 
     const nodes = Array.from(document.querySelectorAll(selector))
-      .filter((node) => !node.closest('.a11y-panel'))
+      .filter((node) => !node.closest(".a11y-panel"))
       .slice(0, 10);
 
     for (const node of nodes) {
       const styles = window.getComputedStyle(node);
-      const value = property === 'background-color'
-        ? styles.backgroundColor
-        : styles.getPropertyValue(property) || styles.color;
+      const value =
+        property === "background-color"
+          ? styles.backgroundColor
+          : styles.getPropertyValue(property) || styles.color;
 
       if (!this.isTransparentColor(value) && this.parseColorToRgb(value)) {
         return value;
       }
 
-      if (styles.backgroundImage && styles.backgroundImage !== 'none') {
+      if (styles.backgroundImage && styles.backgroundImage !== "none") {
         const gradientColor = this.extractFirstCssColor(styles.backgroundImage);
         if (gradientColor) return gradientColor;
       }
@@ -2273,9 +2632,11 @@ class VoiceCommandManager {
   isTransparentColor(value) {
     if (!value) return true;
     const normalized = String(value).trim().toLowerCase();
-    if (normalized === 'transparent') return true;
+    if (normalized === "transparent") return true;
 
-    const rgbaMatch = normalized.match(/^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([0-9.]+)\s*\)$/);
+    const rgbaMatch = normalized.match(
+      /^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([0-9.]+)\s*\)$/,
+    );
     if (!rgbaMatch) return false;
 
     return Number(rgbaMatch[1]) === 0;
@@ -2288,9 +2649,13 @@ class VoiceCommandManager {
 
     const hexMatch = normalized.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
     if (hexMatch) {
-      const hex = hexMatch[1].length === 3
-        ? hexMatch[1].split('').map((c) => `${c}${c}`).join('')
-        : hexMatch[1];
+      const hex =
+        hexMatch[1].length === 3
+          ? hexMatch[1]
+              .split("")
+              .map((c) => `${c}${c}`)
+              .join("")
+          : hexMatch[1];
       return {
         r: Number.parseInt(hex.slice(0, 2), 16),
         g: Number.parseInt(hex.slice(2, 4), 16),
@@ -2298,7 +2663,9 @@ class VoiceCommandManager {
       };
     }
 
-    const rgbMatch = normalized.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*[0-9.]+)?\s*\)$/i);
+    const rgbMatch = normalized.match(
+      /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*[0-9.]+)?\s*\)$/i,
+    );
     if (rgbMatch) {
       return {
         r: Number(rgbMatch[1]),
@@ -2323,20 +2690,19 @@ class VoiceCommandManager {
       return { h: 0, s: 0, l: lightness };
     }
 
-    const saturation = lightness > 0.5
-      ? delta / (2 - max - min)
-      : delta / (max + min);
+    const saturation =
+      lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
 
     let hue = 0;
     switch (max) {
       case red:
-        hue = ((green - blue) / delta) + (green < blue ? 6 : 0);
+        hue = (green - blue) / delta + (green < blue ? 6 : 0);
         break;
       case green:
-        hue = ((blue - red) / delta) + 2;
+        hue = (blue - red) / delta + 2;
         break;
       default:
-        hue = ((red - green) / delta) + 4;
+        hue = (red - green) / delta + 4;
         break;
     }
 
@@ -2359,19 +2725,19 @@ class VoiceCommandManager {
       return p;
     };
 
-    const q = l < 0.5 ? l * (1 + s) : l + s - (l * s);
-    const p = (2 * l) - q;
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
 
     return {
-      r: Math.round(hueToRgb(p, q, h + (1 / 3)) * 255),
+      r: Math.round(hueToRgb(p, q, h + 1 / 3) * 255),
       g: Math.round(hueToRgb(p, q, h) * 255),
-      b: Math.round(hueToRgb(p, q, h - (1 / 3)) * 255),
+      b: Math.round(hueToRgb(p, q, h - 1 / 3) * 255),
     };
   }
 
   getReadableTextColor(backgroundColor) {
     const rgb = this.parseColorToRgb(backgroundColor);
-    if (!rgb) return '#ffffff';
+    if (!rgb) return "#ffffff";
 
     const channels = [rgb.r, rgb.g, rgb.b].map((channel) => {
       const normalized = channel / 255;
@@ -2380,13 +2746,17 @@ class VoiceCommandManager {
         : ((normalized + 0.055) / 1.055) ** 2.4;
     });
 
-    const luminance = (0.2126 * channels[0]) + (0.7152 * channels[1]) + (0.0722 * channels[2]);
-    return luminance > 0.45 ? '#111111' : '#ffffff';
+    const luminance =
+      0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+    return luminance > 0.45 ? "#111111" : "#ffffff";
   }
 
   readPercentCssVar(cssVar, fallback) {
-    const rawValue = window.getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
-    const numericValue = Number.parseFloat(rawValue.replace('%', ''));
+    const rawValue = window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue(cssVar)
+      .trim();
+    const numericValue = Number.parseFloat(rawValue.replace("%", ""));
     return Number.isFinite(numericValue) ? numericValue : fallback;
   }
 
@@ -2399,21 +2769,30 @@ class VoiceCommandManager {
   applyTokens(tokens) {
     const root = document.documentElement;
     Object.entries(tokens).forEach(([key, value]) => {
-      root.style.setProperty(key, value, 'important');
+      root.style.setProperty(key, value, "important");
     });
   }
 
   highlightTarget(target) {
-    const selector = TARGET_HIGHLIGHT_SELECTORS[target] || TARGET_HIGHLIGHT_SELECTORS.all;
+    const selector =
+      TARGET_HIGHLIGHT_SELECTORS[target] || TARGET_HIGHLIGHT_SELECTORS.all;
     if (!selector) return;
 
-    const className = ['text', 'headings', 'links', 'icons', 'filters', 'stars', 'inputText'].includes(target)
-      ? 'voice-target-glow-text'
-      : 'voice-target-glow-box';
+    const className = [
+      "text",
+      "headings",
+      "links",
+      "icons",
+      "filters",
+      "stars",
+      "inputText",
+    ].includes(target)
+      ? "voice-target-glow-text"
+      : "voice-target-glow-box";
 
     const nodes = Array.from(document.querySelectorAll(selector));
     nodes.forEach((node) => {
-      if (node.closest('.a11y-panel')) return;
+      if (node.closest(".a11y-panel")) return;
       node.classList.remove(className);
       // force reflow so the animation can replay
       // eslint-disable-next-line no-unused-expressions
@@ -2428,8 +2807,8 @@ class VoiceCommandManager {
   ensureHighlightStyleElement() {
     if (this.highlightStyleEl) return;
 
-    const style = document.createElement('style');
-    style.setAttribute('data-voice-highlight-styles', '1');
+    const style = document.createElement("style");
+    style.setAttribute("data-voice-highlight-styles", "1");
     style.textContent = `
       @keyframes voiceGlowFadeBox {
         0% { box-shadow: 0 0 0 0 rgba(37, 157, 145, 0.00); opacity: 0.92; }
@@ -2458,8 +2837,8 @@ class VoiceCommandManager {
 
   ensureScopedStyleElement() {
     if (this.scopedStyleEl) return;
-    const style = document.createElement('style');
-    style.setAttribute('data-voice-target-overrides', '1');
+    const style = document.createElement("style");
+    style.setAttribute("data-voice-target-overrides", "1");
     document.head.appendChild(style);
     this.scopedStyleEl = style;
   }
@@ -2473,7 +2852,7 @@ class VoiceCommandManager {
   clearScopedTargetRules() {
     this.scopedRules = {};
     if (this.scopedStyleEl) {
-      this.scopedStyleEl.textContent = '';
+      this.scopedStyleEl.textContent = "";
     }
   }
 
@@ -2487,18 +2866,19 @@ class VoiceCommandManager {
 
   rebuildScopedStyleElement() {
     if (!this.scopedStyleEl) return;
-    this.scopedStyleEl.textContent = Object.values(this.scopedRules).join('\n');
+    this.scopedStyleEl.textContent = Object.values(this.scopedRules).join("\n");
   }
 
   showSupportFallback() {
     if (this.fallbackEl) return;
 
-    const notice = document.createElement('div');
-    notice.className = 'voice-fallback-notice';
-    notice.textContent = 'Voice commands are unavailable: this browser does not support Web Speech API.';
+    const notice = document.createElement("div");
+    notice.className = "voice-fallback-notice";
+    notice.textContent =
+      "Voice commands are unavailable: this browser does not support Web Speech API.";
     document.body.appendChild(notice);
 
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       .voice-fallback-notice {
         position: fixed;
@@ -2522,22 +2902,23 @@ class VoiceCommandManager {
   ensureToast() {
     if (this.toastEl) return;
 
-    const toast = document.createElement('div');
-    toast.className = 'voice-toast';
-    toast.setAttribute('aria-live', 'polite');
+    const toast = document.createElement("div");
+    toast.className = "voice-toast";
+    toast.setAttribute("aria-live", "polite");
 
-    const iconEl = document.createElement('span');
-    iconEl.className = 'voice-toast-icon';
-    iconEl.setAttribute('aria-hidden', 'true');
+    const iconEl = document.createElement("span");
+    iconEl.className = "voice-toast-icon";
+    iconEl.setAttribute("aria-hidden", "true");
 
-    const closeButton = document.createElement('button');
-    closeButton.type = 'button';
-    closeButton.className = 'voice-toast-close';
-    closeButton.setAttribute('aria-label', 'Dismiss voice feedback');
-    closeButton.innerHTML = '<span class="material-icons" aria-hidden="true">close</span>';
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "voice-toast-close";
+    closeButton.setAttribute("aria-label", "Dismiss voice feedback");
+    closeButton.innerHTML =
+      '<span class="material-icons" aria-hidden="true">close</span>';
 
-    const messageEl = document.createElement('p');
-    messageEl.className = 'voice-toast-message';
+    const messageEl = document.createElement("p");
+    messageEl.className = "voice-toast-message";
 
     toast.appendChild(iconEl);
     toast.appendChild(messageEl);
@@ -2545,7 +2926,7 @@ class VoiceCommandManager {
 
     document.body.appendChild(toast);
 
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       .voice-toast {
         position: fixed;
@@ -2633,10 +3014,10 @@ class VoiceCommandManager {
     document.head.appendChild(style);
 
     this.boundToastCloseHandler = () => {
-      toast.classList.remove('show');
+      toast.classList.remove("show");
       window.clearTimeout(this.toastTimer);
     };
-    closeButton.addEventListener('click', this.boundToastCloseHandler);
+    closeButton.addEventListener("click", this.boundToastCloseHandler);
 
     this.toastMessageEl = messageEl;
     this.toastIconEl = iconEl;
@@ -2650,14 +3031,14 @@ class VoiceCommandManager {
 
   showToast(message, options = {}) {
     if (!this.toastEl) this.ensureToast();
-    const icon = options.icon || '💬';
+    const icon = options.icon || "💬";
     if (this.toastIconEl) this.toastIconEl.textContent = icon;
     if (this.toastMessageEl) this.toastMessageEl.textContent = message;
-    this.toastEl.classList.add('show');
+    this.toastEl.classList.add("show");
 
     window.clearTimeout(this.toastTimer);
     this.toastTimer = window.setTimeout(() => {
-      this.toastEl.classList.remove('show');
+      this.toastEl.classList.remove("show");
     }, 2300);
   }
 
@@ -2677,7 +3058,7 @@ class VoiceCommandManager {
     }
 
     if (this.button && this.boundButtonHandler) {
-      this.button.removeEventListener('click', this.boundButtonHandler);
+      this.button.removeEventListener("click", this.boundButtonHandler);
     }
 
     if (this.onStateChange) {
@@ -2685,12 +3066,15 @@ class VoiceCommandManager {
     }
 
     if (this.toastCloseEl && this.boundToastCloseHandler) {
-      this.toastCloseEl.removeEventListener('click', this.boundToastCloseHandler);
+      this.toastCloseEl.removeEventListener(
+        "click",
+        this.boundToastCloseHandler,
+      );
     }
 
     window.clearTimeout(this.toastTimer);
 
-    this.emitTranscript('', false);
+    this.emitTranscript("", false);
     window.clearTimeout(this.transcriptClearTimer);
 
     this.clearContext();
